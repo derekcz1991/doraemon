@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <RadioGroup
+        android:id="@+id/bottom_tab"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:background="#ffffffff"
+        android:orientation="horizontal"
+        android:weightSum="5"
+        >
+
+        <RadioButton
+            android:id="@+id/tab_home"
+            android:checked="true"
+            android:drawableTop="@drawable/tab_home_icon"
+            android:text="寄养"
+            style="@style/bottom_tab_style"
+            />
+
+        <RadioButton
+            android:id="@+id/tab_heart"
+            android:drawableTop="@drawable/tab_heart_icon"
+            android:text="公益"
+            style="@style/bottom_tab_style"
+            />
+
+        <RadioButton
+            android:id="@+id/tab_pet"
+            android:drawableTop="@drawable/tab_pet_icon"
+            android:text="溜宠"
+            style="@style/bottom_tab_style"
+            />
+
+        <RadioButton
+            android:id="@+id/tab_chat"
+            android:drawableTop="@drawable/tab_chat_icon"
+            android:text="勾搭"
+            style="@style/bottom_tab_style"
+            />
+
+        <RadioButton
+            android:id="@+id/tab_me"
+            android:drawableTop="@drawable/tab_me_icon"
+            android:text="勾搭"
+            style="@style/bottom_tab_style"
+            />
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_above="@+id/bottom_tab"
+        android:background="#d0d4d5"
+        />
+    <FrameLayout
+        android:id="@+id/home_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/divider"
+        />
+</RelativeLayout>
