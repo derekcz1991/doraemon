@@ -1,6 +1,8 @@
 package com.derek.doraemon.netapi;
 
 import com.derek.doraemon.model.Token;
+
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.GsonConverterFactory;
 import retrofit2.Retrofit;
@@ -79,5 +81,9 @@ public class NetManager {
 
     public Call<Resp> collect(String type, long postId) {
         return service.collect(token, token, type, String.valueOf(uid), String.valueOf(postId));
+    }
+
+    public Call<Resp> uploadPhoto(RequestBody photo) {
+        return service.uploadPhoto(token, token, String.valueOf(uid), photo);
     }
 }

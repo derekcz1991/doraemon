@@ -1,12 +1,15 @@
 package com.derek.doraemon.netapi;
 
 import com.derek.doraemon.model.Token;
+
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
-import retrofit2.http.Path;
+import retrofit2.http.Part;
 import retrofit2.http.Query;
 
 /**
@@ -73,5 +76,12 @@ public interface RequestService {
         // 点赞类型  1-寄养 2-朋友圈 3-公益
         @Field("uid") String uid, @Field("post_id") String postId); // 帖子id
 
-
+    @FormUrlEncoded
+    @Multipart
+    @POST("v1/post/upload")
+    Call<Resp> uploadPhoto(
+        @Query("access_token") String token,
+        @Field("access_token") String accessToken,
+        @Field("uid") String uid,
+        @Part("photo") RequestBody photo);
 }
