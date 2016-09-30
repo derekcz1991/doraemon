@@ -9,6 +9,7 @@ import retrofit2.Retrofit;
  * Created by derek on 2016/9/28.
  */
 public class NetManager {
+    private final static String host = "http://pet.tazine.com";
     private static NetManager instance;
     private static RequestService service;
     private String token;
@@ -20,7 +21,7 @@ public class NetManager {
     public static NetManager getInstance() {
         if (instance == null) {
             instance = new NetManager();
-            Retrofit retrofit = new Retrofit.Builder().baseUrl("http://pet.tazine.com/")
+            Retrofit retrofit = new Retrofit.Builder().baseUrl(host)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
             service = retrofit.create(RequestService.class);
@@ -34,6 +35,10 @@ public class NetManager {
 
     public void setUid(long uid) {
         this.uid = uid;
+    }
+
+    public String getHost() {
+        return host;
     }
 
     public Call<Resp> register() {
@@ -57,5 +62,22 @@ public class NetManager {
 
     public Call<Resp> getHostList() {
         return service.getHostList(token, token, String.valueOf(uid));
+    }
+
+    public Call<Resp> getStarUser() {
+        return service.getStarUserList(token, String.valueOf(uid));
+    }
+
+    public Call<Resp> star(String type, long likeId) {
+        return service.star(token, token, type, String.valueOf(uid), String.valueOf(likeId));
+    }
+
+    public Call<Resp> comment(String type, long postId, String content) {
+        return service.comment(token, token, type, String.valueOf(uid), String.valueOf(postId),
+            content);
+    }
+
+    public Call<Resp> collect(String type, long postId) {
+        return service.collect(token, token, type, String.valueOf(uid), String.valueOf(postId));
     }
 }

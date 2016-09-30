@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="10dp"
     android:orientation="vertical"
+    android:paddingBottom="20dp"
+    android:paddingTop="20dp"
     >
 
     <TextView
@@ -17,7 +19,7 @@
         />
 
     <ImageView
-        android:id="@+id/favBtn"
+        android:id="@+id/collectBtn"
         android:layout_width="70dp"
         android:layout_height="28dp"
         android:layout_alignParentRight="true"
@@ -25,9 +27,10 @@
         />
 
     <RelativeLayout
+        android:id="@+id/nextPageBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/favBtn"
+        android:layout_below="@id/collectBtn"
         android:layout_marginTop="10dp"
         android:background="@drawable/bg_corner_white"
         >

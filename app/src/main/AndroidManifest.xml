@@ -40,6 +40,17 @@
             android:name=".activity.SelectLocationActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeWhite.NoActionBar"/>
+
+        <activity
+            android:name=".activity.WriteCommentActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeWhite.NoActionBar"/>
+
+        <activity
+            android:name=".activity.HostDetailActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeWhite.NoActionBar"/>
+
     </application>
 
 </manifest>

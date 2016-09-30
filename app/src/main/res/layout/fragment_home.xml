@@ -104,6 +104,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
+                android:background="@color/normal_bg"
                 android:paddingLeft="15dp"
                 android:paddingRight="15dp"
                 />
@@ -114,8 +115,8 @@
         android:id="@+id/cameraFab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="right|bottom"
         android:layout_margin="@dimen/fab_margin"
         android:src="@drawable/icon_camera"
-        android:layout_gravity="right|bottom"
         />
 </android.support.design.widget.CoordinatorLayout>

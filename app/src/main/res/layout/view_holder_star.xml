@@ -3,16 +3,18 @@
     android:layout_width="wrap_content"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:paddingRight="10dp"
     >
 
     <RelativeLayout
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
         >
-        <com.derek.doraemon.view.SquaredImageView
+        <ImageView
             android:id="@+id/petImageView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:scaleType="centerCrop"
             />
         <com.derek.doraemon.view.CircleImageView
             android:id="@+id/userImageView"
@@ -29,10 +31,12 @@
         android:id="@+id/starLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
         android:layout_marginLeft="5dp"
         android:orientation="horizontal"
         >
         <com.derek.doraemon.view.StarMarkView
+            android:id="@+id/starMarkView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             />
@@ -40,7 +44,8 @@
             android:id="@+id/starText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="3"
+            android:layout_marginLeft="5dp"
+            android:text="0"
             android:textColor="#ff000000"
             />
     </LinearLayout>

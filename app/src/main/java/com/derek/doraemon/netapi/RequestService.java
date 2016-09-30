@@ -4,6 +4,7 @@ import com.derek.doraemon.model.Token;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
@@ -46,5 +47,31 @@ public interface RequestService {
     @FormUrlEncoded
     @POST("v1/post/list")
     Call<Resp> getHostList(@Query("access_token") String token,
-        @Field("access_token") String accessToken, @Field("uid") String id);
+        @Field("access_token") String accessToken, @Field("uid") String uid);
+
+    @GET("v1/post/star/1")
+    Call<Resp> getStarUserList(@Query("access_token") String token, @Query("uid") String uid);
+
+    @FormUrlEncoded
+    @POST("v1/post/like")
+    Call<Resp> star(@Query("access_token") String token, @Field("access_token") String accessToken,
+        @Field("type") String type, // 点赞类型  1-寄养 2-朋友圈 3-公益
+        @Field("uid") String uid, @Field("like_id") String likeId);// 对应的帖子id (朋友圈id,公益id)
+
+    @FormUrlEncoded
+    @POST("v1/post/comment")
+    Call<Resp> comment(@Query("access_token") String token,
+        @Field("access_token") String accessToken, @Field("type") String type,
+        // 点赞类型  1-寄养 2-朋友圈 3-公益
+        @Field("uid") String uid, @Field("post_id") String postId, // 帖子id
+        @Field("comment") String content);
+
+    @FormUrlEncoded
+    @POST("v1/post/collect")
+    Call<Resp> collect(@Query("access_token") String token,
+        @Field("access_token") String accessToken, @Field("type") String type,
+        // 点赞类型  1-寄养 2-朋友圈 3-公益
+        @Field("uid") String uid, @Field("post_id") String postId); // 帖子id
+
+
 }

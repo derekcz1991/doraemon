@@ -18,16 +18,23 @@ import com.derek.doraemon.utils.CommonUtils;
 /**
  * Created by derek on 16/8/18.
  */
-public class PublishActivity extends BaseActivity {
-    @BindView(R.id.postImg) TextView postImg;
+public class WriteCommentActivity extends BaseActivity {
+    public static final String EXTRA_TYPE = "type";
+    public static final String EXTRA_POST_ID = "postId";
+
     @BindView(R.id.contentText) TextView contentText;
+
+    private String type;
+    private long postId;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_publish);
+        setContentView(R.layout.activity_write_comment);
 
         ButterKnife.bind(this);
+        type = getIntent().getStringExtra(EXTRA_TYPE);
+        postId = getIntent().getLongExtra(EXTRA_POST_ID, -1);
     }
 
     @OnClick(R.id.pubBtn)
@@ -37,40 +44,24 @@ public class PublishActivity extends BaseActivity {
             return;
         }
 
+        NetManager.getInstance()
+            .comment(type, postId, contentText.getText().toString())
+            .enqueue(new RequestCallback(new RequestCallback.Callback() {
+                @Override
+                public void success(Resp resp) {
+                    CommonUtils.toast(resp.getMessage());
+                    finish();
+                }
+
+                @Override
+                public boolean fail(Resp resp) {
+                    return false;
+                }
+            }));
     }
 
     @OnClick(R.id.cancelBtn)
     public void cancelBtn() {
         finish();
-    }
-
-    @OnClick(R.id.cameraBtn)
-    public void takeCamera() {
-
-    }
-
-    @OnClick(R.id.photoBtn)
-    public void selectPhoto() {
-
-    }
-
-    @OnClick(R.id.adoptBtn)
-    public void checkAdopt() {
-
-    }
-
-    @OnClick(R.id.breedBtn)
-    public void checkBreed() {
-
-    }
-
-    @OnClick(R.id.findBtn)
-    public void checkFind() {
-
-    }
-
-    @OnClick(R.id.qaBtn)
-    public void checkQa() {
-
     }
 }

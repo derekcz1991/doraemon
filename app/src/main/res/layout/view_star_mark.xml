@@ -5,29 +5,34 @@
     android:orientation="horizontal"
     >
     <TextView
+        android:id="@+id/star1"
         android:layout_width="15dp"
         android:layout_height="15dp"
         android:background="@drawable/icon_star_empty"
         />
     <TextView
-        android:layout_width="15dp"
-        android:layout_height="15dp"
-        android:layout_marginLeft="2dp"
-        android:background="@drawable/icon_star_empty"
-        />
-    <TextView
+        android:id="@+id/star2"
         android:layout_width="15dp"
         android:layout_height="15dp"
         android:layout_marginLeft="2dp"
         android:background="@drawable/icon_star_empty"
         />
     <TextView
+        android:id="@+id/star3"
         android:layout_width="15dp"
         android:layout_height="15dp"
         android:layout_marginLeft="2dp"
         android:background="@drawable/icon_star_empty"
         />
     <TextView
+        android:id="@+id/star4"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_marginLeft="2dp"
+        android:background="@drawable/icon_star_empty"
+        />
+    <TextView
+        android:id="@+id/star5"
         android:layout_width="15dp"
         android:layout_height="15dp"
         android:layout_marginLeft="2dp"
