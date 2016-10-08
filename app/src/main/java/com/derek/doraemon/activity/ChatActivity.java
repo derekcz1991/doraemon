@@ -48,7 +48,7 @@ public class ChatActivity extends BaseTitleActivity {
 
         View view = View.inflate(this, R.layout.activity_chat, null);
         getToolbar().setNavigationIcon(R.drawable.icon_nav_blue);
-        setTitleText("我的私信");
+        setBlackTitleText("我的私信");
         ButterKnife.bind(this, view);
 
         refreshLayout.setRefreshing(true);

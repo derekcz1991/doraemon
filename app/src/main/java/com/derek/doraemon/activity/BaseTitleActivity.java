@@ -7,6 +7,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+
 import com.derek.doraemon.R;
 
 /**
@@ -43,6 +44,12 @@ public abstract class BaseTitleActivity extends BaseActivity {
     protected void setTitleText(String title) {
         titleText.setVisibility(View.VISIBLE);
         titleText.setText(title);
+    }
+
+    protected void setBlackTitleText(String title) {
+        titleText.setVisibility(View.VISIBLE);
+        titleText.setText(title);
+        titleText.setTextColor(0xff000000);
     }
 
     @Override

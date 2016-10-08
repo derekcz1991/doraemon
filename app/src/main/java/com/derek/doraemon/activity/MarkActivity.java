@@ -44,7 +44,7 @@ public class MarkActivity extends BaseTitleActivity {
 
         View view = View.inflate(this, R.layout.activity_mark, null);
         getToolbar().setNavigationIcon(R.drawable.icon_nav_blue);
-        setTitleText(userDetail.getRecommend() + "个评分");
+        setBlackTitleText(userDetail.getRecommend() + "个评分");
         ButterKnife.bind(this, view);
 
         totalStarMark.setStar(userDetail.getGradeNum());

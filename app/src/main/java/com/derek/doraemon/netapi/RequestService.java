@@ -121,4 +121,17 @@ public interface RequestService {
     Call<Resp> getMomentList(@Query("access_token") String token,
                              @Field("access_token") String accessToken,
                              @Field("uid") String uid);
+
+    @GET("v1/my/welfare")
+    Call<Resp> getMyWelfareList(@Query("access_token") String token,
+                                @Query("uid") String uid);
+
+    @GET("v1/my/post")
+    Call<Resp> getMyPostList(@Query("access_token") String token,
+                             @Query("uid") String uid);
+
+    @GET("v1/my/moment")
+    Call<Resp> getMyMomentList(@Query("access_token") String token,
+                               @Query("uid") String uid);
+
 }

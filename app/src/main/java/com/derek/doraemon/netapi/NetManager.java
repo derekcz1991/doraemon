@@ -114,4 +114,16 @@ public class NetManager {
     public Call<Resp> getMomentList() {
         return service.getMomentList(token, token, String.valueOf(uid));
     }
+
+    public Call<Resp> getMyPostList() {
+        return service.getMyPostList(token, String.valueOf(uid));
+    }
+
+    public Call<Resp> getMyWelfareList() {
+        return service.getMyWelfareList(token, String.valueOf(uid));
+    }
+
+    public Call<Resp> getMyMomentList() {
+        return service.getMyMomentList(token, String.valueOf(uid));
+    }
 }

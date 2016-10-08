@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.derek.doraemon.R;
 import com.derek.doraemon.activity.MessageActivity;
+import com.derek.doraemon.activity.MyItemListActivity;
 import com.derek.doraemon.activity.SignUpActivity;
 import com.derek.doraemon.model.UserDetail;
 import com.derek.doraemon.netapi.NetManager;
@@ -90,19 +91,25 @@ public class MeFragment extends HomeTabFragment {
         getActivity().startActivity(new Intent(getActivity(), MessageActivity.class));
     }
 
-    @OnClick(R.id.myFoster)
-    public void myFoster() {
-
+    @OnClick(R.id.myPost)
+    public void myPost() {
+        Intent intent = new Intent(getActivity(), MyItemListActivity.class);
+        intent.putExtra(MyItemListActivity.EXTRA_TYPE, 0);
+        getActivity().startActivity(intent);
     }
 
-    @OnClick(R.id.myHeart)
-    public void myHeart() {
-
+    @OnClick(R.id.myWelfare)
+    public void myWelfare() {
+        Intent intent = new Intent(getActivity(), MyItemListActivity.class);
+        intent.putExtra(MyItemListActivity.EXTRA_TYPE, 1);
+        getActivity().startActivity(intent);
     }
 
-    @OnClick(R.id.myDate)
-    public void myDate() {
-
+    @OnClick(R.id.myMoment)
+    public void myMoment() {
+        Intent intent = new Intent(getActivity(), MyItemListActivity.class);
+        intent.putExtra(MyItemListActivity.EXTRA_TYPE, 2);
+        getActivity().startActivity(intent);
     }
 
     @OnClick(R.id.myFav)

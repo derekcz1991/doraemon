@@ -67,10 +67,14 @@
 
         <activity
             android:name=".activity.MessageActivity"
-            android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeBlue.NoActionBar"/>
 
+        <activity
+            android:name=".activity.MyItemListActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeBlue.NoActionBar"/>
     </application>
 
 </manifest>

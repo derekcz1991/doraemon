@@ -96,7 +96,7 @@
             />
 
         <RelativeLayout
-            android:id="@+id/myFoster"
+            android:id="@+id/myPost"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:background="#ffffffff"
@@ -126,7 +126,7 @@
             />
 
         <RelativeLayout
-            android:id="@+id/myHeart"
+            android:id="@+id/myWelfare"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:background="#ffffffff"
@@ -155,7 +155,7 @@
             android:background="#ff000000"
             />
         <RelativeLayout
-            android:id="@+id/myDate"
+            android:id="@+id/myMoment"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:background="#ffffffff"
@@ -165,7 +165,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="15dp"
-                android:text="我的勾搭"
+                android:text="我的圈子"
                 />
             <ImageView
                 android:layout_width="wrap_content"

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+    >
+
+    <ImageView
+        android:id="@+id/petImageView"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        android:layout_margin="5dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/icon_logo"
+        />
+
+    <TextView
+        android:id="@+id/contentText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_toRightOf="@id/petImageView"
+        android:lines="1"
+        android:text="content"
+        />
+
+    <ImageView
+        android:id="@+id/btnDelete"
+        android:layout_width="80dp"
+        android:layout_height="40dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="5dp"
+        android:layout_toRightOf="@id/petImageView"
+        android:src="@drawable/btn_delete"
+        />
+
+    <TextView
+        android:id="@+id/favNumText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/contentText"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="2dp"
+        android:layout_marginTop="5dp"
+        android:layout_toRightOf="@id/petImageView"
+        android:text="26"
+        />
+
+    <TextView
+        android:id="@+id/favText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/favNumText"
+        android:layout_marginRight="20dp"
+        android:layout_toRightOf="@id/favNumText"
+        android:alpha="0.6"
+        android:text="赞"
+        />
+
+    <TextView
+        android:id="@+id/msgNumText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@id/likeBtn"
+        android:layout_alignTop="@id/favNumText"
+        android:layout_marginRight="2dp"
+        android:layout_toRightOf="@id/favText"
+        android:text="13"
+        />
+
+    <TextView
+        android:id="@+id/msgText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/favNumText"
+        android:layout_toRightOf="@id/msgNumText"
+        android:alpha="0.6"
+        android:text="留言"
+        />
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_toRightOf="@id/petImageView"
+        android:alpha="0.15"
+        android:background="#ff000000"
+        />
+</RelativeLayout>

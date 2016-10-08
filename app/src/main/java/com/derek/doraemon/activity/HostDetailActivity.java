@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.derek.doraemon.R;
+import com.derek.doraemon.model.BaseItem;
 import com.derek.doraemon.model.HostItem;
 import com.derek.doraemon.netapi.NetManager;
 import com.derek.doraemon.netapi.RequestCallback;
@@ -23,7 +24,7 @@ import butterknife.OnClick;
  * Created by derek on 16/8/12.
  */
 public class HostDetailActivity extends BaseActivity {
-    public static final String EXTRA_HOST = "hostItem";
+    public static final String EXTRA_HOST = "baseItem";
 
     @BindView(R.id.wallPaper) ImageView wallPaper;
     @BindView(R.id.collectBtn) FloatingActionButton collectBtn;
@@ -32,7 +33,7 @@ public class HostDetailActivity extends BaseActivity {
     @BindView(R.id.hostNameText) TextView hostNameText;
     @BindView(R.id.locationText) TextView locationText;
 
-    private HostItem hostItem;
+    private BaseItem baseItem;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -40,16 +41,16 @@ public class HostDetailActivity extends BaseActivity {
         setContentView(R.layout.activity_host_detail);
         ButterKnife.bind(this);
 
-        hostItem = (HostItem) getIntent().getSerializableExtra(EXTRA_HOST);
-        contentText.setText(hostItem.getContent());
-        locationText.setText(hostItem.getDistrict());
+        baseItem = (HostItem) getIntent().getSerializableExtra(EXTRA_HOST);
+        contentText.setText(baseItem.getContent());
+        locationText.setText(baseItem.getDistrict());
         Picasso.with(this)
-            .load(NetManager.getInstance().getHost() + hostItem.getPhotoUrl())
+            .load(NetManager.getInstance().getHost() + baseItem.getPhotoUrl())
             .into(wallPaper);
         Picasso.with(this)
-            .load(NetManager.getInstance().getHost() + hostItem.getAvatarUrl())
+            .load(NetManager.getInstance().getHost() + baseItem.getAvatarUrl())
             .into(userImageView);
-        hostNameText.setText(hostItem.getUserName());
+        hostNameText.setText(baseItem.getUserName());
     }
 
     @OnClick(R.id.applyBtn)
@@ -65,7 +66,7 @@ public class HostDetailActivity extends BaseActivity {
     @OnClick(R.id.collectBtn)
     public void collect() {
         NetManager.getInstance()
-            .collect("1", hostItem.getId())
+            .collect("1", baseItem.getId())
             .enqueue(new RequestCallback(new RequestCallback.Callback() {
                 @Override
                 public void success(Resp resp) {
