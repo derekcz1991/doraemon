@@ -5,15 +5,18 @@ import com.google.gson.annotations.SerializedName;
 /**
  * Created by derek on 2016/9/29.
  */
-public class User {
+public class User extends BaseModel {
     private long id;
-    @SerializedName("username") private String userName;
-    @SerializedName("nick_name") private String nickName;
+    @SerializedName("username")
+    private String userName;
+    @SerializedName("nick_name")
+    private String nickName;
     private String constellation;
     private String profession;
     private String email;
     private String intro;
-    @SerializedName("last_login") private String lastLogin;
+    @SerializedName("last_login")
+    private String lastLogin;
 
     public long getId() {
         return id;

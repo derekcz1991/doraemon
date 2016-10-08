@@ -1,27 +1,34 @@
 package com.derek.doraemon.view.viewholder;
 
+import android.content.Intent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
 import com.derek.doraemon.R;
+import com.derek.doraemon.activity.ProfileActivity;
 import com.derek.doraemon.model.BaseModel;
 import com.derek.doraemon.model.StarUser;
 import com.derek.doraemon.netapi.NetManager;
 import com.derek.doraemon.view.CircleImageView;
-import com.derek.doraemon.view.SquaredImageView;
 import com.derek.doraemon.view.StarMarkView;
 import com.squareup.picasso.Picasso;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * Created by derek on 16/8/11.
  */
 public class StarUserViewHolder extends BaseViewHolder {
-    @BindView(R.id.petImageView) ImageView petImageView;
-    @BindView(R.id.userImageView) CircleImageView userImageView;
-    @BindView(R.id.starMarkView) StarMarkView starMarkView;
-    @BindView(R.id.starText) TextView starText;
+    @BindView(R.id.petImageView)
+    ImageView petImageView;
+    @BindView(R.id.userImageView)
+    CircleImageView userImageView;
+    @BindView(R.id.starMarkView)
+    StarMarkView starMarkView;
+    @BindView(R.id.starText)
+    TextView starText;
 
     public StarUserViewHolder(View itemView) {
         super(itemView);
@@ -30,7 +37,7 @@ public class StarUserViewHolder extends BaseViewHolder {
 
     @Override
     public void update(BaseModel data) {
-        StarUser starUser = (StarUser) data;
+        final StarUser starUser = (StarUser) data;
         Picasso.with(itemView.getContext())
             .load(NetManager.getInstance().getHost() + starUser.getAvatarUrl())
             .into(userImageView);
@@ -41,5 +48,13 @@ public class StarUserViewHolder extends BaseViewHolder {
 
         starMarkView.setStar(starUser.getRecommendNum());
         starText.setText(String.valueOf(starUser.getRecommendNum()));
+        itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, ProfileActivity.class);
+                intent.putExtra(ProfileActivity.EXTRA_UID, starUser.getId());
+                context.startActivity(intent);
+            }
+        });
     }
 }

@@ -9,7 +9,7 @@ import com.derek.doraemon.R;
 import com.derek.doraemon.activity.HostDetailActivity;
 import com.derek.doraemon.activity.WriteCommentActivity;
 import com.derek.doraemon.model.BaseModel;
-import com.derek.doraemon.model.HostItem;
+import com.derek.doraemon.model.WelfareItem;
 import com.derek.doraemon.netapi.NetManager;
 import com.derek.doraemon.netapi.RequestCallback;
 import com.derek.doraemon.netapi.Resp;
@@ -24,17 +24,17 @@ import butterknife.OnClick;
 /**
  * Created by derek on 16/8/12.
  */
-public class HostItemViewHolder extends BaseViewHolder {
+public class WelfareItemViewHolder extends BaseViewHolder {
     @BindView(R.id.locationText)
     TextView locationText;
-    @BindView(R.id.collectBtn)
-    ImageView collectBtn;
     @BindView(R.id.wallPaper)
     ImageView wallPaper;
     @BindView(R.id.userImageView)
     CircleImageView userImageView;
     @BindView(R.id.nameText)
     TextView nameText;
+    @BindView(R.id.typeText)
+    TextView typeText;
     @BindView(R.id.timeText)
     TextView timeText;
     @BindView(R.id.contentText)
@@ -48,40 +48,47 @@ public class HostItemViewHolder extends BaseViewHolder {
     @BindView(R.id.favNumText)
     TextView favNumText;
 
-    private HostItem hostItem;
+    private WelfareItem welfareItem;
 
-    public HostItemViewHolder(View itemView) {
+    public WelfareItemViewHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
     }
 
     @Override
     public void update(BaseModel data) {
-        hostItem = (HostItem) data;
-        locationText.setText(hostItem.getDistrict());
+        welfareItem = (WelfareItem) data;
+        locationText.setText(welfareItem.getDistrict());
         Picasso.with(context)
-            .load(NetManager.getInstance().getHost() + hostItem.getPhotoUrl())
+            .load(NetManager.getInstance().getHost() + welfareItem.getPhotoUrl())
             .into(wallPaper);
         Picasso.with(context)
-            .load(NetManager.getInstance().getHost() + hostItem.getAvatarUrl())
+            .load(NetManager.getInstance().getHost() + welfareItem.getAvatarUrl())
             .into(userImageView);
-        nameText.setText(hostItem.getUserName());
-        timeText.setText(hostItem.getCreatedAt());
-        contentText.setText(hostItem.getContent());
-        msgNumText.setText(String.valueOf(hostItem.getTotalComment()));
-        favNumText.setText(String.valueOf(hostItem.getTotalLike()));
+        nameText.setText(welfareItem.getUserName());
+        if (welfareItem.getKind() == 1) {
+            typeText.setText("随手拍流浪狗");
+        } else if (welfareItem.getKind() == 2) {
+            typeText.setText("寻宠");
+        } else if (welfareItem.getKind() == 3) {
+            typeText.setText("领养");
+        }
+        timeText.setText(welfareItem.getCreatedAt());
+        contentText.setText(welfareItem.getContent());
+        msgNumText.setText(String.valueOf(welfareItem.getTotalComment()));
+        favNumText.setText(String.valueOf(welfareItem.getTotalLike()));
     }
 
     @OnClick(R.id.likeBtn)
     public void star() {
         NetManager.getInstance()
-            .star("1", hostItem.getId())
+            .star("1", welfareItem.getId())
             .enqueue(new RequestCallback(new RequestCallback.Callback() {
                 @Override
                 public void success(Resp resp) {
                     CommonUtils.toast(resp.getMessage());
-                    hostItem.setTotalLike(hostItem.getTotalLike() + 1);
-                    favNumText.setText(String.valueOf(hostItem.getTotalLike()));
+                    welfareItem.setTotalLike(welfareItem.getTotalLike() + 1);
+                    favNumText.setText(String.valueOf(welfareItem.getTotalLike()));
                 }
 
                 @Override
@@ -94,32 +101,15 @@ public class HostItemViewHolder extends BaseViewHolder {
     @OnClick(R.id.commentBtn)
     public void comment() {
         Intent intent = new Intent(context, WriteCommentActivity.class);
-        intent.putExtra(WriteCommentActivity.EXTRA_POST_ID, hostItem.getId());
+        intent.putExtra(WriteCommentActivity.EXTRA_POST_ID, welfareItem.getId());
         intent.putExtra(WriteCommentActivity.EXTRA_TYPE, "1");
         context.startActivity(intent);
-    }
-
-    @OnClick(R.id.collectBtn)
-    public void collect() {
-        NetManager.getInstance()
-            .collect("1", hostItem.getId())
-            .enqueue(new RequestCallback(new RequestCallback.Callback() {
-                @Override
-                public void success(Resp resp) {
-                    CommonUtils.toast(resp.getMessage());
-                }
-
-                @Override
-                public boolean fail(Resp resp) {
-                    return false;
-                }
-            }));
     }
 
     @OnClick(R.id.nextPageBtn)
     public void detail() {
         Intent intent = new Intent(context, HostDetailActivity.class);
-        intent.putExtra(HostDetailActivity.EXTRA_HOST, hostItem);
+        intent.putExtra(HostDetailActivity.EXTRA_HOST, welfareItem);
         context.startActivity(intent);
     }
 }

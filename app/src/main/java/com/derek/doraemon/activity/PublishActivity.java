@@ -16,9 +16,10 @@ import android.widget.Toast;
 
 import com.derek.doraemon.R;
 import com.derek.doraemon.netapi.NetManager;
+import com.derek.doraemon.netapi.RequestCallback;
+import com.derek.doraemon.netapi.Resp;
 import com.derek.doraemon.utils.CommonUtils;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -31,14 +32,13 @@ import butterknife.OnClick;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
-import okio.BufferedSink;
 
 /**
  * Created by derek on 16/8/18.
  */
 public class PublishActivity extends BaseActivity {
-    public static final String HTTEA_FOLDER = Environment
-        .getExternalStorageDirectory() + "/httea/";
+    public static final String PET_FOLDER = Environment
+        .getExternalStorageDirectory() + "/doraemon/";
     public static final int RESULT_CODE_OK = 100;
     private static final int PICK_FROM_CAMERA = 100;
     private static final int CROP_PHOTO = 200;
@@ -51,6 +51,7 @@ public class PublishActivity extends BaseActivity {
 
     private Uri mImageCaptureUri;
     private boolean isPhotoSelected;
+    private File photoFile;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -59,12 +60,12 @@ public class PublishActivity extends BaseActivity {
 
         ButterKnife.bind(this);
 
-        File file = new File(HTTEA_FOLDER);
+        File file = new File(PET_FOLDER);
         if (!file.exists()) {
             file.mkdir();
         }
 
-        mImageCaptureUri = Uri.fromFile(new File(HTTEA_FOLDER + "temp.jpg"));
+        mImageCaptureUri = Uri.fromFile(new File(PET_FOLDER + "temp.jpg"));
     }
 
     @OnClick(R.id.pubBtn)
@@ -78,25 +79,24 @@ public class PublishActivity extends BaseActivity {
             return;
         }
 
-        NetManager.getInstance().uploadPhoto(new RequestBody() {
-            @Override
-            public MediaType contentType() {
-                return null;
-            }
-
-            @Override
-            public void writeTo(BufferedSink sink) throws IOException {
-
-            }
-        });
-
-        File file = FileUtils.getFile(this, fileUri);
         // create RequestBody instance from file
         RequestBody requestFile =
-            RequestBody.create(MediaType.parse("multipart/form-data"), file);
+            RequestBody.create(MediaType.parse("multipart/form-data"), photoFile);
 
         MultipartBody.Part body =
-            MultipartBody.Part.createFormData("photo", file.getName(), requestFile);
+            MultipartBody.Part.createFormData("photo", photoFile.getName(), requestFile);
+        NetManager.getInstance().uploadPhoto(body).enqueue(new RequestCallback(new RequestCallback.Callback() {
+            @Override
+            public void success(Resp resp) {
+
+            }
+
+            @Override
+            public boolean fail(Resp resp) {
+                return false;
+            }
+
+        }));
     }
 
     @OnClick(R.id.cancelBtn)
@@ -199,9 +199,6 @@ public class PublishActivity extends BaseActivity {
                     if (extras != null) {
                         Bitmap photo = extras.getParcelable("data");
                         saveAvatar(photo);
-                        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                        photo.compress(Bitmap.CompressFormat.PNG, 100, stream);
-                        byte[] byteArray = stream.toByteArray();
                         isPhotoSelected = true;
                         // TODO save pic here
                     }
@@ -212,10 +209,10 @@ public class PublishActivity extends BaseActivity {
     }
 
     private void saveAvatar(Bitmap bitmap) {
-        String path = HTTEA_FOLDER + "avatar" + ".jpg";
-        File file = new File(path);
+        String path = PET_FOLDER + "avatar" + ".jpg";
+        File photoFile = new File(path);
         try {
-            FileOutputStream out = new FileOutputStream(file);
+            FileOutputStream out = new FileOutputStream(photoFile);
             bitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
             try {
                 out.flush();

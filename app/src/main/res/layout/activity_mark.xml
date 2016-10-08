@@ -1,20 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#ffffff"
     >
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         >
+
         <com.derek.doraemon.view.StarMarkView
             android:id="@+id/totalStarMark"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             />
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -22,11 +26,13 @@
             android:layout_marginRight="20dp"
             android:layout_marginTop="25dp"
             >
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="主人爱心"
                 />
+
             <com.derek.doraemon.view.StarMarkView
                 android:id="@+id/hostStarMark"
                 android:layout_width="wrap_content"
@@ -35,6 +41,7 @@
                 android:layout_gravity="center"
                 />
         </RelativeLayout>
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -42,11 +49,13 @@
             android:layout_marginRight="20dp"
             android:layout_marginTop="25dp"
             >
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="寄养环境"
                 />
+
             <com.derek.doraemon.view.StarMarkView
                 android:id="@+id/envStarMark"
                 android:layout_width="wrap_content"
@@ -63,11 +72,13 @@
             android:layout_marginRight="20dp"
             android:layout_marginTop="25dp"
             >
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="位置"
                 />
+
             <com.derek.doraemon.view.StarMarkView
                 android:id="@+id/positionStarMark"
                 android:layout_width="wrap_content"
@@ -76,6 +87,7 @@
                 android:layout_gravity="center"
                 />
         </RelativeLayout>
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -83,11 +95,13 @@
             android:layout_marginRight="20dp"
             android:layout_marginTop="25dp"
             >
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="卫生"
                 />
+
             <com.derek.doraemon.view.StarMarkView
                 android:id="@+id/healthStarMark"
                 android:layout_width="wrap_content"
@@ -96,6 +110,7 @@
                 android:layout_gravity="center"
                 />
         </RelativeLayout>
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -103,11 +118,13 @@
             android:layout_marginRight="20dp"
             android:layout_marginTop="25dp"
             >
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="推荐度"
                 />
+
             <com.derek.doraemon.view.StarMarkView
                 android:id="@+id/suggestStarMark"
                 android:layout_width="wrap_content"

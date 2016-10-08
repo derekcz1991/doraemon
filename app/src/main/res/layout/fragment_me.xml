@@ -65,10 +65,40 @@
             />
 
         <RelativeLayout
-            android:id="@+id/myFoster"
+            android:id="@+id/myMessage"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginTop="20dp"
+            android:background="#ffffffff"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="15dp"
+                android:text="我的消息"
+                />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="15dp"
+                android:src="@drawable/icon_arrow"
+                />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:alpha="0.2"
+            android:background="#ff000000"
+            />
+
+        <RelativeLayout
+            android:id="@+id/myFoster"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
             android:background="#ffffffff"
             >
             <TextView
@@ -94,6 +124,7 @@
             android:alpha="0.2"
             android:background="#ff000000"
             />
+
         <RelativeLayout
             android:id="@+id/myHeart"
             android:layout_width="match_parent"
@@ -185,6 +216,7 @@
             android:id="@+id/myApply"
             android:layout_width="match_parent"
             android:layout_height="50dp"
+            android:visibility="gone"
             android:background="#ffffffff"
             >
             <TextView
@@ -208,6 +240,7 @@
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
             android:alpha="0.2"
+            android:visibility="gone"
             android:background="#ff000000"
             />
     </LinearLayout>

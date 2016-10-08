@@ -18,6 +18,7 @@ public class RequestCallback implements Callback<Resp> {
         void success(Resp resp);
 
         boolean fail(Resp resp);
+
     }
 
     public RequestCallback(Callback callback) {

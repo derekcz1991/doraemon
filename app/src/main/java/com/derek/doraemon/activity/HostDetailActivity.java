@@ -5,9 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
 import com.derek.doraemon.R;
 import com.derek.doraemon.model.HostItem;
 import com.derek.doraemon.netapi.NetManager;
@@ -16,6 +14,10 @@ import com.derek.doraemon.netapi.Resp;
 import com.derek.doraemon.utils.CommonUtils;
 import com.derek.doraemon.view.CircleImageView;
 import com.squareup.picasso.Picasso;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by derek on 16/8/12.
@@ -40,6 +42,7 @@ public class HostDetailActivity extends BaseActivity {
 
         hostItem = (HostItem) getIntent().getSerializableExtra(EXTRA_HOST);
         contentText.setText(hostItem.getContent());
+        locationText.setText(hostItem.getDistrict());
         Picasso.with(this)
             .load(NetManager.getInstance().getHost() + hostItem.getPhotoUrl())
             .into(wallPaper);

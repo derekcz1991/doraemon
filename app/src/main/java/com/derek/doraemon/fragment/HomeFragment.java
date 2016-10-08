@@ -3,14 +3,13 @@ package com.derek.doraemon.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
 import com.derek.doraemon.R;
 import com.derek.doraemon.adapter.HostListAdapter;
 import com.derek.doraemon.adapter.StarUserAdapter;
@@ -21,15 +20,21 @@ import com.derek.doraemon.netapi.RequestCallback;
 import com.derek.doraemon.netapi.Resp;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by derek on 16/7/18.
  */
 public class HomeFragment extends HomeTabFragment {
 
+    @BindView(R.id.refreshLayout) SwipeRefreshLayout swipeRefreshLayout;
     @BindView(R.id.starUserRecyclerView) RecyclerView starUserRecyclerView;
     @BindView(R.id.hostRecyclerView) RecyclerView hostRecyclerView;
     @BindView(R.id.searchFab) FloatingActionButton searchFab;
@@ -68,6 +73,7 @@ public class HomeFragment extends HomeTabFragment {
         getHostCallback = new RequestCallback(new RequestCallback.Callback() {
             @Override
             public void success(Resp resp) {
+                swipeRefreshLayout.setRefreshing(false);
                 hostItems.clear();
                 hostItems.addAll(
                     (List<? extends HostItem>) gson.fromJson(gson.toJsonTree(resp.getData()),
@@ -78,8 +84,10 @@ public class HomeFragment extends HomeTabFragment {
 
             @Override
             public boolean fail(Resp resp) {
+                swipeRefreshLayout.setRefreshing(false);
                 return false;
             }
+
         });
 
         starUsers = new ArrayList<>();
@@ -104,6 +112,14 @@ public class HomeFragment extends HomeTabFragment {
             public boolean fail(Resp resp) {
                 return false;
             }
+
+        });
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refresh();
+            }
         });
     }
 
@@ -114,7 +130,7 @@ public class HomeFragment extends HomeTabFragment {
 
     @OnClick(R.id.searchFab)
     public void search() {
-        refresh();
+
     }
 
     @OnClick(R.id.cameraFab)

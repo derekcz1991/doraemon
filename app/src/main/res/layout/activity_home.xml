@@ -37,16 +37,16 @@
             />
 
         <RadioButton
-            android:id="@+id/tab_chat"
+            android:id="@+id/tab_moment"
             android:drawableTop="@drawable/tab_chat_icon"
-            android:text="勾搭"
+            android:text="圈子"
             style="@style/bottom_tab_style"
             />
 
         <RadioButton
             android:id="@+id/tab_me"
             android:drawableTop="@drawable/tab_me_icon"
-            android:text="勾搭"
+            android:text="我的"
             style="@style/bottom_tab_style"
             />
     </RadioGroup>

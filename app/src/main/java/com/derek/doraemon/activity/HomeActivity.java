@@ -2,24 +2,24 @@ package com.derek.doraemon.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.RadioGroup;
 import android.widget.Toast;
+
 import com.derek.doraemon.R;
+import com.derek.doraemon.fragment.HeartFragment;
 import com.derek.doraemon.fragment.HomeFragment;
 import com.derek.doraemon.fragment.HomeTabFragment;
+import com.derek.doraemon.fragment.MomentFragment;
 import com.derek.doraemon.fragment.TabFragmentManager;
 
 public class HomeActivity extends BaseActivity implements View.OnClickListener {
     private static final String SAVE_PAGE_INDEX = "current_page_index";
     private static final int[] FRAGMENT_IDS =
-        { R.id.tab_home, R.id.tab_heart, R.id.tab_pet, R.id.tab_chat, R.id.tab_me };
+        { R.id.tab_home, R.id.tab_heart, R.id.tab_pet, R.id.tab_moment, R.id.tab_me };
     private TabFragmentManager.TabFragmentAdapter mTabFragmentAdapter;
     private RadioGroup mBottomNavigationBar;
     private FrameLayout mContent;
@@ -41,7 +41,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
         findViewById(R.id.tab_home).setOnClickListener(this);
         findViewById(R.id.tab_heart).setOnClickListener(this);
         findViewById(R.id.tab_pet).setOnClickListener(this);
-        findViewById(R.id.tab_chat).setOnClickListener(this);
+        findViewById(R.id.tab_moment).setOnClickListener(this);
         findViewById(R.id.tab_me).setOnClickListener(this);
         initFragment(savedInstanceState);
     }
@@ -163,15 +163,13 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
                 case R.id.tab_home:
                     fragment = new HomeFragment();
                     break;
-                /*case R.id.tab_loan:
-                    fragment = new BaseWebViewFragment();
-                    initWebViewFragment(fragment,Url.TAB_LOAN_URL,getString(R.string.loan));
+                case R.id.tab_heart:
+                    fragment = new HeartFragment();
                     break;
-                case R.id.tab_discovery:
-                    fragment = new BaseWebViewFragment();
-                    initWebViewFragment(fragment, Url.TAB_DISCOVERY_URL, getString(R.string.discovery));
+                case R.id.tab_moment:
+                    fragment = new MomentFragment();
                     break;
-                case R.id.tab_me:
+                /*case R.id.tab_me:
                     fragment = new MyAccountFragment();
                     break;*/
             }
