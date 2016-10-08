@@ -3,28 +3,47 @@ package com.derek.doraemon.activity;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
 import com.derek.doraemon.R;
+import com.derek.doraemon.model.UserDetail;
 import com.derek.doraemon.netapi.NetManager;
 import com.derek.doraemon.netapi.RequestCallback;
 import com.derek.doraemon.netapi.Resp;
+import com.derek.doraemon.view.CircleImageView;
+import com.squareup.picasso.Picasso;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by derek on 16/7/14.
  */
 public class SignUpActivity extends BaseTitleActivity {
+    public static final String EXTRA_USER_DETAIL = "userDetail";
 
-    @BindView(R.id.petNameText) TextView petNameText;
-    @BindView(R.id.petAgeText) TextView petAgeText;
-    @BindView(R.id.petTypeText) TextView petTypeText;
-    @BindView(R.id.petCategoryText) TextView petCategoryText;
-    @BindView(R.id.nickNameText) TextView nickNameText;
-    @BindView(R.id.jobText) TextView jobText;
-    @BindView(R.id.constellationText) TextView constellationText;
-    @BindView(R.id.emailText) TextView emailText;
-    @BindView(R.id.introText) TextView introText;
+    @BindView(R.id.userImageView)
+    CircleImageView userImageView;
+    @BindView(R.id.petNameText)
+    TextView petNameText;
+    @BindView(R.id.petAgeText)
+    TextView petAgeText;
+    @BindView(R.id.petTypeText)
+    TextView petTypeText;
+    @BindView(R.id.petCategoryText)
+    TextView petCategoryText;
+    @BindView(R.id.nickNameText)
+    TextView nickNameText;
+    @BindView(R.id.jobText)
+    TextView jobText;
+    @BindView(R.id.constellationText)
+    TextView constellationText;
+    @BindView(R.id.emailText)
+    TextView emailText;
+    @BindView(R.id.introText)
+    TextView introText;
+
+    private UserDetail userDetail;
 
     @Override
     protected boolean showNavIcon() {
@@ -36,6 +55,19 @@ public class SignUpActivity extends BaseTitleActivity {
         setTitleText("完善个人信息");
         View view = View.inflate(this, R.layout.activity_sign_up, null);
         ButterKnife.bind(this, view);
+
+        userDetail = (UserDetail) getIntent().getSerializableExtra(EXTRA_USER_DETAIL);
+        if (userDetail != null) {
+            Picasso.with(this).load(NetManager.getInstance().getHost() + userDetail.getAvatarUrl()).into(userImageView);
+            petNameText.setText(userDetail.getPetName());
+            petTypeText.setText(userDetail.getPetBreed());
+            petCategoryText.setText(userDetail.getPetBreed());
+            nickNameText.setText(userDetail.getNickName());
+            emailText.setText(userDetail.getEmail());
+            petAgeText.setText(String.valueOf(userDetail.getPetAge()));
+            jobText.setText(userDetail.getProfession());
+            constellationText.setText(userDetail.getConstellation());
+        }
         return view;
     }
 

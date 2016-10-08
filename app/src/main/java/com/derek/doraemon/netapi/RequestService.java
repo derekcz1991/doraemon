@@ -90,6 +90,12 @@ public interface RequestService {
     Call<Resp> getUserDetail(@Query("access_token") String token, @Query("uid") String uid);
 
     @FormUrlEncoded
+    @POST("v1/letter/list")
+    Call<Resp> getLetterList(@Query("access_token") String token,
+                             @Field("access_token") String accessToken,
+                             @Field("uid") String uid);
+
+    @FormUrlEncoded
     @POST("v1/letter/chat")
     Call<Resp> getChatList(@Query("access_token") String token,
                            @Field("access_token") String accessToken,

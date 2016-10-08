@@ -1,50 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.SwipeRefreshLayout
-    android:id="@+id/refreshLayout"
+
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ffffffff"
-    android:orientation="vertical"
-    >
+    android:orientation="vertical">
 
-    <android.support.v4.widget.NestedScrollView
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:alpha="0.5"
+        android:background="#ff000000"/>
+
+    <EditText
+        android:id="@+id/msgText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="10dp"
+        android:background="@drawable/bg_msg"
+        android:hint="发私信"
+        android:imeOptions="actionSend"
+        android:inputType="text"
+        android:minHeight="35dp"
+        android:padding="5dp"/>
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true">
+        android:layout_above="@id/msgText"
+        >
 
-        <RelativeLayout
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:alpha="0.5"
-                android:background="#ff000000"/>
-
-            <EditText
-                android:id="@+id/msgText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_margin="10dp"
-                android:background="@drawable/bg_msg"
-                android:hint="发私信"
-                android:imeOptions="actionSend"
-                android:inputType="text"
-                android:minHeight="35dp"
-                android:padding="5dp"/>
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recyclerView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_above="@id/msgText"
-                android:layout_marginTop="1dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"/>
-        </RelativeLayout>
-    </android.support.v4.widget.NestedScrollView>
-</android.support.v4.widget.SwipeRefreshLayout>
+            android:layout_marginTop="1dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"/>
+    </android.support.v4.widget.SwipeRefreshLayout>
+</RelativeLayout>

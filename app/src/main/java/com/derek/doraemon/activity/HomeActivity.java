@@ -13,6 +13,7 @@ import com.derek.doraemon.R;
 import com.derek.doraemon.fragment.HeartFragment;
 import com.derek.doraemon.fragment.HomeFragment;
 import com.derek.doraemon.fragment.HomeTabFragment;
+import com.derek.doraemon.fragment.MeFragment;
 import com.derek.doraemon.fragment.MomentFragment;
 import com.derek.doraemon.fragment.TabFragmentManager;
 
@@ -68,13 +69,13 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
     public void setTabSelected(int selectedResId) {
         int clickedTableIndex = getTabIndexByResId(selectedResId);
 
-        if (isMyAccountTab(clickedTableIndex)) {
+        /*if (isMyAccountTab(clickedTableIndex)) {
             // 点击我的页面时，如果未登录就跳到登录页面
-            /*Intent intent = IntentHelper.getLoginIntent();
+            *//*Intent intent = IntentHelper.getLoginIntent();
             startActivityForResult(intent, IntentConstants.REQUEST_CODE_LOGIN);
-            overridePendingTransition(R.anim.slide_bottom_in, R.anim.no);*/
+            overridePendingTransition(R.anim.slide_bottom_in, R.anim.no);*//*
             return;
-        }
+        }*/
         // 通知一下tab的点击事件
         TabFragmentManager.getInstance(this).performTabSelected(mContent, selectedResId);
         mBottomNavigationBar.check(selectedResId);
@@ -169,9 +170,9 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
                 case R.id.tab_moment:
                     fragment = new MomentFragment();
                     break;
-                /*case R.id.tab_me:
-                    fragment = new MyAccountFragment();
-                    break;*/
+                case R.id.tab_me:
+                    fragment = new MeFragment();
+                    break;
             }
             return fragment;
         }

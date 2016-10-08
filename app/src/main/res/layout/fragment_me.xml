@@ -19,7 +19,7 @@
             android:layout_alignParentRight="true"
             />
         <TextView
-            android:id="@+id/hostNameText"
+            android:id="@+id/userNameText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -35,7 +35,7 @@
             android:orientation="horizontal"
             >
             <TextView
-                android:id="@+id/starText"
+                android:id="@+id/constellationText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="白羊座"

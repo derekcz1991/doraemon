@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
+
 import com.derek.doraemon.MyApplication;
 import com.derek.doraemon.R;
 import com.derek.doraemon.constants.SharePrefsConstants;
@@ -16,7 +17,7 @@ import com.derek.doraemon.netapi.RequestCallback;
 import com.derek.doraemon.netapi.Resp;
 import com.derek.doraemon.utils.SharePreferenceHelper;
 import com.google.gson.Gson;
-import com.google.gson.internal.LinkedHashTreeMap;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -85,6 +86,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                     User user = gson.fromJson(gson.toJsonTree(resp.getData()), User.class);
                     NetManager.getInstance().setUid(user.getId());
                     startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                    finish();
                 }
 
                 @Override

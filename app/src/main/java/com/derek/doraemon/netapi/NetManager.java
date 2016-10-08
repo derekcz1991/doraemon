@@ -95,6 +95,10 @@ public class NetManager {
         return service.getUserDetail(token, String.valueOf(uid));
     }
 
+    public Call<Resp> getLetterList() {
+        return service.getLetterList(token, token, String.valueOf(uid));
+    }
+
     public Call<Resp> getChatList(long chatterId) {
         return service.getChatList(token, token, String.valueOf(uid), String.valueOf(chatterId));
     }
