@@ -49,7 +49,7 @@ public class MessageViewHolder extends BaseViewHolder {
             public void onClick(View v) {
                 Intent intent = new Intent(MyApplication.getContext(), ChatActivity.class);
                 intent.putExtra(ChatActivity.EXTRA_CHATTERID, message.getMsgTo());
-                MyApplication.getContext().startActivity(intent);
+                context.startActivity(intent);
             }
         });
     }
