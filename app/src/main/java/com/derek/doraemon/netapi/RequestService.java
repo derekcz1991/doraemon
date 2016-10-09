@@ -3,6 +3,7 @@ package com.derek.doraemon.netapi;
 import com.derek.doraemon.model.Token;
 
 import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -76,15 +77,21 @@ public interface RequestService {
                        // 点赞类型  1-寄养 2-朋友圈 3-公益
                        @Field("uid") String uid, @Field("post_id") String postId); // 帖子id
 
-    @FormUrlEncoded
     @Multipart
     @POST("v1/post/upload")
     Call<Resp> uploadPhoto(
         @Query("access_token") String token,
-        @Field("access_token") String accessToken,
-        @Field("uid") String uid,
-        //@Part("description") RequestBody description,
-        @Part("photo") MultipartBody.Part file);
+        @Part("access_token") RequestBody accessToken,
+        @Part("uid") RequestBody uid,
+        @Part MultipartBody.Part file);
+
+    @FormUrlEncoded
+    @POST("v1/post/add")
+    Call<Resp> post(@Query("access_token") String token,
+                    @Field("access_token") String accessToken,
+                    @Field("uid") String uid,
+                    @Field("content") String content,
+                    @Field("photoUrl") String photoUrl);
 
     @GET("v1/user/detail")
     Call<Resp> getUserDetail(@Query("access_token") String token, @Query("uid") String uid);
@@ -138,4 +145,9 @@ public interface RequestService {
     Call<Resp> getMyFavList(@Query("access_token") String token,
                             @Query("uid") String uid,
                             @Query("type") String type);
+
+    @GET("v1/walk/list/1")
+    Call<Resp> getNearbyList(@Query("access_token") String token,
+                             @Query("access_token") String accessToken,
+                             @Query("uid") String uid);
 }

@@ -11,6 +11,8 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,7 +47,7 @@ public class PublishActivity extends BaseActivity {
     private static final int PICK_FROM_FILE = 300;
 
     @BindView(R.id.postImg)
-    TextView postImg;
+    ImageView postImg;
     @BindView(R.id.contentText)
     TextView contentText;
 
@@ -85,18 +87,32 @@ public class PublishActivity extends BaseActivity {
 
         MultipartBody.Part body =
             MultipartBody.Part.createFormData("photo", photoFile.getName(), requestFile);
-        NetManager.getInstance().uploadPhoto(body).enqueue(new RequestCallback(new RequestCallback.Callback() {
-            @Override
-            public void success(Resp resp) {
 
-            }
+        NetManager.getInstance().uploadPhoto(body).enqueue(
+            new RequestCallback(new RequestCallback.Callback() {
+                @Override
+                public void success(Resp resp) {
+                    NetManager.getInstance().post(contentText.getText().toString(), (String) resp.getData()).enqueue(
+                        new RequestCallback(new RequestCallback.Callback() {
+                            @Override
+                            public void success(Resp resp) {
+                                CommonUtils.toast(resp.getMessage());
+                                finish();
+                            }
 
-            @Override
-            public boolean fail(Resp resp) {
-                return false;
-            }
+                            @Override
+                            public boolean fail(Resp resp) {
+                                return false;
+                            }
+                        }));
+                }
 
-        }));
+                @Override
+                public boolean fail(Resp resp) {
+                    return false;
+                }
+
+            }));
     }
 
     @OnClick(R.id.cancelBtn)
@@ -164,9 +180,10 @@ public class PublishActivity extends BaseActivity {
         } else {
             intent.setData(mImageCaptureUri);
 
-            intent.putExtra("outputX", 210);
-            intent.putExtra("outputY", 210);
-            intent.putExtra("aspectX", 1);
+            intent.putExtra("crop", "true");
+            intent.putExtra("outputX", 400);
+            intent.putExtra("outputY", 400);
+            intent.putExtra("aspectX", 3);
             intent.putExtra("aspectY", 1);
             intent.putExtra("scale", true);
             intent.putExtra("return-data", true);
@@ -198,19 +215,20 @@ public class PublishActivity extends BaseActivity {
                     Bundle extras = data.getExtras();
                     if (extras != null) {
                         Bitmap photo = extras.getParcelable("data");
+
                         saveAvatar(photo);
                         isPhotoSelected = true;
-                        // TODO save pic here
+                        postImg.setVisibility(View.VISIBLE);
+                        postImg.setImageBitmap(photo);
                     }
                 }
-                finish();
                 break;
         }
     }
 
     private void saveAvatar(Bitmap bitmap) {
         String path = PET_FOLDER + "avatar" + ".jpg";
-        File photoFile = new File(path);
+        photoFile = new File(path);
         try {
             FileOutputStream out = new FileOutputStream(photoFile);
             bitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);

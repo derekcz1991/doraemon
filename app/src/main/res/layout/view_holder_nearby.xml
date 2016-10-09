@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
     >
+
     <com.derek.doraemon.view.CircleImageView
         android:id="@+id/userImageView"
         android:layout_width="60dp"
@@ -11,20 +12,22 @@
         android:layout_marginLeft="15dp"
         android:layout_marginRight="20dp"
         android:layout_marginTop="15dp"
+        android:scaleType="centerCrop"
         />
 
     <TextView
-        android:singleLine="true"
         android:id="@+id/userNameText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@id/userImageView"
         android:layout_toRightOf="@id/userImageView"
+        android:singleLine="true"
         android:text="derek"
         android:textSize="16dp"
         />
+
     <TextView
-        android:id="@+id/distanceText"
+        android:id="@+id/timeText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@id/userNameText"
@@ -33,28 +36,31 @@
         android:layout_marginTop="5dp"
         android:text="0.7km"
         />
+
     <TextView
-        android:id="@+id/moodText"
+        android:id="@+id/locationText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@id/userNameText"
-        android:layout_below="@id/distanceText"
+        android:layout_below="@id/timeText"
         android:text="哈哈"
         />
+
     <ImageView
         android:id="@+id/btnBark"
         android:layout_width="80dp"
         android:layout_height="match_parent"
-        android:layout_alignBottom="@id/moodText"
+        android:layout_alignBottom="@id/locationText"
         android:layout_alignParentRight="true"
         android:layout_alignTop="@id/userNameText"
         android:layout_marginRight="10dp"
         android:src="@drawable/btn_bark"
         />
+
     <View
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
-        android:layout_below="@id/moodText"
+        android:layout_below="@id/locationText"
         android:layout_marginTop="15dp"
         android:layout_toRightOf="@id/userImageView"
         android:alpha="0.3"

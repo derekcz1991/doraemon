@@ -15,12 +15,13 @@ import com.derek.doraemon.fragment.HomeFragment;
 import com.derek.doraemon.fragment.HomeTabFragment;
 import com.derek.doraemon.fragment.MeFragment;
 import com.derek.doraemon.fragment.MomentFragment;
+import com.derek.doraemon.fragment.NearbyFragment;
 import com.derek.doraemon.fragment.TabFragmentManager;
 
 public class HomeActivity extends BaseActivity implements View.OnClickListener {
     private static final String SAVE_PAGE_INDEX = "current_page_index";
     private static final int[] FRAGMENT_IDS =
-        { R.id.tab_home, R.id.tab_heart, R.id.tab_pet, R.id.tab_moment, R.id.tab_me };
+        {R.id.tab_home, R.id.tab_heart, R.id.tab_nearby, R.id.tab_moment, R.id.tab_me};
     private TabFragmentManager.TabFragmentAdapter mTabFragmentAdapter;
     private RadioGroup mBottomNavigationBar;
     private FrameLayout mContent;
@@ -41,7 +42,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
         mContent = (FrameLayout) findViewById(R.id.home_content);
         findViewById(R.id.tab_home).setOnClickListener(this);
         findViewById(R.id.tab_heart).setOnClickListener(this);
-        findViewById(R.id.tab_pet).setOnClickListener(this);
+        findViewById(R.id.tab_nearby).setOnClickListener(this);
         findViewById(R.id.tab_moment).setOnClickListener(this);
         findViewById(R.id.tab_me).setOnClickListener(this);
         initFragment(savedInstanceState);
@@ -67,37 +68,9 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
     }
 
     public void setTabSelected(int selectedResId) {
-        int clickedTableIndex = getTabIndexByResId(selectedResId);
-
-        /*if (isMyAccountTab(clickedTableIndex)) {
-            // 点击我的页面时，如果未登录就跳到登录页面
-            *//*Intent intent = IntentHelper.getLoginIntent();
-            startActivityForResult(intent, IntentConstants.REQUEST_CODE_LOGIN);
-            overridePendingTransition(R.anim.slide_bottom_in, R.anim.no);*//*
-            return;
-        }*/
         // 通知一下tab的点击事件
         TabFragmentManager.getInstance(this).performTabSelected(mContent, selectedResId);
         mBottomNavigationBar.check(selectedResId);
-    }
-
-    private int getTabIndexByResId(int selectedResId) {
-        for (int i = 0; i < FRAGMENT_IDS.length; i++) {
-            if (FRAGMENT_IDS[i] == selectedResId) {
-                return i;
-            }
-        }
-        return 0;
-    }
-
-    private boolean isMyAccountTab(int clickedTableIndex) {
-        return clickedTableIndex == 4;// && !ManagerFactory.getAccountManager().isLogin();
-    }
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        outState.putInt(SAVE_PAGE_INDEX, mBottomNavigationBar.getCheckedRadioButtonId());
-        super.onSaveInstanceState(outState);
     }
 
     @Override
@@ -145,6 +118,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
                 exitTime = System.currentTimeMillis();
             } else {
                 finish();
+                System.exit(0);
             }
             return true;
         }
@@ -167,6 +141,9 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
                 case R.id.tab_heart:
                     fragment = new HeartFragment();
                     break;
+                case R.id.tab_nearby:
+                    fragment = new NearbyFragment();
+                    break;
                 case R.id.tab_moment:
                     fragment = new MomentFragment();
                     break;
@@ -177,24 +154,4 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
             return fragment;
         }
     }
-    /*@Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_home, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }*/
 }

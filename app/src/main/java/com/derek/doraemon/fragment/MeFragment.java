@@ -123,7 +123,7 @@ public class MeFragment extends HomeTabFragment {
     @OnClick(R.id.myFavWelfare)
     public void myFavWelfare() {
         Intent intent = new Intent(getActivity(), FavListActivity.class);
-        intent.putExtra(FavListActivity.EXTRA_TYPE, 2);
+        intent.putExtra(FavListActivity.EXTRA_TYPE, 3);
         getActivity().startActivity(intent);
     }
 }

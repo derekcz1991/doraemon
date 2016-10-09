@@ -11,6 +11,7 @@ import com.derek.doraemon.model.FavItem;
 import com.derek.doraemon.netapi.NetManager;
 import com.derek.doraemon.netapi.RequestCallback;
 import com.derek.doraemon.netapi.Resp;
+import com.derek.doraemon.utils.CommonUtils;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -51,8 +52,8 @@ public class FavListActivity extends BaseTitleActivity {
             case 1:
                 setTitleText("收藏的窝");
                 break;
-            case 2:
-                setTitleText("收藏的寄养");
+            case 3:
+                setTitleText("收藏的公益");
                 break;
         }
         View view = View.inflate(this, R.layout.activity_fav, null);
@@ -74,13 +75,17 @@ public class FavListActivity extends BaseTitleActivity {
         getFavListCallback = new RequestCallback(new RequestCallback.Callback() {
             @Override
             public void success(Resp resp) {
-                favItems.clear();
-                favItems.addAll(
-                    (Collection<? extends FavItem>) gson.fromJson(gson.toJsonTree(resp.getData()),
-                        new TypeToken<List<FavItem>>() {
-                        }.getType()));
-                myFavListAdapter.notifyDataSetChanged();
-                refreshLayout.setRefreshing(false);
+                if (resp.getData() == null) {
+                    CommonUtils.toast(resp.getMessage());
+                } else {
+                    favItems.clear();
+                    favItems.addAll(
+                        (Collection<? extends FavItem>) gson.fromJson(gson.toJsonTree(resp.getData()),
+                            new TypeToken<List<FavItem>>() {
+                            }.getType()));
+                    myFavListAdapter.notifyDataSetChanged();
+                    refreshLayout.setRefreshing(false);
+                }
             }
 
             @Override
@@ -90,9 +95,9 @@ public class FavListActivity extends BaseTitleActivity {
             }
         });
 
-        refreshLayout.setOnClickListener(new View.OnClickListener() {
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
-            public void onClick(View v) {
+            public void onRefresh() {
                 refresh();
             }
         });

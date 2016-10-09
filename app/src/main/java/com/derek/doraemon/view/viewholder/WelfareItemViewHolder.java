@@ -6,7 +6,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.derek.doraemon.R;
-import com.derek.doraemon.activity.HostDetailActivity;
+import com.derek.doraemon.activity.ItemDetailActivity;
 import com.derek.doraemon.activity.WriteCommentActivity;
 import com.derek.doraemon.model.BaseModel;
 import com.derek.doraemon.model.WelfareItem;
@@ -108,8 +108,9 @@ public class WelfareItemViewHolder extends BaseViewHolder {
 
     @OnClick(R.id.nextPageBtn)
     public void detail() {
-        Intent intent = new Intent(context, HostDetailActivity.class);
-        intent.putExtra(HostDetailActivity.EXTRA_HOST, welfareItem);
+        Intent intent = new Intent(context, ItemDetailActivity.class);
+        intent.putExtra(ItemDetailActivity.EXTRA_ITEM, welfareItem);
+        intent.putExtra(ItemDetailActivity.EXTRA_TYPE, "3");
         context.startActivity(intent);
     }
 }

@@ -2,7 +2,9 @@ package com.derek.doraemon.netapi;
 
 import com.derek.doraemon.model.Token;
 
+import okhttp3.MediaType;
 import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.GsonConverterFactory;
 import retrofit2.Retrofit;
@@ -89,7 +91,13 @@ public class NetManager {
     }
 
     public Call<Resp> uploadPhoto(MultipartBody.Part body) {
-        return service.uploadPhoto(token, token, String.valueOf(uid), body);
+        return service.uploadPhoto(token,
+            RequestBody.create(MediaType.parse("multipart/form-data"), token),
+            RequestBody.create(MediaType.parse("multipart/form-data"), String.valueOf(uid)), body);
+    }
+
+    public Call<Resp> post(String content, String photoUrl) {
+        return service.post(token, token, String.valueOf(uid), content, photoUrl);
     }
 
     public Call<Resp> getUserDetail(long uid) {
@@ -130,5 +138,9 @@ public class NetManager {
 
     public Call<Resp> getMyFavList(int type) {
         return service.getMyFavList(token, String.valueOf(uid), String.valueOf(type));
+    }
+
+    public Call<Resp> getNearbyList() {
+        return service.getNearbyList(token, token, String.valueOf(uid));
     }
 }

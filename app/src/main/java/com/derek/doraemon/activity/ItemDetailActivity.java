@@ -22,15 +22,22 @@ import butterknife.OnClick;
 /**
  * Created by derek on 16/8/12.
  */
-public class HostDetailActivity extends BaseActivity {
-    public static final String EXTRA_HOST = "baseItem";
+public class ItemDetailActivity extends BaseActivity {
+    public static final String EXTRA_ITEM = "item";
+    public static final String EXTRA_TYPE = "type";
 
-    @BindView(R.id.wallPaper) ImageView wallPaper;
-    @BindView(R.id.collectBtn) FloatingActionButton collectBtn;
-    @BindView(R.id.contentText) TextView contentText;
-    @BindView(R.id.userImageView) CircleImageView userImageView;
-    @BindView(R.id.hostNameText) TextView hostNameText;
-    @BindView(R.id.locationText) TextView locationText;
+    @BindView(R.id.wallPaper)
+    ImageView wallPaper;
+    @BindView(R.id.collectBtn)
+    FloatingActionButton collectBtn;
+    @BindView(R.id.contentText)
+    TextView contentText;
+    @BindView(R.id.userImageView)
+    CircleImageView userImageView;
+    @BindView(R.id.hostNameText)
+    TextView hostNameText;
+    @BindView(R.id.locationText)
+    TextView locationText;
 
     private BaseItem baseItem;
 
@@ -40,7 +47,7 @@ public class HostDetailActivity extends BaseActivity {
         setContentView(R.layout.activity_host_detail);
         ButterKnife.bind(this);
 
-        baseItem = (BaseItem) getIntent().getSerializableExtra(EXTRA_HOST);
+        baseItem = (BaseItem) getIntent().getSerializableExtra(EXTRA_ITEM);
         contentText.setText(baseItem.getContent());
         locationText.setText(baseItem.getDistrict());
         Picasso.with(this)
@@ -65,7 +72,7 @@ public class HostDetailActivity extends BaseActivity {
     @OnClick(R.id.collectBtn)
     public void collect() {
         NetManager.getInstance()
-            .collect("1", baseItem.getId())
+            .collect(getIntent().getStringExtra(EXTRA_TYPE), baseItem.getId())
             .enqueue(new RequestCallback(new RequestCallback.Callback() {
                 @Override
                 public void success(Resp resp) {

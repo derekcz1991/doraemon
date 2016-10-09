@@ -1,5 +1,6 @@
 package com.derek.doraemon.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.derek.doraemon.R;
+import com.derek.doraemon.activity.PublishActivity;
 import com.derek.doraemon.adapter.HostListAdapter;
 import com.derek.doraemon.adapter.StarUserAdapter;
 import com.derek.doraemon.model.HostItem;
@@ -34,11 +36,16 @@ import butterknife.OnClick;
  */
 public class HomeFragment extends HomeTabFragment {
 
-    @BindView(R.id.refreshLayout) SwipeRefreshLayout swipeRefreshLayout;
-    @BindView(R.id.starUserRecyclerView) RecyclerView starUserRecyclerView;
-    @BindView(R.id.hostRecyclerView) RecyclerView hostRecyclerView;
-    @BindView(R.id.searchFab) FloatingActionButton searchFab;
-    @BindView(R.id.cameraFab) FloatingActionButton cameraFab;
+    @BindView(R.id.refreshLayout)
+    SwipeRefreshLayout swipeRefreshLayout;
+    @BindView(R.id.starUserRecyclerView)
+    RecyclerView starUserRecyclerView;
+    @BindView(R.id.hostRecyclerView)
+    RecyclerView hostRecyclerView;
+    @BindView(R.id.searchFab)
+    FloatingActionButton searchFab;
+    @BindView(R.id.cameraFab)
+    FloatingActionButton cameraFab;
 
     private Gson gson;
 
@@ -53,7 +60,7 @@ public class HomeFragment extends HomeTabFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
-        @Nullable Bundle savedInstanceState) {
+                             @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         ButterKnife.bind(this, view);
         initData();
@@ -135,7 +142,7 @@ public class HomeFragment extends HomeTabFragment {
 
     @OnClick(R.id.cameraFab)
     public void takeCamera() {
-
+        getActivity().startActivity(new Intent(getActivity(), PublishActivity.class));
     }
 
     @Override

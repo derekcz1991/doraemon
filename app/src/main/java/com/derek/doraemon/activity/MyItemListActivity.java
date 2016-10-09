@@ -11,6 +11,7 @@ import com.derek.doraemon.model.BaseItem;
 import com.derek.doraemon.netapi.NetManager;
 import com.derek.doraemon.netapi.RequestCallback;
 import com.derek.doraemon.netapi.Resp;
+import com.derek.doraemon.utils.CommonUtils;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -77,12 +78,16 @@ public class MyItemListActivity extends BaseTitleActivity {
         getItemListCallback = new RequestCallback(new RequestCallback.Callback() {
             @Override
             public void success(Resp resp) {
-                items.clear();
-                items.addAll(
-                    (Collection<? extends BaseItem>) gson.fromJson(gson.toJsonTree(resp.getData()),
-                        new TypeToken<List<BaseItem>>() {
-                        }.getType()));
-                myItemListAdapter.notifyDataSetChanged();
+                if (resp.getData() == null) {
+                    CommonUtils.toast(resp.getMessage());
+                } else {
+                    items.clear();
+                    items.addAll(
+                        (Collection<? extends BaseItem>) gson.fromJson(gson.toJsonTree(resp.getData()),
+                            new TypeToken<List<BaseItem>>() {
+                            }.getType()));
+                    myItemListAdapter.notifyDataSetChanged();
+                }
                 refreshLayout.setRefreshing(false);
             }
 
