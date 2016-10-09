@@ -8,7 +8,6 @@ import android.widget.TextView;
 
 import com.derek.doraemon.R;
 import com.derek.doraemon.model.BaseItem;
-import com.derek.doraemon.model.HostItem;
 import com.derek.doraemon.netapi.NetManager;
 import com.derek.doraemon.netapi.RequestCallback;
 import com.derek.doraemon.netapi.Resp;
@@ -41,7 +40,7 @@ public class HostDetailActivity extends BaseActivity {
         setContentView(R.layout.activity_host_detail);
         ButterKnife.bind(this);
 
-        baseItem = (HostItem) getIntent().getSerializableExtra(EXTRA_HOST);
+        baseItem = (BaseItem) getIntent().getSerializableExtra(EXTRA_HOST);
         contentText.setText(baseItem.getContent());
         locationText.setText(baseItem.getDistrict());
         Picasso.with(this)

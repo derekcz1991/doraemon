@@ -75,6 +75,12 @@
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeBlue.NoActionBar"/>
+
+        <activity
+            android:name=".activity.FavListActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeBlue.NoActionBar"/>
     </application>
 
 </manifest>

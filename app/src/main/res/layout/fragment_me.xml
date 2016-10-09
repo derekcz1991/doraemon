@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     >
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -12,12 +13,14 @@
         android:orientation="vertical"
         android:paddingTop="20dp"
         >
+
         <com.derek.doraemon.view.CircleImageView
             android:id="@+id/userImageView"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_alignParentRight="true"
             />
+
         <TextView
             android:id="@+id/userNameText"
             android:layout_width="wrap_content"
@@ -34,6 +37,7 @@
             android:layout_marginTop="10dp"
             android:orientation="horizontal"
             >
+
             <TextView
                 android:id="@+id/constellationText"
                 android:layout_width="wrap_content"
@@ -42,6 +46,7 @@
                 android:textColor="@color/colorAccent"
                 android:textSize="12dp"
                 />
+
             <TextView
                 android:id="@+id/occupationText"
                 android:layout_width="wrap_content"
@@ -71,6 +76,7 @@
             android:layout_marginTop="20dp"
             android:background="#ffffffff"
             >
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -78,6 +84,7 @@
                 android:layout_marginLeft="15dp"
                 android:text="我的消息"
                 />
+
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -101,6 +108,7 @@
             android:layout_height="50dp"
             android:background="#ffffffff"
             >
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -108,6 +116,7 @@
                 android:layout_marginLeft="15dp"
                 android:text="我的寄养"
                 />
+
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -131,6 +140,7 @@
             android:layout_height="50dp"
             android:background="#ffffffff"
             >
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -138,6 +148,7 @@
                 android:layout_marginLeft="15dp"
                 android:text="我的公益"
                 />
+
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -154,12 +165,14 @@
             android:alpha="0.2"
             android:background="#ff000000"
             />
+
         <RelativeLayout
             android:id="@+id/myMoment"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:background="#ffffffff"
             >
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -167,6 +180,7 @@
                 android:layout_marginLeft="15dp"
                 android:text="我的圈子"
                 />
+
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -183,12 +197,14 @@
             android:alpha="0.2"
             android:background="#ff000000"
             />
+
         <RelativeLayout
-            android:id="@+id/myFav"
+            android:id="@+id/myFavHost"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:background="#ffffffff"
             >
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -196,6 +212,7 @@
                 android:layout_marginLeft="15dp"
                 android:text="收藏的窝"
                 />
+
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -212,20 +229,22 @@
             android:alpha="0.2"
             android:background="#ff000000"
             />
+
         <RelativeLayout
-            android:id="@+id/myApply"
+            android:id="@+id/myFavWelfare"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:visibility="gone"
             android:background="#ffffffff"
             >
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="15dp"
-                android:text="申请状态"
+                android:text="收藏的公益"
                 />
+
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -240,7 +259,6 @@
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
             android:alpha="0.2"
-            android:visibility="gone"
             android:background="#ff000000"
             />
     </LinearLayout>

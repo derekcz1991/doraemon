@@ -36,7 +36,8 @@ public class NetManager {
     }
 
     public void setUid(long uid) {
-        this.uid = 26;
+        //this.uid = 26;
+        this.uid = uid;
     }
 
     public long getUid() {
@@ -125,5 +126,9 @@ public class NetManager {
 
     public Call<Resp> getMyMomentList() {
         return service.getMyMomentList(token, String.valueOf(uid));
+    }
+
+    public Call<Resp> getMyFavList(int type) {
+        return service.getMyFavList(token, String.valueOf(uid), String.valueOf(type));
     }
 }

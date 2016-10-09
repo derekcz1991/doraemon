@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.derek.doraemon.R;
+import com.derek.doraemon.activity.FavListActivity;
 import com.derek.doraemon.activity.MessageActivity;
 import com.derek.doraemon.activity.MyItemListActivity;
 import com.derek.doraemon.activity.SignUpActivity;
@@ -112,8 +113,17 @@ public class MeFragment extends HomeTabFragment {
         getActivity().startActivity(intent);
     }
 
-    @OnClick(R.id.myFav)
-    public void myFav() {
+    @OnClick(R.id.myFavHost)
+    public void myFavHost() {
+        Intent intent = new Intent(getActivity(), FavListActivity.class);
+        intent.putExtra(FavListActivity.EXTRA_TYPE, 1);
+        getActivity().startActivity(intent);
+    }
 
+    @OnClick(R.id.myFavWelfare)
+    public void myFavWelfare() {
+        Intent intent = new Intent(getActivity(), FavListActivity.class);
+        intent.putExtra(FavListActivity.EXTRA_TYPE, 2);
+        getActivity().startActivity(intent);
     }
 }

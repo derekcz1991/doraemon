@@ -134,4 +134,8 @@ public interface RequestService {
     Call<Resp> getMyMomentList(@Query("access_token") String token,
                                @Query("uid") String uid);
 
+    @GET("v1/collection")
+    Call<Resp> getMyFavList(@Query("access_token") String token,
+                            @Query("uid") String uid,
+                            @Query("type") String type);
 }
