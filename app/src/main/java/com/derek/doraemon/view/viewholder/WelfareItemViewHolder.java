@@ -82,7 +82,7 @@ public class WelfareItemViewHolder extends BaseViewHolder {
     @OnClick(R.id.likeBtn)
     public void star() {
         NetManager.getInstance()
-            .star("1", welfareItem.getId())
+            .star("3", welfareItem.getId())
             .enqueue(new RequestCallback(new RequestCallback.Callback() {
                 @Override
                 public void success(Resp resp) {

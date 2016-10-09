@@ -26,18 +26,12 @@ public class ItemDetailActivity extends BaseActivity {
     public static final String EXTRA_ITEM = "item";
     public static final String EXTRA_TYPE = "type";
 
-    @BindView(R.id.wallPaper)
-    ImageView wallPaper;
-    @BindView(R.id.collectBtn)
-    FloatingActionButton collectBtn;
-    @BindView(R.id.contentText)
-    TextView contentText;
-    @BindView(R.id.userImageView)
-    CircleImageView userImageView;
-    @BindView(R.id.hostNameText)
-    TextView hostNameText;
-    @BindView(R.id.locationText)
-    TextView locationText;
+    @BindView(R.id.wallPaper) ImageView wallPaper;
+    @BindView(R.id.collectBtn) FloatingActionButton collectBtn;
+    @BindView(R.id.contentText) TextView contentText;
+    @BindView(R.id.userImageView) CircleImageView userImageView;
+    @BindView(R.id.hostNameText) TextView hostNameText;
+    @BindView(R.id.locationText) TextView locationText;
 
     private BaseItem baseItem;
 

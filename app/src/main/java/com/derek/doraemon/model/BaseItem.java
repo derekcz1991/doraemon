@@ -23,6 +23,7 @@ public class BaseItem extends BaseModel {
     protected String userName;
     @SerializedName("avatar")
     protected String avatarUrl;
+    private int itemType;
 
     public long getId() {
         return id;
@@ -102,5 +103,13 @@ public class BaseItem extends BaseModel {
 
     public void setAvatarUrl(String avatarUrl) {
         this.avatarUrl = avatarUrl;
+    }
+
+    public int getItemType() {
+        return itemType;
+    }
+
+    public void setItemType(int itemType) {
+        this.itemType = itemType;
     }
 }

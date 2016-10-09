@@ -17,28 +17,37 @@ import retrofit2.http.Query;
  * Created by derek on 2016/9/28.
  */
 public interface RequestService {
+
+    // ------------------------------- account -------------------------------------
     @FormUrlEncoded
     @POST("v1/register")
-    Call<Resp> register(@Field("username") String userName, @Field("email") String email,
-                        @Field("password") String password, @Field("pwd_check") String pwdCheck);
+    Call<Resp> register(@Field("username") String userName,
+                        @Field("email") String email,
+                        @Field("password") String password,
+                        @Field("pwd_check") String pwdCheck);
 
     @FormUrlEncoded
     @POST("oauth/access_token")
     Call<Token> getToken(@Field("username") String userName, // 用户邮箱
-                         @Field("password") String password, @Field("client_id") int clientId, // 客户端id
+                         @Field("password") String password,
+                         @Field("client_id") int clientId, // 客户端id
                          @Field("client_secret") String clientSecret, // 客户端密钥
                          @Field("grant_type") String grantType); // 授权类型
 
     @FormUrlEncoded
     @POST("v1/login")
-    Call<Resp> login(@Query("access_token") String token, @Field("access_token") String accessToken,
-                     @Field("email") String email, @Field("password") String password);
+    Call<Resp> login(@Query("access_token") String token,
+                     @Field("access_token") String accessToken,
+                     @Field("email") String email,
+                     @Field("password") String password);
 
+
+    // ------------------------------- user -------------------------------------
     @FormUrlEncoded
     @POST("v1/complete")
     Call<Resp> completeUserInfo(@Query("access_token") String token,
-                                @Field("access_token") String accessToken, @Field("sex") String sex,
-                                // 1-男 2-女   (必填)
+                                @Field("access_token") String accessToken,
+                                @Field("sex") String sex, // 1-男 2-女   (必填)
                                 @Field("pet_type") String petType, // 宠物类型 (非必填)
                                 @Field("pet_breed") String petBreed, // 宠物品种 (非必填)
                                 @Field("pet_name") String petName, // 宠物名称  (非必填)
@@ -48,42 +57,45 @@ public interface RequestService {
                                 @Field("constellation") String constellation, // 星座     (非必填)
                                 @Field("intro") String intro); // 介绍      必填
 
-    @FormUrlEncoded
-    @POST("v1/post/list")
-    Call<Resp> getHostList(@Query("access_token") String token,
-                           @Field("access_token") String accessToken, @Field("uid") String uid);
+    @GET("v1/user/detail")
+    Call<Resp> getUserDetail(@Query("access_token") String token,
+                             @Query("uid") String uid);
 
     @GET("v1/post/star/1")
-    Call<Resp> getStarUserList(@Query("access_token") String token, @Query("uid") String uid);
+    Call<Resp> getStarUserList(@Query("access_token") String token,
+                               @Query("uid") String uid);
 
+    // ------------------------------- common -------------------------------------
     @FormUrlEncoded
     @POST("v1/post/like")
-    Call<Resp> star(@Query("access_token") String token, @Field("access_token") String accessToken,
+    Call<Resp> star(@Query("access_token") String token,
+                    @Field("access_token") String accessToken,
                     @Field("type") String type, // 点赞类型  1-寄养 2-朋友圈 3-公益
-                    @Field("uid") String uid, @Field("like_id") String likeId);// 对应的帖子id (朋友圈id,公益id)
+                    @Field("uid") String uid,
+                    @Field("like_id") String likeId);// 对应的帖子id (朋友圈id,公益id)
 
     @FormUrlEncoded
     @POST("v1/post/comment")
     Call<Resp> comment(@Query("access_token") String token,
-                       @Field("access_token") String accessToken, @Field("type") String type,
-                       // 点赞类型  1-寄养 2-朋友圈 3-公益
+                       @Field("access_token") String accessToken,
+                       @Field("type") String type, // 点赞类型  1-寄养 2-朋友圈 3-公益
                        @Field("uid") String uid, @Field("post_id") String postId, // 帖子id
                        @Field("comment") String content);
 
     @FormUrlEncoded
     @POST("v1/post/collect")
     Call<Resp> collect(@Query("access_token") String token,
-                       @Field("access_token") String accessToken, @Field("type") String type,
-                       // 点赞类型  1-寄养 2-朋友圈 3-公益
-                       @Field("uid") String uid, @Field("post_id") String postId); // 帖子id
+                       @Field("access_token") String accessToken,
+                       @Field("type") String type, // 点赞类型  1-寄养 2-朋友圈 3-公益
+                       @Field("uid") String uid,
+                       @Field("post_id") String postId); // 帖子id
 
     @Multipart
     @POST("v1/post/upload")
-    Call<Resp> uploadPhoto(
-        @Query("access_token") String token,
-        @Part("access_token") RequestBody accessToken,
-        @Part("uid") RequestBody uid,
-        @Part MultipartBody.Part file);
+    Call<Resp> uploadPhoto(@Query("access_token") String token,
+                           @Part("access_token") RequestBody accessToken,
+                           @Part("uid") RequestBody uid,
+                           @Part MultipartBody.Part file);
 
     @FormUrlEncoded
     @POST("v1/post/add")
@@ -93,9 +105,71 @@ public interface RequestService {
                     @Field("content") String content,
                     @Field("photoUrl") String photoUrl);
 
-    @GET("v1/user/detail")
-    Call<Resp> getUserDetail(@Query("access_token") String token, @Query("uid") String uid);
+    @GET("v1/collection")
+    Call<Resp> getMyFavList(@Query("access_token") String token,
+                            @Query("uid") String uid,
+                            @Query("type") String type);
 
+    @GET("v1/collect/cancel")
+    Call<Resp> cancelCollection(@Query("access_token") String token,
+                             @Query("id") String id);
+
+
+    // ------------------------------- post -------------------------------------
+    @FormUrlEncoded
+    @POST("v1/post/list")
+    Call<Resp> getHostList(@Query("access_token") String token,
+                           @Field("access_token") String accessToken,
+                           @Field("uid") String uid);
+
+    @GET("v1/my/post")
+    Call<Resp> getMyPostList(@Query("access_token") String token,
+                             @Query("uid") String uid);
+
+    @GET("v1/post/delete")
+    Call<Resp> deletePost(@Query("access_token") String token,
+                          @Query("id") String postId);
+
+
+    // ------------------------------- welfare -------------------------------------
+    @FormUrlEncoded
+    @POST("v1/welfare/list")
+    Call<Resp> getWelfareList(@Query("access_token") String token,
+                              @Field("access_token") String accessToken,
+                              @Field("uid") String uid);
+
+    @GET("v1/my/welfare")
+    Call<Resp> getMyWelfareList(@Query("access_token") String token,
+                                @Query("uid") String uid);
+
+    @GET("v1/welfare/delete")
+    Call<Resp> deleteWelfare(@Query("access_token") String token,
+                             @Query("id") String welfareId);
+
+
+    // ------------------------------- moment -------------------------------------
+    @FormUrlEncoded
+    @POST("v1/moment/list")
+    Call<Resp> getMomentList(@Query("access_token") String token,
+                             @Field("access_token") String accessToken,
+                             @Field("uid") String uid);
+
+    @GET("v1/my/moment")
+    Call<Resp> getMyMomentList(@Query("access_token") String token,
+                               @Query("uid") String uid);
+
+    @GET("v1/moment/delete")
+    Call<Resp> deleteMoment(@Query("access_token") String token,
+                            @Query("id") String momentId);
+
+
+    // ------------------------------- nearby -------------------------------------
+    @GET("v1/walk/list/1")
+    Call<Resp> getNearbyList(@Query("access_token") String token,
+                             @Query("access_token") String accessToken,
+                             @Query("uid") String uid);
+
+    // ------------------------------- letter -------------------------------------
     @FormUrlEncoded
     @POST("v1/letter/list")
     Call<Resp> getLetterList(@Query("access_token") String token,
@@ -116,38 +190,4 @@ public interface RequestService {
                         @Field("from") String fromUid,
                         @Field("to") String toUid,
                         @Field("content") String content);
-
-    @FormUrlEncoded
-    @POST("v1/welfare/list")
-    Call<Resp> getWelfareList(@Query("access_token") String token,
-                              @Field("access_token") String accessToken,
-                              @Field("uid") String uid);
-
-    @FormUrlEncoded
-    @POST("v1/moment/list")
-    Call<Resp> getMomentList(@Query("access_token") String token,
-                             @Field("access_token") String accessToken,
-                             @Field("uid") String uid);
-
-    @GET("v1/my/welfare")
-    Call<Resp> getMyWelfareList(@Query("access_token") String token,
-                                @Query("uid") String uid);
-
-    @GET("v1/my/post")
-    Call<Resp> getMyPostList(@Query("access_token") String token,
-                             @Query("uid") String uid);
-
-    @GET("v1/my/moment")
-    Call<Resp> getMyMomentList(@Query("access_token") String token,
-                               @Query("uid") String uid);
-
-    @GET("v1/collection")
-    Call<Resp> getMyFavList(@Query("access_token") String token,
-                            @Query("uid") String uid,
-                            @Query("type") String type);
-
-    @GET("v1/walk/list/1")
-    Call<Resp> getNearbyList(@Query("access_token") String token,
-                             @Query("access_token") String accessToken,
-                             @Query("uid") String uid);
 }

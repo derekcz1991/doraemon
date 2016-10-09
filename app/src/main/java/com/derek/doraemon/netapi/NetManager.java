@@ -143,4 +143,20 @@ public class NetManager {
     public Call<Resp> getNearbyList() {
         return service.getNearbyList(token, token, String.valueOf(uid));
     }
+
+    public Call<Resp> deletePublishedItem(int type, long id) {
+        switch (type) {
+            case 1:
+                return service.deletePost(token, String.valueOf(id));
+            case 2:
+                return service.deleteWelfare(token, String.valueOf(id));
+            case 3:
+                return service.deleteMoment(token, String.valueOf(id));
+        }
+        return null;
+    }
+
+    public Call<Resp> cancelCollection(long id) {
+        return service.cancelCollection(token, String.valueOf(id));
+    }
 }

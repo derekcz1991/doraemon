@@ -24,7 +24,16 @@ public class FavListAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     @Override
     public BaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return new FavViewHolder(
-            LayoutInflater.from(parent.getContext()).inflate(R.layout.view_holder_fav, null));
+            LayoutInflater.from(parent.getContext()).inflate(R.layout.view_holder_fav, null),
+            new FavViewHolder.Callback() {
+                @Override
+                public void onItemDelete(int position) {
+                    if (position < favItems.size()) {
+                        favItems.remove(position);
+                        notifyItemRemoved(position);
+                    }
+                }
+            });
     }
 
     @Override
@@ -36,4 +45,5 @@ public class FavListAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     public int getItemCount() {
         return favItems == null ? 0 : favItems.size();
     }
+
 }

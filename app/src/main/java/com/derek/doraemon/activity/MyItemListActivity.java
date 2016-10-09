@@ -70,7 +70,7 @@ public class MyItemListActivity extends BaseTitleActivity {
 
     private void initData() {
         items = new ArrayList<>();
-        myItemListAdapter = new MyItemListAdapter(items);
+        myItemListAdapter = new MyItemListAdapter(items, type);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(myItemListAdapter);
 

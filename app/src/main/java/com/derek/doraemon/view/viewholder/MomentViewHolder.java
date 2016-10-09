@@ -71,7 +71,7 @@ public class MomentViewHolder extends BaseViewHolder {
     @OnClick(R.id.likeBtn)
     public void star() {
         NetManager.getInstance()
-            .star("1", momentItem.getId())
+            .star("2", momentItem.getId())
             .enqueue(new RequestCallback(new RequestCallback.Callback() {
                 @Override
                 public void success(Resp resp) {
