@@ -65,6 +65,14 @@ public interface RequestService {
     Call<Resp> getStarUserList(@Query("access_token") String token,
                                @Query("uid") String uid);
 
+    @FormUrlEncoded
+    @POST("v1/locate")
+    Call<Resp> locate(@Query("access_token") String token,
+                      @Field("access_token") String accessToken,
+                      @Field("uid") String uid,
+                      @Field("long") double longitude,
+                      @Field("lat") double latitude);
+
     // ------------------------------- common -------------------------------------
     @FormUrlEncoded
     @POST("v1/post/like")
@@ -112,7 +120,7 @@ public interface RequestService {
 
     @GET("v1/collect/cancel")
     Call<Resp> cancelCollection(@Query("access_token") String token,
-                             @Query("id") String id);
+                                @Query("id") String id);
 
 
     // ------------------------------- post -------------------------------------

@@ -10,7 +10,7 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.derek.doraemon.R;
-import com.derek.doraemon.fragment.HeartFragment;
+import com.derek.doraemon.fragment.WelfareFragment;
 import com.derek.doraemon.fragment.HomeFragment;
 import com.derek.doraemon.fragment.HomeTabFragment;
 import com.derek.doraemon.fragment.MeFragment;
@@ -30,10 +30,12 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_home);
 
         initView(savedInstanceState);
         setTabSelected(R.id.tab_home);
+
     }
 
     private void initView(Bundle savedInstanceState) {
@@ -139,7 +141,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
                     fragment = new HomeFragment();
                     break;
                 case R.id.tab_heart:
-                    fragment = new HeartFragment();
+                    fragment = new WelfareFragment();
                     break;
                 case R.id.tab_nearby:
                     fragment = new NearbyFragment();
@@ -154,4 +156,5 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
             return fragment;
         }
     }
+
 }

@@ -159,4 +159,8 @@ public class NetManager {
     public Call<Resp> cancelCollection(long id) {
         return service.cancelCollection(token, String.valueOf(id));
     }
+
+    public Call<Resp> locate(double[] location) {
+        return service.locate(token, token, String.valueOf(uid), location[1], location[0]);
+    }
 }

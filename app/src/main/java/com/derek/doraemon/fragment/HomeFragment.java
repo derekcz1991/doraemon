@@ -10,16 +10,19 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.derek.doraemon.R;
 import com.derek.doraemon.activity.PublishActivity;
 import com.derek.doraemon.adapter.HostListAdapter;
 import com.derek.doraemon.adapter.StarUserAdapter;
 import com.derek.doraemon.model.HostItem;
+import com.derek.doraemon.model.Location;
 import com.derek.doraemon.model.StarUser;
 import com.derek.doraemon.netapi.NetManager;
 import com.derek.doraemon.netapi.RequestCallback;
 import com.derek.doraemon.netapi.Resp;
+import com.derek.doraemon.utils.CommonUtils;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -46,6 +49,8 @@ public class HomeFragment extends HomeTabFragment {
     FloatingActionButton searchFab;
     @BindView(R.id.cameraFab)
     FloatingActionButton cameraFab;
+    @BindView(R.id.locationText)
+    TextView locationText;
 
     private Gson gson;
 
@@ -63,9 +68,31 @@ public class HomeFragment extends HomeTabFragment {
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         ButterKnife.bind(this, view);
+
+        updateLocation();
         initData();
         refresh();
         return view;
+    }
+
+    private void updateLocation() {
+        double[] latlong = CommonUtils.getLocation();
+        if (latlong[0] != -1) {
+            NetManager.getInstance().locate(latlong).enqueue(
+                new RequestCallback(new RequestCallback.Callback() {
+                    @Override
+                    public void success(Resp resp) {
+                        Gson gson = new Gson();
+                        Location location = gson.fromJson(gson.toJsonTree(resp.getData()), Location.class);
+                        locationText.setText(location.getDistrict());
+                    }
+
+                    @Override
+                    public boolean fail(Resp resp) {
+                        return false;
+                    }
+                }));
+        }
     }
 
     private void initData() {
@@ -149,4 +176,5 @@ public class HomeFragment extends HomeTabFragment {
     public void onPageInto(BaseFragment fromFragment) {
 
     }
+
 }
