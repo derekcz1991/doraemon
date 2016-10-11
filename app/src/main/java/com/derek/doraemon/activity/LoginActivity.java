@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
-import android.view.View;
 import android.widget.Toast;
 
 import com.derek.doraemon.MyApplication;
@@ -16,8 +15,16 @@ import com.derek.doraemon.netapi.NetManager;
 import com.derek.doraemon.netapi.RequestCallback;
 import com.derek.doraemon.netapi.Resp;
 import com.derek.doraemon.utils.SharePreferenceHelper;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
 import com.google.gson.Gson;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -25,30 +32,46 @@ import retrofit2.Response;
 /**
  * Created by derek on 16/7/12.
  */
-public class LoginActivity extends BaseActivity implements View.OnClickListener {
+public class LoginActivity extends BaseActivity {
+    private String TAG = this.getClass().getSimpleName();
+
+    @BindView(R.id.loginBtn)
+    LoginButton loginButton;
+    private CallbackManager callbackManager;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        findViewById(R.id.wechatBtn).setOnClickListener(this);
-        findViewById(R.id.fbBtn).setOnClickListener(this);
-        findViewById(R.id.wbBtn).setOnClickListener(this);
-        findViewById(R.id.twBtn).setOnClickListener(this);
+        ButterKnife.bind(this);
+        setLoginButton();
     }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.wechatBtn:
-                getToken();
-                break;
-            case R.id.fbBtn:
-            case R.id.wbBtn:
-            case R.id.twBtn:
-                register();
-                break;
-        }
+    private void setLoginButton() {
+        loginButton.setReadPermissions("email");
+        // Callback registration
+        callbackManager = CallbackManager.Factory.create();
+        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                Log.d(TAG, loginResult.toString());
+            }
+
+            @Override
+            public void onCancel() {
+                Log.d(TAG, "facebook login cancel");
+            }
+
+            @Override
+            public void onError(FacebookException exception) {
+                Log.d(TAG, "facebook onError", exception);
+            }
+        });
+    }
+
+    @OnClick(R.id.wechatBtn)
+    public void onWechatClick() {
+        getToken();
     }
 
     private void getToken() {
@@ -110,5 +133,11 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                     return false;
                 }
             }));
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        callbackManager.onActivityResult(requestCode, resultCode, data);
     }
 }
