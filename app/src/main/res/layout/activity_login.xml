@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
     >
+
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -28,6 +29,7 @@
         android:textColor="#ffffff"
         android:textSize="18dp"
         />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -37,6 +39,7 @@
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
         >
+
         <ImageView
             android:id="@+id/wechatBtn"
             android:layout_width="0dp"
@@ -44,6 +47,7 @@
             android:layout_weight="1"
             android:src="@drawable/icon_wechat"
             />
+
         <ImageView
             android:id="@+id/fbBtn"
             android:layout_width="0dp"
@@ -51,6 +55,7 @@
             android:layout_weight="1"
             android:src="@drawable/icon_fb"
             />
+
         <ImageView
             android:id="@+id/wbBtn"
             android:layout_width="0dp"
@@ -58,8 +63,9 @@
             android:layout_weight="1"
             android:src="@drawable/icon_wb"
             />
+
         <ImageView
-            android:id="@+id/twBtn"
+            android:id="@+id/twitterBtn"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_weight="1"
@@ -67,11 +73,4 @@
             />
     </LinearLayout>
 
-    <com.facebook.login.widget.LoginButton
-        android:id="@+id/loginBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="30dp"
-        android:layout_marginBottom="30dp" />
 </RelativeLayout>

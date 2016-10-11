@@ -15,6 +15,7 @@ import com.derek.doraemon.netapi.RequestCallback;
 import com.derek.doraemon.netapi.Resp;
 import com.derek.doraemon.utils.CommonUtils;
 import com.derek.doraemon.view.CircleImageView;
+import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
@@ -56,10 +57,14 @@ public class MomentViewHolder extends BaseViewHolder {
             petImageView.setVisibility(View.VISIBLE);
             Picasso.with(context)
                 .load(NetManager.getInstance().getHost() + momentItem.getPhotoUrl())
+                .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE)
+                .resize(200, 200)
+                //.centerCrop()
                 .into(petImageView);
         }
         Picasso.with(context)
             .load(NetManager.getInstance().getHost() + momentItem.getAvatarUrl())
+            .resize(100, 100)
             .into(userImageView);
         nameText.setText(momentItem.getUserName());
         timeText.setText(momentItem.getCreatedAt());

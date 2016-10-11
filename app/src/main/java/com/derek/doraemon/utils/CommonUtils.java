@@ -1,5 +1,6 @@
 package com.derek.doraemon.utils;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.location.Criteria;
 import android.location.Location;
@@ -23,6 +24,12 @@ public class CommonUtils {
 
     public static void toast(String msg) {
         Toast.makeText(MyApplication.getContext(), msg, Toast.LENGTH_SHORT).show();
+    }
+
+    public static void showProgress(Context context, String msg) {
+        ProgressDialog progressDialog = new ProgressDialog(context);
+        progressDialog.setMessage(msg);
+        progressDialog.show();
     }
 
     public static double[] getLocation() {

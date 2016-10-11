@@ -15,6 +15,7 @@ import com.derek.doraemon.netapi.RequestCallback;
 import com.derek.doraemon.netapi.Resp;
 import com.derek.doraemon.utils.CommonUtils;
 import com.derek.doraemon.view.CircleImageView;
+import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
@@ -61,9 +62,13 @@ public class WelfareItemViewHolder extends BaseViewHolder {
         locationText.setText(welfareItem.getDistrict());
         Picasso.with(context)
             .load(NetManager.getInstance().getHost() + welfareItem.getPhotoUrl())
+            .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE)
+            .resize(300, 100)
+            //.centerCrop()
             .into(wallPaper);
         Picasso.with(context)
             .load(NetManager.getInstance().getHost() + welfareItem.getAvatarUrl())
+            .resize(100, 100)
             .into(userImageView);
         nameText.setText(welfareItem.getUserName());
         if (welfareItem.getKind() == 1) {

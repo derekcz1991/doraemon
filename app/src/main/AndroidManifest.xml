@@ -28,6 +28,11 @@
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id"/>
 
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="foJvwgdJreZtPkfKOXiQBV9nJ"
+            />
+
         <activity
             android:name="com.facebook.FacebookActivity"
             android:configChanges=

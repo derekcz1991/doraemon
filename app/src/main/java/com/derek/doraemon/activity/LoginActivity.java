@@ -8,19 +8,31 @@ import android.widget.Toast;
 
 import com.derek.doraemon.MyApplication;
 import com.derek.doraemon.R;
+import com.derek.doraemon.constants.Constants;
 import com.derek.doraemon.constants.SharePrefsConstants;
 import com.derek.doraemon.model.Token;
 import com.derek.doraemon.model.User;
 import com.derek.doraemon.netapi.NetManager;
 import com.derek.doraemon.netapi.RequestCallback;
 import com.derek.doraemon.netapi.Resp;
+import com.derek.doraemon.utils.CommonUtils;
 import com.derek.doraemon.utils.SharePreferenceHelper;
+import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
+import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.google.gson.Gson;
+import com.twitter.sdk.android.core.Result;
+import com.twitter.sdk.android.core.TwitterCore;
+import com.twitter.sdk.android.core.TwitterException;
+import com.twitter.sdk.android.core.TwitterSession;
+import com.twitter.sdk.android.core.identity.TwitterAuthClient;
+import com.twitter.sdk.android.core.identity.TwitterLoginButton;
+
+import java.util.Arrays;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -35,43 +47,81 @@ import retrofit2.Response;
 public class LoginActivity extends BaseActivity {
     private String TAG = this.getClass().getSimpleName();
 
-    @BindView(R.id.loginBtn)
-    LoginButton loginButton;
+    // facebook
     private CallbackManager callbackManager;
+    private String facebookUid;
+    // twitter
+    private TwitterAuthClient twitterAuthClient;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
-        setLoginButton();
-    }
-
-    private void setLoginButton() {
-        loginButton.setReadPermissions("email");
-        // Callback registration
-        callbackManager = CallbackManager.Factory.create();
-        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
-            @Override
-            public void onSuccess(LoginResult loginResult) {
-                Log.d(TAG, loginResult.toString());
-            }
-
-            @Override
-            public void onCancel() {
-                Log.d(TAG, "facebook login cancel");
-            }
-
-            @Override
-            public void onError(FacebookException exception) {
-                Log.d(TAG, "facebook onError", exception);
-            }
-        });
+        //CommonUtils.showProgress(this, "登录中...");
     }
 
     @OnClick(R.id.wechatBtn)
     public void onWechatClick() {
         getToken();
+    }
+
+    @OnClick(R.id.fbBtn)
+    public void onFacebookClick() {
+        AccessToken accessToken = AccessToken.getCurrentAccessToken();
+        if (accessToken == null) {
+            callbackManager = CallbackManager.Factory.create();
+            LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+                @Override
+                public void onSuccess(LoginResult loginResult) {
+                    facebookUid = loginResult.getAccessToken().getUserId();
+                    SharePreferenceHelper.getInstance().put(SharePrefsConstants.PLATFORM, Constants.PLATFORM_FACEBOOK);
+                    SharePreferenceHelper.getInstance().put(SharePrefsConstants.PLATFORM_USER_ID, facebookUid);
+                    Log.d(TAG, "facebookUid = " + facebookUid);
+                }
+
+                @Override
+                public void onCancel() {
+                    Log.d(TAG, "facebook login cancel");
+                }
+
+                @Override
+                public void onError(FacebookException exception) {
+                    CommonUtils.toast("facebook登录失败, 请重试");
+                    Log.d(TAG, "facebook onError", exception);
+                }
+            });
+            LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile"));
+        } else {
+            Log.d(TAG, "facebookUid = " + facebookUid);
+        }
+    }
+
+    @OnClick(R.id.twitterBtn)
+    public void onTwitterClick() {
+        TwitterSession session = TwitterCore.getInstance().getSessionManager().getActiveSession();
+        if (session == null) {
+            getTwitterAuthClient().authorize(this, new com.twitter.sdk.android.core.Callback<TwitterSession>() {
+                @Override
+                public void success(Result<TwitterSession> result) {
+                    // The TwitterSession is also available through:
+                    // Twitter.getInstance().core.getSessionManager().getActiveSession()
+                    TwitterSession session = result.data;
+                    // TODO: Remove toast and use the TwitterSession's userID
+                    // with your app's user model
+                    String msg = "@" + session.getUserName() + " logged in! (#" + session.getUserId() + ")";
+                    Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
+                }
+
+                @Override
+                public void failure(TwitterException exception) {
+                    Log.d("TwitterKit", "Login with Twitter failure", exception);
+                }
+            });
+        } else {
+            String msg = "@" + session.getUserName() + " logged in! (#" + session.getUserId() + ")";
+            Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
+        }
     }
 
     private void getToken() {
@@ -135,9 +185,26 @@ public class LoginActivity extends BaseActivity {
             }));
     }
 
+    private TwitterAuthClient getTwitterAuthClient() {
+        if (twitterAuthClient == null) {
+            synchronized (TwitterLoginButton.class) {
+                if (twitterAuthClient == null) {
+                    twitterAuthClient = new TwitterAuthClient();
+                }
+            }
+        }
+        return twitterAuthClient;
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        callbackManager.onActivityResult(requestCode, resultCode, data);
+        if (callbackManager != null) {
+            callbackManager.onActivityResult(requestCode, resultCode, data);
+        }
+        if (requestCode == getTwitterAuthClient().getRequestCode()) {
+            getTwitterAuthClient().onActivityResult(requestCode, resultCode, data);
+        }
     }
+
 }
