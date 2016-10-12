@@ -93,6 +93,7 @@ public class LoginActivity extends BaseActivity {
             });
             LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile"));
         } else {
+            facebookUid = accessToken.getUserId();
             Log.d(TAG, "facebookUid = " + facebookUid);
         }
     }

@@ -98,21 +98,6 @@ public interface RequestService {
                        @Field("uid") String uid,
                        @Field("post_id") String postId); // 帖子id
 
-    @Multipart
-    @POST("v1/post/upload")
-    Call<Resp> uploadPhoto(@Query("access_token") String token,
-                           @Part("access_token") RequestBody accessToken,
-                           @Part("uid") RequestBody uid,
-                           @Part MultipartBody.Part file);
-
-    @FormUrlEncoded
-    @POST("v1/post/add")
-    Call<Resp> post(@Query("access_token") String token,
-                    @Field("access_token") String accessToken,
-                    @Field("uid") String uid,
-                    @Field("content") String content,
-                    @Field("photoUrl") String photoUrl);
-
     @GET("v1/collection")
     Call<Resp> getMyFavList(@Query("access_token") String token,
                             @Query("uid") String uid,
@@ -138,6 +123,20 @@ public interface RequestService {
     Call<Resp> deletePost(@Query("access_token") String token,
                           @Query("id") String postId);
 
+    @Multipart
+    @POST("v1/post/upload")
+    Call<Resp> uploadPostPhoto(@Query("access_token") String token,
+                               @Part("access_token") RequestBody accessToken,
+                               @Part("uid") RequestBody uid,
+                               @Part MultipartBody.Part file);
+
+    @FormUrlEncoded
+    @POST("v1/post/add")
+    Call<Resp> publishPost(@Query("access_token") String token,
+                           @Field("access_token") String accessToken,
+                           @Field("uid") String uid,
+                           @Field("content") String content,
+                           @Field("photoUrl") String photoUrl);
 
     // ------------------------------- welfare -------------------------------------
     @FormUrlEncoded
@@ -154,6 +153,22 @@ public interface RequestService {
     Call<Resp> deleteWelfare(@Query("access_token") String token,
                              @Query("id") String welfareId);
 
+    @Multipart
+    @POST("v1/welfare/upload")
+    Call<Resp> uploadWelfarePhoto(@Query("access_token") String token,
+                                  @Part("access_token") RequestBody accessToken,
+                                  @Part("uid") RequestBody uid,
+                                  @Part MultipartBody.Part file);
+
+    @FormUrlEncoded
+    @POST("v1/welfare/add")
+    Call<Resp> publishWelfare(@Query("access_token") String token,
+                              @Field("access_token") String accessToken,
+                              @Field("uid") String uid,
+                              @Field("content") String content,
+                              @Field("kind") String kind,
+                              @Field("photoUrl") String photoUrl);
+
 
     // ------------------------------- moment -------------------------------------
     @FormUrlEncoded
@@ -169,6 +184,21 @@ public interface RequestService {
     @GET("v1/moment/delete")
     Call<Resp> deleteMoment(@Query("access_token") String token,
                             @Query("id") String momentId);
+
+    @Multipart
+    @POST("v1/moment/upload")
+    Call<Resp> uploadMomentPhoto(@Query("access_token") String token,
+                                  @Part("access_token") RequestBody accessToken,
+                                  @Part("uid") RequestBody uid,
+                                  @Part MultipartBody.Part file);
+
+    @FormUrlEncoded
+    @POST("v1/moment/add")
+    Call<Resp> publishMoment(@Query("access_token") String token,
+                              @Field("access_token") String accessToken,
+                              @Field("uid") String uid,
+                              @Field("content") String content,
+                              @Field("photoUrl") String photoUrl);
 
 
     // ------------------------------- nearby -------------------------------------

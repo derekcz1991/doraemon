@@ -70,6 +70,50 @@
             />
     </RelativeLayout>
 
+    <RelativeLayout
+        android:id="@+id/typeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/menuLayout"
+        android:orientation="horizontal"
+        android:padding="10dp"
+        >
+
+        <CheckedTextView
+            android:id="@+id/xcBtn"
+            android:layout_width="52dp"
+            android:layout_height="22dp"
+            android:layout_centerVertical="true"
+            android:background="@drawable/btn_xc_selector"
+            />
+
+        <CheckedTextView
+            android:id="@+id/sspBtn"
+            android:layout_width="100dp"
+            android:layout_height="22dp"
+            android:layout_centerInParent="true"
+            android:background="@drawable/btn_ssp_selector"
+            />
+
+        <CheckedTextView
+            android:id="@+id/lyBtn"
+            android:layout_width="51dp"
+            android:layout_height="22dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/btn_ly_selector"
+            />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/typeText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/typeLayout"
+        android:layout_marginLeft="15dp"
+        android:hint="选择话题分类"
+        />
+
     <ImageView
         android:id="@+id/postImg"
         android:layout_width="150dp"
@@ -86,7 +130,7 @@
         android:id="@+id/contentText"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/menuLayout"
+        android:layout_above="@id/typeText"
         android:layout_below="@id/divider"
         android:layout_toLeftOf="@id/postImg"
         android:background="@null"

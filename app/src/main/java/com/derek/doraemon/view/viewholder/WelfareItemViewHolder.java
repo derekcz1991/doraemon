@@ -35,7 +35,7 @@ public class WelfareItemViewHolder extends BaseViewHolder {
     @BindView(R.id.nameText)
     TextView nameText;
     @BindView(R.id.typeText)
-    TextView typeText;
+    ImageView typeText;
     @BindView(R.id.timeText)
     TextView timeText;
     @BindView(R.id.contentText)
@@ -72,11 +72,11 @@ public class WelfareItemViewHolder extends BaseViewHolder {
             .into(userImageView);
         nameText.setText(welfareItem.getUserName());
         if (welfareItem.getKind() == 1) {
-            typeText.setText("随手拍流浪狗");
+            typeText.setImageResource(R.drawable.btn_ssp);
         } else if (welfareItem.getKind() == 2) {
-            typeText.setText("寻宠");
+            typeText.setImageResource(R.drawable.btn_xc);
         } else if (welfareItem.getKind() == 3) {
-            typeText.setText("领养");
+            typeText.setImageResource(R.drawable.btn_ly);
         }
         timeText.setText(welfareItem.getCreatedAt());
         contentText.setText(welfareItem.getContent());

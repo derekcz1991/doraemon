@@ -169,7 +169,9 @@ public class HomeFragment extends HomeTabFragment {
 
     @OnClick(R.id.cameraFab)
     public void takeCamera() {
-        getActivity().startActivity(new Intent(getActivity(), PublishActivity.class));
+        Intent intent = new Intent(getActivity(), PublishActivity.class);
+        intent.putExtra(PublishActivity.EXTRA_TYPE, 0);
+        getActivity().startActivity(intent);
     }
 
     @Override

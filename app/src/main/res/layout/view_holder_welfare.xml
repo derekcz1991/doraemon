@@ -18,16 +18,12 @@
         android:text="罗湖区"
         />
 
-    <TextView
+    <ImageView
         android:id="@+id/typeText"
-        android:layout_width="wrap_content"
-        android:layout_height="28dp"
-        android:layout_alignParentRight="true"
-        android:background="@drawable/bg_welfare_label"
-        android:gravity="center"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:textColor="#ff614386"/>
+        android:layout_width="100dp"
+        android:layout_height="22dp"
+        android:scaleType="fitEnd"
+        android:layout_alignParentRight="true"/>
 
     <RelativeLayout
         android:id="@+id/nextPageBtn"

@@ -1,5 +1,6 @@
 package com.derek.doraemon.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.derek.doraemon.R;
+import com.derek.doraemon.activity.PublishActivity;
 import com.derek.doraemon.adapter.MomentListAdapter;
 import com.derek.doraemon.model.MomentItem;
 import com.derek.doraemon.netapi.NetManager;
@@ -23,6 +25,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by derek on 08/10/2016.
@@ -90,6 +93,13 @@ public class MomentFragment extends HomeTabFragment {
 
     private void refresh() {
         NetManager.getInstance().getMomentList().enqueue(getMomentCallback);
+    }
+
+    @OnClick(R.id.cameraFab)
+    public void takeCamera() {
+        Intent intent = new Intent(getActivity(), PublishActivity.class);
+        intent.putExtra(PublishActivity.EXTRA_TYPE, 2);
+        getActivity().startActivity(intent);
     }
 
     @Override

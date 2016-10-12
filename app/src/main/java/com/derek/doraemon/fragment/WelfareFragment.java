@@ -1,5 +1,6 @@
 package com.derek.doraemon.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -12,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.derek.doraemon.R;
+import com.derek.doraemon.activity.PublishActivity;
 import com.derek.doraemon.adapter.StarUserAdapter;
 import com.derek.doraemon.adapter.WelfareListAdapter;
 import com.derek.doraemon.model.Location;
@@ -167,7 +169,9 @@ public class WelfareFragment extends HomeTabFragment {
 
     @OnClick(R.id.cameraFab)
     public void takeCamera() {
-
+        Intent intent = new Intent(getActivity(), PublishActivity.class);
+        intent.putExtra(PublishActivity.EXTRA_TYPE, 1);
+        getActivity().startActivity(intent);
     }
 
     @Override

@@ -70,6 +70,63 @@
             />
     </RelativeLayout>
 
+    <LinearLayout
+        android:id="@+id/typeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/menuLayout"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
+        >
+
+        <CheckedTextView
+            android:id="@+id/stBtn"
+            android:layout_width="52dp"
+            android:layout_height="22dp"
+            android:layout_marginRight="15dp"
+            android:background="@drawable/btn_st_selector"
+            />
+
+        <CheckedTextView
+            android:id="@+id/pzBtn"
+            android:layout_width="51dp"
+            android:layout_height="22dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:background="@drawable/btn_pz_selector"
+            />
+
+        <CheckedTextView
+            android:id="@+id/hdBtn"
+            android:layout_width="51dp"
+            android:layout_height="22dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:background="@drawable/btn_hd_selector"
+            />
+
+        <CheckedTextView
+            android:id="@+id/mzmBtn"
+            android:layout_width="51dp"
+            android:layout_height="22dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:background="@drawable/btn_mzm_selector"
+            />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/typeText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/typeLayout"
+        android:layout_marginLeft="15dp"
+        android:hint="选择话题分类"
+        />
+
     <ImageView
         android:id="@+id/postImg"
         android:layout_width="150dp"
@@ -86,7 +143,7 @@
         android:id="@+id/contentText"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/menuLayout"
+        android:layout_above="@id/typeText"
         android:layout_below="@id/divider"
         android:layout_toLeftOf="@id/postImg"
         android:background="@null"

@@ -48,7 +48,7 @@
             android:layout_alignParentRight="true"
             android:visibility="invisible"
             android:layout_alignTop="@id/userImageView"
-            android:src="@drawable/btn_adopt2"
+            android:src="@drawable/btn_st"
             />
     </RelativeLayout>
 

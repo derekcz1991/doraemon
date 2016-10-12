@@ -12,6 +12,7 @@ import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.CheckedTextView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -38,9 +39,11 @@ import okhttp3.RequestBody;
 /**
  * Created by derek on 16/8/18.
  */
-public class PublishActivity extends BaseActivity {
-    public static final String PET_FOLDER = Environment
-        .getExternalStorageDirectory() + "/doraemon/";
+public class PublishActivity extends BaseActivity implements View.OnClickListener {
+
+    public static final String EXTRA_TYPE = "type";
+    public static final String PET_FOLDER = Environment.getExternalStorageDirectory() + "/doraemon/";
+
     public static final int RESULT_CODE_OK = 100;
     private static final int PICK_FROM_CAMERA = 100;
     private static final int CROP_PHOTO = 200;
@@ -51,14 +54,34 @@ public class PublishActivity extends BaseActivity {
     @BindView(R.id.contentText)
     TextView contentText;
 
+    private TextView typeText;
+    private CheckedTextView sspCT;
+    private CheckedTextView xcCT;
+    private CheckedTextView lyCT;
+    private CheckedTextView stCT;
+    private CheckedTextView pzCT;
+    private CheckedTextView hdCT;
+    private CheckedTextView mzmCT;
+
     private Uri mImageCaptureUri;
     private boolean isPhotoSelected;
     private File photoFile;
 
+    private int type;
+    private int kind = -1;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_publish);
+        type = getIntent().getIntExtra(EXTRA_TYPE, 0);
+
+        if (type == 0) {
+            setContentView(R.layout.activity_publish);
+        } else if (type == 1) {
+            setContentView(R.layout.activity_publish_welfare);
+        } else if (type == 2) {
+            setContentView(R.layout.activity_publish_moment);
+        }
 
         ButterKnife.bind(this);
 
@@ -66,18 +89,41 @@ public class PublishActivity extends BaseActivity {
         if (!file.exists()) {
             file.mkdir();
         }
-
         mImageCaptureUri = Uri.fromFile(new File(PET_FOLDER + "temp.jpg"));
+
+        if (type == 1) {
+            typeText = (TextView) findViewById(R.id.typeText);
+            sspCT = (CheckedTextView) findViewById(R.id.sspBtn);
+            xcCT = (CheckedTextView) findViewById(R.id.xcBtn);
+            lyCT = (CheckedTextView) findViewById(R.id.lyBtn);
+            sspCT.setOnClickListener(this);
+            xcCT.setOnClickListener(this);
+            lyCT.setOnClickListener(this);
+        } else if (type == 2) {
+            typeText = (TextView) findViewById(R.id.typeText);
+            stCT = (CheckedTextView) findViewById(R.id.stBtn);
+            pzCT = (CheckedTextView) findViewById(R.id.pzBtn);
+            hdCT = (CheckedTextView) findViewById(R.id.hdBtn);
+            mzmCT = (CheckedTextView) findViewById(R.id.mzmBtn);
+            stCT.setOnClickListener(this);
+            pzCT.setOnClickListener(this);
+            hdCT.setOnClickListener(this);
+            mzmCT.setOnClickListener(this);
+        }
     }
 
     @OnClick(R.id.pubBtn)
     public void publish() {
         if (TextUtils.isEmpty(contentText.getText().toString())) {
-            CommonUtils.toast("写点什么...");
+            CommonUtils.toast("写点什么");
             return;
         }
         if (!isPhotoSelected) {
-            CommonUtils.toast("选个照片吧...");
+            CommonUtils.toast("选个照片吧");
+            return;
+        }
+        if (type == 1 && kind == -1) {
+            CommonUtils.toast("请选择话题分类");
             return;
         }
 
@@ -88,11 +134,11 @@ public class PublishActivity extends BaseActivity {
         MultipartBody.Part body =
             MultipartBody.Part.createFormData("photo", photoFile.getName(), requestFile);
 
-        NetManager.getInstance().uploadPhoto(body).enqueue(
+        NetManager.getInstance().uploadPhoto(body, type).enqueue(
             new RequestCallback(new RequestCallback.Callback() {
                 @Override
                 public void success(Resp resp) {
-                    NetManager.getInstance().post(contentText.getText().toString(), (String) resp.getData()).enqueue(
+                    NetManager.getInstance().post(contentText.getText().toString(), (String) resp.getData(), type, kind).enqueue(
                         new RequestCallback(new RequestCallback.Callback() {
                             @Override
                             public void success(Resp resp) {
@@ -144,24 +190,61 @@ public class PublishActivity extends BaseActivity {
             PICK_FROM_FILE);
     }
 
-    @OnClick(R.id.adoptBtn)
-    public void checkAdopt() {
-
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.sspBtn:
+                resetWelfareType();
+                sspCT.setChecked(true);
+                typeText.setText("选择话题分类: 随手拍");
+                kind = 1;
+                break;
+            case R.id.xcBtn:
+                resetWelfareType();
+                xcCT.setChecked(true);
+                typeText.setText("选择话题分类: 寻宠");
+                kind = 2;
+                break;
+            case R.id.lyBtn:
+                resetWelfareType();
+                lyCT.setChecked(true);
+                typeText.setText("选择话题分类: 领养");
+                kind = 3;
+                break;
+            case R.id.stBtn:
+                resetMomentType();
+                stCT.setChecked(true);
+                typeText.setText("选择话题分类: 晒图");
+                break;
+            case R.id.pzBtn:
+                resetMomentType();
+                pzCT.setChecked(true);
+                typeText.setText("选择话题分类: 配种");
+                break;
+            case R.id.hdBtn:
+                resetMomentType();
+                hdCT.setChecked(true);
+                typeText.setText("选择话题分类: 活动");
+                break;
+            case R.id.mzmBtn:
+                resetMomentType();
+                mzmCT.setChecked(true);
+                typeText.setText("选择话题分类: 墓志铭");
+                break;
+        }
     }
 
-    @OnClick(R.id.breedBtn)
-    public void checkBreed() {
-
+    private void resetWelfareType() {
+        sspCT.setChecked(false);
+        xcCT.setChecked(false);
+        lyCT.setChecked(false);
     }
 
-    @OnClick(R.id.findBtn)
-    public void checkFind() {
-
-    }
-
-    @OnClick(R.id.qaBtn)
-    public void checkQa() {
-
+    private void resetMomentType() {
+        stCT.setChecked(false);
+        pzCT.setChecked(false);
+        hdCT.setChecked(false);
+        mzmCT.setChecked(false);
     }
 
     private void doCrop() {
@@ -181,8 +264,8 @@ public class PublishActivity extends BaseActivity {
             intent.setData(mImageCaptureUri);
 
             intent.putExtra("crop", "true");
-            intent.putExtra("outputX", 400);
-            intent.putExtra("outputY", 400);
+            intent.putExtra("outputX", 300);
+            intent.putExtra("outputY", 100);
             intent.putExtra("aspectX", 3);
             intent.putExtra("aspectY", 1);
             intent.putExtra("scale", true);

@@ -90,14 +90,30 @@ public class NetManager {
         return service.collect(token, token, type, String.valueOf(uid), String.valueOf(postId));
     }
 
-    public Call<Resp> uploadPhoto(MultipartBody.Part body) {
-        return service.uploadPhoto(token,
-            RequestBody.create(MediaType.parse("multipart/form-data"), token),
-            RequestBody.create(MediaType.parse("multipart/form-data"), String.valueOf(uid)), body);
+    public Call<Resp> uploadPhoto(MultipartBody.Part body, int type) {
+        if (type == 0) {
+            return service.uploadPostPhoto(token,
+                RequestBody.create(MediaType.parse("multipart/form-data"), token),
+                RequestBody.create(MediaType.parse("multipart/form-data"), String.valueOf(uid)), body);
+        } else if (type == 1) {
+            return service.uploadWelfarePhoto(token,
+                RequestBody.create(MediaType.parse("multipart/form-data"), token),
+                RequestBody.create(MediaType.parse("multipart/form-data"), String.valueOf(uid)), body);
+        } else {
+            return service.uploadMomentPhoto(token,
+                RequestBody.create(MediaType.parse("multipart/form-data"), token),
+                RequestBody.create(MediaType.parse("multipart/form-data"), String.valueOf(uid)), body);
+        }
     }
 
-    public Call<Resp> post(String content, String photoUrl) {
-        return service.post(token, token, String.valueOf(uid), content, photoUrl);
+    public Call<Resp> post(String content, String photoUrl, int type, int kind) {
+        if (type == 0) {
+            return service.publishPost(token, token, String.valueOf(uid), content, photoUrl);
+        } else if (type == 1) {
+            return service.publishWelfare(token, token, String.valueOf(uid), content, String.valueOf(kind), photoUrl);
+        } else {
+            return service.publishMoment(token, token, String.valueOf(uid), content, photoUrl);
+        }
     }
 
     public Call<Resp> getUserDetail(long uid) {
