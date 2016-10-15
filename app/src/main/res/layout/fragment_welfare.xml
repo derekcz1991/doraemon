@@ -42,6 +42,14 @@
                 app:layout_collapseMode="parallax"
                 app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed"
                 />
+
+            <TextView
+                android:id="@+id/locationText"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:textColor="#ffffff"
+                android:textSize="20sp"/>
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
 
@@ -130,7 +138,7 @@
         android:layout_gravity="right|bottom"
         android:layout_marginBottom="80dp"
         android:layout_marginRight="@dimen/fab_margin"
-        android:src="@drawable/icon_camera"
+        android:src="@drawable/btn_class"
         />
 
     <android.support.design.widget.FloatingActionButton

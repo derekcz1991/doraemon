@@ -29,7 +29,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="12dp"
-            android:src="@drawable/btn_map"/>
+            android:src="@drawable/btn_list"/>
     </RelativeLayout>
 
     <RelativeLayout
@@ -46,5 +46,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
         </android.support.v4.widget.SwipeRefreshLayout>
+
+        <com.baidu.mapapi.map.MapView
+            android:id="@+id/bmapView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clickable="true" />
     </RelativeLayout>
 </LinearLayout>

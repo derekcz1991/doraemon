@@ -65,7 +65,7 @@ public class WelfareFragment extends HomeTabFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_home, container, false);
+        View view = inflater.inflate(R.layout.fragment_welfare, container, false);
         ButterKnife.bind(this, view);
 
         updateLocation();
@@ -164,6 +164,11 @@ public class WelfareFragment extends HomeTabFragment {
 
     @OnClick(R.id.searchFab)
     public void search() {
+
+    }
+
+    @OnClick(R.id.typeFab)
+    public void onTypeClick() {
 
     }
 

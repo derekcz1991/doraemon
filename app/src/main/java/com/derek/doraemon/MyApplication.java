@@ -3,6 +3,7 @@ package com.derek.doraemon;
 import android.app.Application;
 import android.content.Context;
 
+import com.baidu.mapapi.SDKInitializer;
 import com.derek.doraemon.constants.SharePrefsConstants;
 import com.derek.doraemon.utils.SharePreferenceHelper;
 import com.facebook.FacebookSdk;
@@ -33,6 +34,9 @@ public class MyApplication extends Application {
         // twitter
         TwitterAuthConfig authConfig = new TwitterAuthConfig("foJvwgdJreZtPkfKOXiQBV9nJ", "ZFiugQJDKidG6eYMFJh3h6aVvhGAnTNfSBX449u1q6CN9BXZoP");
         Fabric.with(this, new TwitterCore(authConfig));
+
+        // baidu map
+        SDKInitializer.initialize(getApplicationContext());
     }
 
     public static Context getContext() {
