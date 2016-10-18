@@ -1,6 +1,8 @@
 package com.derek.doraemon.netapi;
 
+import com.derek.doraemon.constants.Constants;
 import com.derek.doraemon.model.Token;
+import com.derek.doraemon.model.WechatResp;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -16,6 +18,7 @@ public class NetManager {
     private final static String host = "http://pet.tazine.com";
     private static NetManager instance;
     private static RequestService service;
+    private static OtherRequestService otherService;
     private String token;
     private long uid;
 
@@ -29,6 +32,11 @@ public class NetManager {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
             service = retrofit.create(RequestService.class);
+
+            Retrofit otherRetrofit = new Retrofit.Builder().baseUrl("https://api.weixin.qq.com/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+            otherService = otherRetrofit.create(OtherRequestService.class);
         }
         return instance;
     }
@@ -63,9 +71,13 @@ public class NetManager {
         return service.login(token, token, "derekcz1991@gmail.com", "123");
     }
 
+    public Call<Resp> thirdPartyLogin(String platform, String openId) {
+        return service.thirdPartyLogin(platform, openId);
+    }
+
     public Call<Resp> completeUserInfo(String sex, String petType, String petBreed, String petName,
                                        String petAge, String nickName, String profession, String constellation, String intro) {
-        return service.completeUserInfo(token, token, sex, petType, petBreed, petName, petAge,
+        return service.completeUserInfo(token, token, String.valueOf(uid), sex, petType, petBreed, petName, petAge,
             nickName, profession, constellation, intro);
     }
 
@@ -178,5 +190,15 @@ public class NetManager {
 
     public Call<Resp> locate(double[] location) {
         return service.locate(token, token, String.valueOf(uid), location[1], location[0]);
+    }
+
+    public Call<Resp> uploadAvatar(MultipartBody.Part body) {
+        return service.uploadAvatar(token,
+            RequestBody.create(MediaType.parse("multipart/form-data"), token),
+            RequestBody.create(MediaType.parse("multipart/form-data"), String.valueOf(uid)), body);
+    }
+
+    public Call<WechatResp> oauthWechat(String code, String grantType) {
+        return otherService.getWechatToken(Constants.APP_ID, Constants.SECRET_ID, code, grantType);
     }
 }

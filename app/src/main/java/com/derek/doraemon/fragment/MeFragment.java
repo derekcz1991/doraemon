@@ -9,10 +9,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.derek.doraemon.R;
+import com.derek.doraemon.activity.CompleteInfoActivity;
 import com.derek.doraemon.activity.FavListActivity;
 import com.derek.doraemon.activity.MessageActivity;
 import com.derek.doraemon.activity.MyItemListActivity;
-import com.derek.doraemon.activity.SignUpActivity;
 import com.derek.doraemon.model.UserDetail;
 import com.derek.doraemon.netapi.NetManager;
 import com.derek.doraemon.netapi.RequestCallback;
@@ -82,8 +82,8 @@ public class MeFragment extends HomeTabFragment {
 
     @OnClick(R.id.editBtn)
     public void editProfile() {
-        Intent intent = new Intent(getActivity(), SignUpActivity.class);
-        intent.putExtra(SignUpActivity.EXTRA_USER_DETAIL, userDetail);
+        Intent intent = new Intent(getActivity(), CompleteInfoActivity.class);
+        intent.putExtra(CompleteInfoActivity.EXTRA_USER_DETAIL, userDetail);
         getActivity().startActivity(intent);
     }
 

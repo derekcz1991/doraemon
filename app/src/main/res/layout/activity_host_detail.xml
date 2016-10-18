@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout
+    android:id="@+id/coordinator_layout"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/coordinator_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ffffffff"
-    tools:context=".activity.HomeActivity"
+    tools:context=".activity.ItemDetailActivity"
     >
 
     <android.support.design.widget.AppBarLayout
@@ -58,6 +58,19 @@
         app:layout_anchorGravity="bottom|end"
         />
 
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/shareBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="80dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/icon_share"
+        app:backgroundTint="#fe826a"
+        app:fabSize="mini"
+        app:layout_anchor="@id/app_bar"
+        app:layout_anchorGravity="bottom|end"
+        />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -66,6 +79,7 @@
         android:paddingRight="15dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         >
+
         <TextView
             android:id="@+id/contentText"
             android:layout_width="match_parent"
@@ -73,6 +87,7 @@
             android:layout_marginTop="30dp"
             android:textColor="#ff000000"
             />
+
         <View
             android:id="@+id/divider"
             android:layout_width="match_parent"
@@ -89,6 +104,7 @@
             android:layout_marginTop="10dp"
             android:gravity="center_vertical"
             >
+
             <com.derek.doraemon.view.CircleImageView
                 android:id="@+id/userImageView"
                 android:layout_width="60dp"
@@ -103,6 +119,7 @@
                 android:layout_marginTop="5dp"
                 android:text="房东  :  "
                 />
+
             <TextView
                 android:id="@+id/hostNameText"
                 android:layout_width="wrap_content"
@@ -111,6 +128,7 @@
                 android:layout_toRightOf="@id/hostLabelText"
                 android:textColor="@color/colorAccent"
                 />
+
             <TextView
                 android:id="@+id/locationText"
                 android:layout_width="wrap_content"
@@ -125,20 +143,11 @@
         </RelativeLayout>
 
         <ImageView
-            android:id="@+id/applyBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="35dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="40dp"
-            android:src="@drawable/icon_apply"
-            />
-
-        <ImageView
             android:id="@+id/msgBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="35dp"
+            android:layout_width="220dp"
+            android:layout_height="40dp"
             android:layout_gravity="center"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="50dp"
             android:src="@drawable/icon_msg"
             />
     </LinearLayout>

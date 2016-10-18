@@ -7,7 +7,11 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -54,12 +58,11 @@ public class WelfareFragment extends HomeTabFragment {
     private Gson gson;
 
     private List<WelfareItem> welfareItems;
+    private List<WelfareItem> disPlayItems;
     private WelfareListAdapter welfareListAdapter;
     private RequestCallback getWelfareCallback;
 
-    private List<StarUser> starUsers;
-    private StarUserAdapter starUserAdapter;
-    private RequestCallback getStarUserCallback;
+    private int kind = 0;
 
     @Nullable
     @Override
@@ -68,6 +71,7 @@ public class WelfareFragment extends HomeTabFragment {
         View view = inflater.inflate(R.layout.fragment_welfare, container, false);
         ButterKnife.bind(this, view);
 
+        registerForContextMenu(view);
         updateLocation();
         initData();
         refresh();
@@ -98,7 +102,8 @@ public class WelfareFragment extends HomeTabFragment {
         gson = new Gson();
 
         welfareItems = new ArrayList<>();
-        welfareListAdapter = new WelfareListAdapter(welfareItems);
+        disPlayItems = new ArrayList<>();
+        welfareListAdapter = new WelfareListAdapter(disPlayItems);
         welfareRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         welfareRecyclerView.setNestedScrollingEnabled(false);
         welfareRecyclerView.setAdapter(welfareListAdapter);
@@ -112,38 +117,12 @@ public class WelfareFragment extends HomeTabFragment {
                     (List<? extends WelfareItem>) gson.fromJson(gson.toJsonTree(resp.getData()),
                         new TypeToken<List<WelfareItem>>() {
                         }.getType()));
-
-                welfareListAdapter.notifyDataSetChanged();
+                updateDisplayList();
             }
 
             @Override
             public boolean fail(Resp resp) {
                 swipeRefreshLayout.setRefreshing(false);
-                return false;
-            }
-
-        });
-
-        starUsers = new ArrayList<>();
-        starUserAdapter = new StarUserAdapter(starUsers);
-        starUserRecyclerView.setLayoutManager(
-            new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-        starUserRecyclerView.setNestedScrollingEnabled(false);
-        starUserRecyclerView.setAdapter(starUserAdapter);
-
-        getStarUserCallback = new RequestCallback(new RequestCallback.Callback() {
-            @Override
-            public void success(Resp resp) {
-                starUsers.clear();
-                starUsers.addAll(
-                    (Collection<? extends StarUser>) gson.fromJson(gson.toJsonTree(resp.getData()),
-                        new TypeToken<List<StarUser>>() {
-                        }.getType()));
-                starUserAdapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public boolean fail(Resp resp) {
                 return false;
             }
 
@@ -159,7 +138,43 @@ public class WelfareFragment extends HomeTabFragment {
 
     private void refresh() {
         NetManager.getInstance().getWelfareList().enqueue(getWelfareCallback);
-        NetManager.getInstance().getStarUser().enqueue(getStarUserCallback);
+    }
+
+    private void updateDisplayList() {
+        switch (kind) {
+            case 0:
+                disPlayItems.clear();
+                disPlayItems.addAll(welfareItems);
+                break;
+            default:
+                disPlayItems.clear();
+                for (int i = 0; i < welfareItems.size(); i++) {
+                    if (welfareItems.get(i).getKind() == kind) {
+                        disPlayItems.add(welfareItems.get(i));
+                    }
+                }
+                break;
+        }
+        welfareListAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        menu.add(1, 0, 1, "全部");
+        menu.add(1, 1, 2, "随手拍流浪狗");
+        menu.add(1, 2, 3, "寻宠");
+        menu.add(1, 3, 4, "领养");
+        super.onCreateContextMenu(menu, v, menuInfo);
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        if (kind == item.getItemId()) {
+            return false;
+        }
+        kind = item.getItemId();
+        updateDisplayList();
+        return super.onContextItemSelected(item);
     }
 
     @OnClick(R.id.searchFab)
@@ -169,7 +184,7 @@ public class WelfareFragment extends HomeTabFragment {
 
     @OnClick(R.id.typeFab)
     public void onTypeClick() {
-
+        getActivity().openContextMenu(getView());
     }
 
     @OnClick(R.id.cameraFab)

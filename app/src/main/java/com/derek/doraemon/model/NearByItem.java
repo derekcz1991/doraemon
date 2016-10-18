@@ -11,9 +11,9 @@ public class NearbyItem extends BaseModel {
     private int kind;
     private long uid;
     @SerializedName("long")
-    private String longitude;
+    private double longitude;
     @SerializedName("lat")
-    private String latitude;
+    private double latitude;
     private String country;
     private String province;
     private String city;
@@ -55,19 +55,19 @@ public class NearbyItem extends BaseModel {
         this.uid = uid;
     }
 
-    public String getLongitude() {
+    public double getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(String longitude) {
+    public void setLongitude(double longitude) {
         this.longitude = longitude;
     }
 
-    public String getLatitude() {
+    public double getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(String latitude) {
+    public void setLatitude(double latitude) {
         this.latitude = latitude;
     }
 

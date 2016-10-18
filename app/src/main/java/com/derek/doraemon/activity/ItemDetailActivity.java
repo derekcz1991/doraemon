@@ -1,5 +1,6 @@
 package com.derek.doraemon.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -26,12 +27,18 @@ public class ItemDetailActivity extends BaseActivity {
     public static final String EXTRA_ITEM = "item";
     public static final String EXTRA_TYPE = "type";
 
-    @BindView(R.id.wallPaper) ImageView wallPaper;
-    @BindView(R.id.collectBtn) FloatingActionButton collectBtn;
-    @BindView(R.id.contentText) TextView contentText;
-    @BindView(R.id.userImageView) CircleImageView userImageView;
-    @BindView(R.id.hostNameText) TextView hostNameText;
-    @BindView(R.id.locationText) TextView locationText;
+    @BindView(R.id.wallPaper)
+    ImageView wallPaper;
+    @BindView(R.id.collectBtn)
+    FloatingActionButton collectBtn;
+    @BindView(R.id.contentText)
+    TextView contentText;
+    @BindView(R.id.userImageView)
+    CircleImageView userImageView;
+    @BindView(R.id.hostNameText)
+    TextView hostNameText;
+    @BindView(R.id.locationText)
+    TextView locationText;
 
     private BaseItem baseItem;
 
@@ -53,14 +60,20 @@ public class ItemDetailActivity extends BaseActivity {
         hostNameText.setText(baseItem.getUserName());
     }
 
-    @OnClick(R.id.applyBtn)
-    public void apply() {
-
-    }
-
     @OnClick(R.id.msgBtn)
     public void sendMsg() {
+        Intent intent = new Intent(this, ChatActivity.class);
+        intent.putExtra(ChatActivity.EXTRA_CHATTERID, baseItem.getUid());
+        startActivity(intent);
+    }
 
+    @OnClick(R.id.shareBtn)
+    public void share() {
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.putExtra(Intent.EXTRA_TEXT, NetManager.getInstance().getHost() + baseItem.getPhotoUrl());
+        sendIntent.setType("text/plain");
+        startActivity(Intent.createChooser(sendIntent, "分享到"));
     }
 
     @OnClick(R.id.collectBtn)
@@ -78,5 +91,12 @@ public class ItemDetailActivity extends BaseActivity {
                     return false;
                 }
             }));
+    }
+
+    @OnClick(R.id.userImageView)
+    public void onUserClick() {
+        Intent intent = new Intent(this, ProfileActivity.class);
+        intent.putExtra(ProfileActivity.EXTRA_UID, baseItem.getUid());
+        startActivity(intent);
     }
 }

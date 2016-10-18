@@ -72,21 +72,22 @@ public class ChatActivity extends BaseTitleActivity {
     }
 
     private void getChat() {
-        NetManager.getInstance().getChatList(chatterId).enqueue(new RequestCallback(new RequestCallback.Callback() {
-            @Override
-            public void success(Resp resp) {
-                Gson gson = new Gson();
-                chat = gson.fromJson(gson.toJsonTree(resp.getData()), Chat.class);
-                chatListAdapter.setChat(chat);
-                refreshLayout.setRefreshing(false);
-            }
+        NetManager.getInstance().getChatList(chatterId).enqueue(
+            new RequestCallback(new RequestCallback.Callback() {
+                @Override
+                public void success(Resp resp) {
+                    Gson gson = new Gson();
+                    chat = gson.fromJson(gson.toJsonTree(resp.getData()), Chat.class);
+                    chatListAdapter.setChat(chat);
+                    refreshLayout.setRefreshing(false);
+                }
 
-            @Override
-            public boolean fail(Resp resp) {
-                refreshLayout.setRefreshing(false);
-                return false;
-            }
-        }));
+                @Override
+                public boolean fail(Resp resp) {
+                    refreshLayout.setRefreshing(false);
+                    return false;
+                }
+            }));
     }
 
     @OnEditorAction(R.id.msgText)
@@ -95,19 +96,20 @@ public class ChatActivity extends BaseTitleActivity {
             if (msgText.getText().toString().isEmpty()) {
                 return true;
             }
-            NetManager.getInstance().sendChat(chatterId, msgText.getText().toString()).enqueue(new RequestCallback(new RequestCallback.Callback() {
-                @Override
-                public void success(Resp resp) {
-                    CommonUtils.toast(resp.getMessage());
-                    msgText.setText("");
-                    getChat();
-                }
+            NetManager.getInstance().sendChat(chatterId, msgText.getText().toString()).enqueue(
+                new RequestCallback(new RequestCallback.Callback() {
+                    @Override
+                    public void success(Resp resp) {
+                        CommonUtils.toast(resp.getMessage());
+                        msgText.setText("");
+                        getChat();
+                    }
 
-                @Override
-                public boolean fail(Resp resp) {
-                    return false;
-                }
-            }));
+                    @Override
+                    public boolean fail(Resp resp) {
+                        return false;
+                    }
+                }));
         }
         return false;
     }

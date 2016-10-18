@@ -17,6 +17,8 @@ public class User extends BaseModel {
     private String intro;
     @SerializedName("last_login")
     private String lastLogin;
+    @SerializedName("is_first")
+    private boolean isFirst;
 
     public long getId() {
         return id;
@@ -80,5 +82,13 @@ public class User extends BaseModel {
 
     public void setLastLogin(String lastLogin) {
         this.lastLogin = lastLogin;
+    }
+
+    public boolean isFirst() {
+        return isFirst;
+    }
+
+    public void setFirst(boolean first) {
+        isFirst = first;
     }
 }

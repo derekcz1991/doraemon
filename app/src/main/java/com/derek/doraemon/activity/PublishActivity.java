@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.derek.doraemon.R;
+import com.derek.doraemon.constants.Constants;
 import com.derek.doraemon.netapi.NetManager;
 import com.derek.doraemon.netapi.RequestCallback;
 import com.derek.doraemon.netapi.Resp;
@@ -42,7 +43,6 @@ import okhttp3.RequestBody;
 public class PublishActivity extends BaseActivity implements View.OnClickListener {
 
     public static final String EXTRA_TYPE = "type";
-    public static final String PET_FOLDER = Environment.getExternalStorageDirectory() + "/doraemon/";
 
     public static final int RESULT_CODE_OK = 100;
     private static final int PICK_FROM_CAMERA = 100;
@@ -85,11 +85,11 @@ public class PublishActivity extends BaseActivity implements View.OnClickListene
 
         ButterKnife.bind(this);
 
-        File file = new File(PET_FOLDER);
+        File file = new File(Constants.PET_FOLDER);
         if (!file.exists()) {
             file.mkdir();
         }
-        mImageCaptureUri = Uri.fromFile(new File(PET_FOLDER + "temp.jpg"));
+        mImageCaptureUri = Uri.fromFile(new File(Constants.PET_FOLDER + "temp.jpg"));
 
         if (type == 1) {
             typeText = (TextView) findViewById(R.id.typeText);
@@ -310,7 +310,7 @@ public class PublishActivity extends BaseActivity implements View.OnClickListene
     }
 
     private void saveAvatar(Bitmap bitmap) {
-        String path = PET_FOLDER + "avatar" + ".jpg";
+        String path = Constants.PET_FOLDER + "avatar" + ".jpg";
         photoFile = new File(path);
         try {
             FileOutputStream out = new FileOutputStream(photoFile);

@@ -26,7 +26,7 @@ public class UserDetail extends BaseModel {
     @SerializedName("avatar")
     private String avatarUrl;
     @SerializedName("mobilephone")
-    private int mobilePhone;
+    private String mobilePhone;
     private String profession;
     private String constellation;
     private String intro;
@@ -135,11 +135,11 @@ public class UserDetail extends BaseModel {
         this.avatarUrl = avatarUrl;
     }
 
-    public int getMobilePhone() {
+    public String getMobilePhone() {
         return mobilePhone;
     }
 
-    public void setMobilePhone(int mobilePhone) {
+    public void setMobilePhone(String mobilePhone) {
         this.mobilePhone = mobilePhone;
     }
 

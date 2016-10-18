@@ -58,9 +58,9 @@ public class HomeFragment extends HomeTabFragment {
     private HostListAdapter hostListAdapter;
     private RequestCallback getHostCallback;
 
-    private List<StarUser> starUsers;
+    /*private List<StarUser> starUsers;
     private StarUserAdapter starUserAdapter;
-    private RequestCallback getStarUserCallback;
+    private RequestCallback getStarUserCallback;*/
 
     @Nullable
     @Override
@@ -124,7 +124,7 @@ public class HomeFragment extends HomeTabFragment {
 
         });
 
-        starUsers = new ArrayList<>();
+        /*starUsers = new ArrayList<>();
         starUserAdapter = new StarUserAdapter(starUsers);
         starUserRecyclerView.setLayoutManager(
             new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
@@ -147,7 +147,7 @@ public class HomeFragment extends HomeTabFragment {
                 return false;
             }
 
-        });
+        });*/
 
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -159,7 +159,7 @@ public class HomeFragment extends HomeTabFragment {
 
     private void refresh() {
         NetManager.getInstance().getHostList().enqueue(getHostCallback);
-        NetManager.getInstance().getStarUser().enqueue(getStarUserCallback);
+        //NetManager.getInstance().getStarUser().enqueue(getStarUserCallback);
     }
 
     @OnClick(R.id.searchFab)

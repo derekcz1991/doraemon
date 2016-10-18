@@ -41,12 +41,19 @@ public interface RequestService {
                      @Field("email") String email,
                      @Field("password") String password);
 
+    @FormUrlEncoded
+    @POST("v1/thirdPartyLogin")
+    Call<Resp> thirdPartyLogin(@Field("platform") String platform,
+                               @Field("open_id") String open_id);
+
+
 
     // ------------------------------- user -------------------------------------
     @FormUrlEncoded
     @POST("v1/complete")
     Call<Resp> completeUserInfo(@Query("access_token") String token,
                                 @Field("access_token") String accessToken,
+                                @Field("uid") String uid,
                                 @Field("sex") String sex, // 1-男 2-女   (必填)
                                 @Field("pet_type") String petType, // 宠物类型 (非必填)
                                 @Field("pet_breed") String petBreed, // 宠物品种 (非必填)
@@ -72,6 +79,13 @@ public interface RequestService {
                       @Field("uid") String uid,
                       @Field("long") double longitude,
                       @Field("lat") double latitude);
+
+    @Multipart
+    @POST("v1/avatar")
+    Call<Resp> uploadAvatar(@Query("access_token") String token,
+                            @Part("access_token") RequestBody accessToken,
+                            @Part("uid") RequestBody uid,
+                            @Part MultipartBody.Part file);
 
     // ------------------------------- common -------------------------------------
     @FormUrlEncoded
@@ -188,17 +202,17 @@ public interface RequestService {
     @Multipart
     @POST("v1/moment/upload")
     Call<Resp> uploadMomentPhoto(@Query("access_token") String token,
-                                  @Part("access_token") RequestBody accessToken,
-                                  @Part("uid") RequestBody uid,
-                                  @Part MultipartBody.Part file);
+                                 @Part("access_token") RequestBody accessToken,
+                                 @Part("uid") RequestBody uid,
+                                 @Part MultipartBody.Part file);
 
     @FormUrlEncoded
     @POST("v1/moment/add")
     Call<Resp> publishMoment(@Query("access_token") String token,
-                              @Field("access_token") String accessToken,
-                              @Field("uid") String uid,
-                              @Field("content") String content,
-                              @Field("photoUrl") String photoUrl);
+                             @Field("access_token") String accessToken,
+                             @Field("uid") String uid,
+                             @Field("content") String content,
+                             @Field("photoUrl") String photoUrl);
 
 
     // ------------------------------- nearby -------------------------------------

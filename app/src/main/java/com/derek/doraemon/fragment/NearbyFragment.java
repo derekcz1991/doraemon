@@ -1,5 +1,6 @@
 package com.derek.doraemon.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -9,26 +10,33 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.map.BaiduMap;
+import com.baidu.mapapi.map.BitmapDescriptorFactory;
+import com.baidu.mapapi.map.InfoWindow;
 import com.baidu.mapapi.map.MapStatus;
 import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
+import com.baidu.mapapi.map.Marker;
+import com.baidu.mapapi.map.MarkerOptions;
 import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.model.LatLng;
-import com.derek.doraemon.MyApplication;
 import com.derek.doraemon.R;
+import com.derek.doraemon.activity.ProfileActivity;
 import com.derek.doraemon.adapter.NearbyListAdapter;
 import com.derek.doraemon.model.NearbyItem;
 import com.derek.doraemon.netapi.NetManager;
 import com.derek.doraemon.netapi.RequestCallback;
 import com.derek.doraemon.netapi.Resp;
+import com.derek.doraemon.view.CircleImageView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -122,6 +130,29 @@ public class NearbyFragment extends HomeTabFragment {
         option.setScanSpan(1000);
         mLocClient.setLocOption(option);
         mLocClient.start();
+
+        mBaiduMap.setOnMarkerClickListener(new BaiduMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+                View view = LayoutInflater.from(getContext()).inflate(R.layout.view_info_window, null);
+                final int position = marker.getExtraInfo().getInt("position");
+                if (position < nearbyItems.size()) {
+                    ((TextView) view.findViewById(R.id.nameText)).setText(nearbyItems.get(position).getUserName());
+                    ((TextView) view.findViewById(R.id.addressText)).setText(nearbyItems.get(position).getAddress());
+                }
+                InfoWindow mInfoWindow = new InfoWindow(BitmapDescriptorFactory.fromView(view), marker.getPosition(), 135,
+                    new InfoWindow.OnInfoWindowClickListener() {
+                        @Override
+                        public void onInfoWindowClick() {
+                            Intent intent = new Intent(getContext(), ProfileActivity.class);
+                            intent.putExtra(ProfileActivity.EXTRA_UID, nearbyItems.get(position).getUid());
+                            getContext().startActivity(intent);
+                        }
+                    });
+                mBaiduMap.showInfoWindow(mInfoWindow);
+                return true;
+            }
+        });
     }
 
     private void initData() {
@@ -143,6 +174,7 @@ public class NearbyFragment extends HomeTabFragment {
                         new TypeToken<List<NearbyItem>>() {
                         }.getType()));
                 nearbyListAdapter.notifyDataSetChanged();
+                setUpMarker();
             }
 
             @Override
@@ -160,6 +192,27 @@ public class NearbyFragment extends HomeTabFragment {
         });
     }
 
+    private void setUpMarker() {
+        for (int i = 0; i < nearbyItems.size(); i++) {
+            View view = LayoutInflater.from(getContext()).inflate(R.layout.view_marker, null);
+            CircleImageView avatar = (CircleImageView) view.findViewById(R.id.avatar);
+            avatar.setBorderWidth(5);
+            avatar.setBorderColor(getContext().getResources().getColor(R.color.colorPrimary));
+            Picasso.with(getContext())
+                .load(NetManager.getInstance().getHost() + nearbyItems.get(i).getAvatarUrl())
+                .into(avatar);
+
+            Marker marker = (Marker) mBaiduMap.addOverlay(new MarkerOptions()
+                .position(new LatLng(nearbyItems.get(i).getLatitude(), nearbyItems.get(i).getLongitude()))
+                .icon(BitmapDescriptorFactory.fromView(view))
+                .zIndex(9));
+            Bundle bundle = new Bundle();
+            bundle.putInt("position", i);
+            marker.setExtraInfo(bundle);
+
+        }
+    }
+
     @Override
     public void onResume() {
         super.onResume();
@@ -172,7 +225,7 @@ public class NearbyFragment extends HomeTabFragment {
         mMapView.onPause();
     }
 
-    @Override 
+    @Override
     public void onDestroy() {
         // 退出时销毁定位
         mLocClient.stop();

@@ -1,9 +1,11 @@
 package com.derek.doraemon.view.viewholder;
 
+import android.content.Intent;
 import android.view.View;
 import android.widget.TextView;
 
 import com.derek.doraemon.R;
+import com.derek.doraemon.activity.ProfileActivity;
 import com.derek.doraemon.model.BaseModel;
 import com.derek.doraemon.model.NearbyItem;
 import com.derek.doraemon.netapi.NetManager;
@@ -33,7 +35,7 @@ public class NearbyViewHolder extends BaseViewHolder {
 
     @Override
     public void update(BaseModel data) {
-        NearbyItem nearbyItem = (NearbyItem) data;
+        final NearbyItem nearbyItem = (NearbyItem) data;
         Picasso.with(itemView.getContext())
             .load(NetManager.getInstance().getHost() + nearbyItem.getAvatarUrl())
             .into(userImageView);
@@ -41,5 +43,14 @@ public class NearbyViewHolder extends BaseViewHolder {
         userNameText.setText(nearbyItem.getUserName());
         timeText.setText(nearbyItem.getUpdatedAt());
         locationText.setText(nearbyItem.getAddress());
+
+        itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, ProfileActivity.class);
+                intent.putExtra(ProfileActivity.EXTRA_UID, nearbyItem.getUid());
+                context.startActivity(intent);
+            }
+        });
     }
 }
