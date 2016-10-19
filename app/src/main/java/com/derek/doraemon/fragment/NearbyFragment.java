@@ -34,6 +34,8 @@ import com.derek.doraemon.netapi.NetManager;
 import com.derek.doraemon.netapi.RequestCallback;
 import com.derek.doraemon.netapi.Resp;
 import com.derek.doraemon.view.CircleImageView;
+import com.derek.doraemon.view.RecorderView;
+import com.derek.doraemon.view.viewholder.NearbyViewHolder;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.squareup.picasso.Picasso;
@@ -57,6 +59,8 @@ public class NearbyFragment extends HomeTabFragment {
     MapView mMapView;
     @BindView(R.id.switchBtn)
     ImageView switchBtn;
+    @BindView(R.id.recordView)
+    RecorderView recorderView;
 
     private Gson gson;
 
@@ -116,9 +120,6 @@ public class NearbyFragment extends HomeTabFragment {
 
     private void initMap() {
         mBaiduMap = mMapView.getMap();
-        /*mBaiduMap
-            .setMyLocationConfigeration(new MyLocationConfiguration(
-                MyLocationConfiguration.LocationMode.NORMAL, true, null));*/
         // 开启定位图层
         mBaiduMap.setMyLocationEnabled(true);
         // 定位初始化
@@ -159,7 +160,18 @@ public class NearbyFragment extends HomeTabFragment {
         gson = new Gson();
 
         nearbyItems = new ArrayList<>();
-        nearbyListAdapter = new NearbyListAdapter(nearbyItems);
+        nearbyListAdapter = new NearbyListAdapter(nearbyItems, new NearbyViewHolder.Callback() {
+            @Override
+            public void onViewPressed(long uid) {
+                recorderView.setReceiverId(uid);
+                recorderView.start();
+            }
+
+            @Override
+            public void onViewRelease() {
+                recorderView.stop();
+            }
+        });
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setNestedScrollingEnabled(false);
         recyclerView.setAdapter(nearbyListAdapter);

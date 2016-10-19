@@ -4,6 +4,8 @@ import com.derek.doraemon.constants.Constants;
 import com.derek.doraemon.model.Token;
 import com.derek.doraemon.model.WechatResp;
 
+import java.io.File;
+
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -200,5 +202,23 @@ public class NetManager {
 
     public Call<WechatResp> oauthWechat(String code, String grantType) {
         return otherService.getWechatToken(Constants.APP_ID, Constants.SECRET_ID, code, grantType);
+    }
+
+    public Call<Resp> uploadAudio(File file, long hostUid) {
+        // create RequestBody instance from file
+        RequestBody requestFile =
+            RequestBody.create(MediaType.parse("multipart/form-data"), file);
+
+        MultipartBody.Part audio =
+            MultipartBody.Part.createFormData("audio", file.getName(), requestFile);
+
+        return service.uploadAudio(token,
+            RequestBody.create(MediaType.parse("multipart/form-data"), token),
+            RequestBody.create(MediaType.parse("multipart/form-data"), String.valueOf(uid)),
+            RequestBody.create(MediaType.parse("multipart/form-data"), String.valueOf(hostUid)), audio);
+    }
+
+    public Call<Resp> getAudioList() {
+        return service.getAudioList(token, token, String.valueOf(uid));
     }
 }

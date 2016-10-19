@@ -15,16 +15,18 @@ import java.util.List;
  * Created by derek on 09/10/2016.
  */
 public class NearbyListAdapter extends RecyclerView.Adapter<BaseViewHolder> {
-    List<NearbyItem> nearbyItems;
+    private List<NearbyItem> nearbyItems;
+    private NearbyViewHolder.Callback callback;
 
-    public NearbyListAdapter(List<NearbyItem> nearbyItems) {
+    public NearbyListAdapter(List<NearbyItem> nearbyItems, NearbyViewHolder.Callback callback) {
         this.nearbyItems = nearbyItems;
+        this.callback = callback;
     }
 
     @Override
     public BaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return new NearbyViewHolder(
-            LayoutInflater.from(parent.getContext()).inflate(R.layout.view_holder_nearby, null));
+            LayoutInflater.from(parent.getContext()).inflate(R.layout.view_holder_nearby, null), callback);
     }
 
     @Override

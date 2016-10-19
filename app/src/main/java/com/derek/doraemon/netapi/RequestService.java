@@ -47,7 +47,6 @@ public interface RequestService {
                                @Field("open_id") String open_id);
 
 
-
     // ------------------------------- user -------------------------------------
     @FormUrlEncoded
     @POST("v1/complete")
@@ -242,4 +241,18 @@ public interface RequestService {
                         @Field("from") String fromUid,
                         @Field("to") String toUid,
                         @Field("content") String content);
+
+    // ------------------------------- audio -------------------------------------
+    @Multipart
+    @POST("v1/apply/audio")
+    Call<Resp> uploadAudio(@Query("access_token") String token,
+                           @Part("access_token") RequestBody accessToken,
+                           @Part("uid") RequestBody uid,
+                           @Part("host_uid") RequestBody hostUid,
+                           @Part MultipartBody.Part audio);
+
+    @GET("v1/apply/audioList/1")
+    Call<Resp> getAudioList(@Query("access_token") String token,
+                            @Query("access_token") String accessToken,
+                            @Query("uid") String uid);
 }

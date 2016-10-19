@@ -1,7 +1,9 @@
 package com.derek.doraemon.view.viewholder;
 
 import android.content.Intent;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.derek.doraemon.R;
@@ -27,10 +29,21 @@ public class NearbyViewHolder extends BaseViewHolder {
     TextView locationText;
     @BindView(R.id.userImageView)
     CircleImageView userImageView;
+    @BindView(R.id.btnBark)
+    ImageView btnBark;
 
-    public NearbyViewHolder(View itemView) {
+    private Callback callback;
+
+    public interface Callback {
+        void onViewPressed(long uid);
+
+        void onViewRelease();
+    }
+
+    public NearbyViewHolder(View itemView, Callback callback) {
         super(itemView);
         ButterKnife.bind(this, itemView);
+        this.callback = callback;
     }
 
     @Override
@@ -50,6 +63,21 @@ public class NearbyViewHolder extends BaseViewHolder {
                 Intent intent = new Intent(context, ProfileActivity.class);
                 intent.putExtra(ProfileActivity.EXTRA_UID, nearbyItem.getUid());
                 context.startActivity(intent);
+            }
+        });
+
+        btnBark.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        callback.onViewPressed(nearbyItem.getUid());
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        callback.onViewRelease();
+                        break;
+                }
+                return true;
             }
         });
     }

@@ -68,15 +68,6 @@ public class ProfileActivity extends BaseTitleActivity {
     private long uid;
     private UserDetail userDetail;
 
-    private MP3Recorder mRecorder;
-    private boolean isRecorderStart;
-    private long startTime;
-
-    private int count;
-    private Timer mTimer;
-    private TimerTask mTimerTask;
-    private Runnable timerRunnable;
-
     @Override
     protected boolean showNavIcon() {
         return false;
@@ -106,77 +97,22 @@ public class ProfileActivity extends BaseTitleActivity {
 
     private void initRecord() {
         recorderView.setVisibility(View.INVISIBLE);
+        recorderView.setReceiverId(uid);
         helloBtn.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                Log.d("initRecord", "event = " + event.getAction());
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
-                        startTime = System.currentTimeMillis();
-                        isRecorderStart = true;
-                        helloBtn.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                if (isRecorderStart) {
-                                    mRecorder = new MP3Recorder(new File(Constants.PET_FOLDER, startTime + ".mp3"));
-                                    try {
-                                        recorderView.setVisibility(View.VISIBLE);
-                                        mRecorder.start();
-                                        initTimer();
-                                        mTimer.schedule(mTimerTask, 0, 1000);
-                                    } catch (IOException e) {
-                                        e.printStackTrace();
-                                    }
-                                } else {
-                                    CommonUtils.toast("录制时间太短");
-                                }
-                            }
-                        }, 500);
+                        recorderView.start();
                         break;
                     case MotionEvent.ACTION_CANCEL:
                     case MotionEvent.ACTION_UP:
-                        recorderView.setVisibility(View.INVISIBLE);
-                        if (isRecorderStart) {
-                            stopRecord();
-                        }
-                        isRecorderStart = false;
+                        recorderView.stop();
                         break;
                 }
                 return true;
             }
         });
-    }
-
-    private void initTimer() {
-        mTimer = new Timer();
-        mTimerTask = new TimerTask() {
-            @Override
-            public void run() {
-                count++;
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        recorderView.updateTime(5 - count);
-                    }
-                });
-                if (count == 5) {
-                    stopRecord();
-                }
-            }
-        };
-    }
-
-    private void stopRecord() {
-        isRecorderStart = false;
-        mRecorder.stop();
-        mTimer.cancel();
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                recorderView.setVisibility(View.INVISIBLE);
-            }
-        });
-        count = 0;
     }
 
     @OnClick(R.id.starLayout)

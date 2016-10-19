@@ -4,12 +4,15 @@ import android.app.Application;
 import android.content.Context;
 
 import com.baidu.mapapi.SDKInitializer;
+import com.derek.doraemon.constants.Constants;
 import com.derek.doraemon.constants.SharePrefsConstants;
 import com.derek.doraemon.utils.SharePreferenceHelper;
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
 import com.twitter.sdk.android.core.TwitterAuthConfig;
 import com.twitter.sdk.android.core.TwitterCore;
+
+import java.io.File;
 
 import io.fabric.sdk.android.Fabric;
 
@@ -37,6 +40,12 @@ public class MyApplication extends Application {
 
         // baidu map
         SDKInitializer.initialize(getApplicationContext());
+
+        //
+        File dir = new File(Constants.RECORDS_FOLDER);
+        if (!dir.exists()) {
+            dir.mkdirs();
+        }
     }
 
     public static Context getContext() {

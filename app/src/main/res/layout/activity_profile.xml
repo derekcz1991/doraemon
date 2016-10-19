@@ -68,7 +68,7 @@
                     android:layout_width="140dp"
                     android:layout_height="35dp"
                     android:layout_marginLeft="20dp"
-                    android:src="@drawable/icon_msg"
+                    android:src="@drawable/icon_sendpm"
                     />
 
                 <ImageView
