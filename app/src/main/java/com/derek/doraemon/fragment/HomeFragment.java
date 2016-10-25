@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.derek.doraemon.R;
 import com.derek.doraemon.activity.PublishActivity;
+import com.derek.doraemon.activity.SearchHostActivity;
 import com.derek.doraemon.adapter.HostListAdapter;
 import com.derek.doraemon.adapter.StarUserAdapter;
 import com.derek.doraemon.model.HostItem;
@@ -164,7 +165,7 @@ public class HomeFragment extends HomeTabFragment {
 
     @OnClick(R.id.searchFab)
     public void search() {
-
+        startActivity(new Intent(getActivity(), SearchHostActivity.class));
     }
 
     @OnClick(R.id.cameraFab)

@@ -146,6 +146,12 @@ public interface RequestService {
                            @Field("access_token") String accessToken,
                            @Field("uid") String uid);
 
+    @FormUrlEncoded
+    @POST("v1/post/find")
+    Call<Resp> findHostList(@Query("access_token") String token,
+                            @Field("access_token") String accessToken,
+                            @Field("keyword") String keyword);
+
     @GET("v1/my/post")
     Call<Resp> getMyPostList(@Query("access_token") String token,
                              @Query("uid") String uid);
@@ -200,6 +206,11 @@ public interface RequestService {
                               @Field("kind") String kind,
                               @Field("photoUrl") String photoUrl);
 
+    @FormUrlEncoded
+    @POST("v1/welfare/find")
+    Call<Resp> findWelfareList(@Query("access_token") String token,
+                               @Field("access_token") String accessToken,
+                               @Field("keyword") String keyword);
 
     // ------------------------------- moment -------------------------------------
     @FormUrlEncoded

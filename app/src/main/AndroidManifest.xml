@@ -168,6 +168,17 @@
             android:theme="@style/AppThemeBlue.NoActionBar"/>
 
         <activity
+            android:name=".activity.SearchHostActivity"
+            android:label=""
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeBlue.NoActionBar"/>
+        <activity
+            android:name=".activity.SearchWelfareActivity"
+            android:label=""
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeBlue.NoActionBar"/>
+
+        <activity
             android:name=".wxapi.WXEntryActivity"
             android:exported="true"
             android:launchMode="singleTop"

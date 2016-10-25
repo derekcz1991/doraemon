@@ -234,4 +234,12 @@ public class NetManager {
     public Call<Resp> evaluate(long hostUid, int grade, String comment) {
         return service.evaluate(token, token, String.valueOf(uid), String.valueOf(hostUid), grade, comment);
     }
+
+    public Call<Resp> findHostPost(String keyword) {
+        return service.findHostList(token, token, keyword);
+    }
+
+    public Call<Resp> findWelfarePost(String keyword) {
+        return service.findWelfareList(token, token, keyword);
+    }
 }

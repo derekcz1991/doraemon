@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.derek.doraemon.R;
 import com.derek.doraemon.activity.PublishActivity;
+import com.derek.doraemon.activity.SearchWelfareActivity;
 import com.derek.doraemon.adapter.StarUserAdapter;
 import com.derek.doraemon.adapter.WelfareListAdapter;
 import com.derek.doraemon.model.Location;
@@ -179,7 +180,7 @@ public class WelfareFragment extends HomeTabFragment {
 
     @OnClick(R.id.searchFab)
     public void search() {
-
+        startActivity(new Intent(getActivity(), SearchWelfareActivity.class));
     }
 
     @OnClick(R.id.typeFab)
