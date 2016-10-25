@@ -59,7 +59,7 @@ public class MyItemListActivity extends BaseTitleActivity {
                 setTitleText("我的圈子");
                 break;
         }
-        View view = View.inflate(this, R.layout.activity_message, null);
+        View view = View.inflate(this, R.layout.activity_my_item, null);
         ButterKnife.bind(this, view);
 
         refreshLayout.setRefreshing(true);

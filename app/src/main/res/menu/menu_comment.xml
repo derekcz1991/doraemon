@@ -4,8 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/action_settings"
-        android:icon="@drawable/icon_pen_white"
         android:orderInCategory="100"
-        android:title="消息列表"
+        android:title="发布"
         app:showAsAction="always"/>
 </menu>

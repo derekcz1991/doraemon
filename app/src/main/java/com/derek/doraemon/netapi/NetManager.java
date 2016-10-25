@@ -9,6 +9,7 @@ import java.io.File;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.Retrofit;
@@ -220,5 +221,17 @@ public class NetManager {
 
     public Call<Resp> getAudioList() {
         return service.getAudioList(token, token, String.valueOf(uid));
+    }
+
+    public Call<ResponseBody> getAudio(String audioName) {
+        return service.getAudio("/uploads/audio/" + audioName);
+    }
+
+    public Call<Resp> feedback(String feedback) {
+        return service.feedback(token, token, String.valueOf(uid), feedback);
+    }
+
+    public Call<Resp> evaluate(long hostUid, int grade, String comment) {
+        return service.evaluate(token, token, String.valueOf(uid), String.valueOf(hostUid), grade, comment);
     }
 }

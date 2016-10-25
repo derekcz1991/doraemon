@@ -264,10 +264,17 @@ public class PublishActivity extends BaseActivity implements View.OnClickListene
             intent.setData(mImageCaptureUri);
 
             intent.putExtra("crop", "true");
-            intent.putExtra("outputX", 300);
-            intent.putExtra("outputY", 100);
-            intent.putExtra("aspectX", 3);
-            intent.putExtra("aspectY", 1);
+            if (type == 2) {
+                intent.putExtra("outputX", 200);
+                intent.putExtra("outputY", 200);
+                intent.putExtra("aspectX", 1);
+                intent.putExtra("aspectY", 1);
+            } else {
+                intent.putExtra("outputX", 250);
+                intent.putExtra("outputY", 100);
+                intent.putExtra("aspectX", 5);
+                intent.putExtra("aspectY", 2);
+            }
             intent.putExtra("scale", true);
             intent.putExtra("return-data", true);
 

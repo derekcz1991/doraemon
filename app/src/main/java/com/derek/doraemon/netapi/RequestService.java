@@ -4,6 +4,7 @@ import com.derek.doraemon.model.Token;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -12,6 +13,7 @@ import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
 import retrofit2.http.Query;
+import retrofit2.http.Url;
 
 /**
  * Created by derek on 2016/9/28.
@@ -86,6 +88,15 @@ public interface RequestService {
                             @Part("uid") RequestBody uid,
                             @Part MultipartBody.Part file);
 
+    @FormUrlEncoded
+    @POST("v1/user/evaluate")
+    Call<Resp> evaluate(@Query("access_token") String token,
+                        @Field("access_token") String accessToken,
+                        @Field("uid") String uid,
+                        @Field("host_uid") String hostUid,
+                        @Field("grade") int grade,
+                        @Field("comment") String comment);
+
     // ------------------------------- common -------------------------------------
     @FormUrlEncoded
     @POST("v1/post/like")
@@ -100,7 +111,8 @@ public interface RequestService {
     Call<Resp> comment(@Query("access_token") String token,
                        @Field("access_token") String accessToken,
                        @Field("type") String type, // 点赞类型  1-寄养 2-朋友圈 3-公益
-                       @Field("uid") String uid, @Field("post_id") String postId, // 帖子id
+                       @Field("uid") String uid,
+                       @Field("post_id") String postId, // 帖子id
                        @Field("comment") String content);
 
     @FormUrlEncoded
@@ -120,6 +132,12 @@ public interface RequestService {
     Call<Resp> cancelCollection(@Query("access_token") String token,
                                 @Query("id") String id);
 
+    @FormUrlEncoded
+    @POST("v1/feedback")
+    Call<Resp> feedback(@Query("access_token") String token,
+                        @Field("access_token") String accessToken,
+                        @Field("uid") String uid,
+                        @Field("feedback") String feedback);
 
     // ------------------------------- post -------------------------------------
     @FormUrlEncoded
@@ -255,4 +273,7 @@ public interface RequestService {
     Call<Resp> getAudioList(@Query("access_token") String token,
                             @Query("access_token") String accessToken,
                             @Query("uid") String uid);
+
+    @GET
+    public Call<ResponseBody> getAudio(@Url String url);
 }

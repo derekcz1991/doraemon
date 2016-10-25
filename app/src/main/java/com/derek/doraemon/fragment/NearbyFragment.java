@@ -46,6 +46,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import pl.droidsonroids.gif.GifImageView;
 
 /**
  * Created by derek on 09/10/2016.
@@ -61,6 +62,8 @@ public class NearbyFragment extends HomeTabFragment {
     ImageView switchBtn;
     @BindView(R.id.recordView)
     RecorderView recorderView;
+    @BindView(R.id.loadingView)
+    GifImageView loadingView;
 
     private Gson gson;
 
@@ -229,6 +232,13 @@ public class NearbyFragment extends HomeTabFragment {
     public void onResume() {
         super.onResume();
         mMapView.onResume();
+        loadingView.setVisibility(View.VISIBLE);
+        loadingView.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                loadingView.setVisibility(View.INVISIBLE);
+            }
+        }, 3000);
     }
 
     @Override

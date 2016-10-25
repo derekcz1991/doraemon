@@ -8,7 +8,6 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginRight="40dp"
         >
 
         <com.derek.doraemon.view.CircleImageView
@@ -42,20 +41,31 @@
             />
 
         <ImageView
+            android:id="@+id/kind"
             android:layout_width="60dp"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@id/userImageView"
             android:layout_alignParentRight="true"
-            android:visibility="invisible"
             android:layout_alignTop="@id/userImageView"
+            android:layout_marginRight="40dp"
             android:src="@drawable/btn_st"
             />
+
+        <ImageView
+            android:id="@+id/shareBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/kind"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@id/kind"
+            android:layout_marginRight="15dp"
+            android:src="@drawable/btn_share_active"/>
     </RelativeLayout>
 
     <com.derek.doraemon.view.SquaredImageView
         android:id="@+id/petImageView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
         android:layout_marginLeft="60dp"
         android:layout_marginRight="40dp"
         android:layout_marginTop="10dp"

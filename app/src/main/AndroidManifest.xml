@@ -70,7 +70,6 @@
         <activity
             android:name=".activity.LoginActivity"
             android:label="@string/app_name"
-            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeWhite.NoActionBar">
             <intent-filter>
@@ -155,6 +154,18 @@
             android:label=""
             android:screenOrientation="portrait"
             android:theme="@style/MyDialogStyleActivity"/>
+
+        <activity
+            android:name=".activity.FeedbackActivity"
+            android:label=""
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeBlue.NoActionBar"/>
+
+        <activity
+            android:name=".activity.PubMarkActivity"
+            android:label=""
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeBlue.NoActionBar"/>
 
         <activity
             android:name=".wxapi.WXEntryActivity"

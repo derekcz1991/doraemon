@@ -40,6 +40,8 @@ public class MomentViewHolder extends BaseViewHolder {
     TextView msgNumText;
     @BindView(R.id.favNumText)
     TextView favNumText;
+    @BindView(R.id.kind)
+    ImageView kindView;
 
     private MomentItem momentItem;
 
@@ -58,7 +60,7 @@ public class MomentViewHolder extends BaseViewHolder {
             Picasso.with(context)
                 .load(NetManager.getInstance().getHost() + momentItem.getPhotoUrl())
                 .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE)
-                .resize(200, 200)
+                //.resize(200, 200)
                 //.centerCrop()
                 .into(petImageView);
         }
@@ -66,6 +68,19 @@ public class MomentViewHolder extends BaseViewHolder {
             .load(NetManager.getInstance().getHost() + momentItem.getAvatarUrl())
             .resize(100, 100)
             .into(userImageView);
+        switch (momentItem.getKind()) {
+            case 1:
+                kindView.setImageResource(R.drawable.btn_st);
+                break;
+            case 2:
+                kindView.setImageResource(R.drawable.btn_pz);
+                break;
+            case 3:
+                kindView.setImageResource(R.drawable.btn_hd);
+                break;
+            case 4:
+                kindView.setImageResource(R.drawable.btn_mzm);
+        }
         nameText.setText(momentItem.getUserName());
         timeText.setText(momentItem.getCreatedAt());
         contentText.setText(momentItem.getContent());
@@ -96,8 +111,16 @@ public class MomentViewHolder extends BaseViewHolder {
     public void comment() {
         Intent intent = new Intent(context, WriteCommentActivity.class);
         intent.putExtra(WriteCommentActivity.EXTRA_POST_ID, momentItem.getId());
-        intent.putExtra(WriteCommentActivity.EXTRA_TYPE, "1");
+        intent.putExtra(WriteCommentActivity.EXTRA_TYPE, "2");
         context.startActivity(intent);
     }
 
+    @OnClick(R.id.shareBtn)
+    public void share() {
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.putExtra(Intent.EXTRA_TEXT, NetManager.getInstance().getHost() + momentItem.getPhotoUrl());
+        sendIntent.setType("text/plain");
+        context.startActivity(Intent.createChooser(sendIntent, "分享到"));
+    }
 }

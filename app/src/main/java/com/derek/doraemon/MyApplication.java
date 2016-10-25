@@ -42,7 +42,7 @@ public class MyApplication extends Application {
         SDKInitializer.initialize(getApplicationContext());
 
         //
-        File dir = new File(Constants.RECORDS_FOLDER);
+        File dir = new File(Constants.AUDIO_FOLDER);
         if (!dir.exists()) {
             dir.mkdirs();
         }

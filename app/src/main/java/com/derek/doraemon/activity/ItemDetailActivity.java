@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -48,6 +50,10 @@ public class ItemDetailActivity extends BaseActivity {
         setContentView(R.layout.activity_host_detail);
         ButterKnife.bind(this);
 
+        /*Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setNavigationIcon(R.drawable.icon_nav);
+        setSupportActionBar(toolbar);*/
+
         baseItem = (BaseItem) getIntent().getSerializableExtra(EXTRA_ITEM);
         contentText.setText(baseItem.getContent());
         locationText.setText(baseItem.getDistrict());
@@ -58,6 +64,13 @@ public class ItemDetailActivity extends BaseActivity {
             .load(NetManager.getInstance().getHost() + baseItem.getAvatarUrl())
             .into(userImageView);
         hostNameText.setText(baseItem.getUserName());
+    }
+
+    @OnClick(R.id.commentBtn)
+    public void onCommentClick() {
+        Intent intent = getIntent();
+        intent.setClass(this, PubMarkActivity.class);
+        startActivity(intent);
     }
 
     @OnClick(R.id.msgBtn)

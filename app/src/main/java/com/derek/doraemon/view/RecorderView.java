@@ -66,7 +66,7 @@ public class RecorderView extends FrameLayout {
             public void run() {
                 if (isRecordsStart) {
                     setVisibility(VISIBLE);
-                    recordsAudio = new File(Constants.RECORDS_FOLDER, fileName);
+                    recordsAudio = new File(Constants.AUDIO_FOLDER, fileName);
                     mRecorder = new MP3Recorder(recordsAudio);
                     try {
                         mRecorder.start();

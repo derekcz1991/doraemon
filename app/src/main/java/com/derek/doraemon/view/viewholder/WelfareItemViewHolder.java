@@ -107,7 +107,7 @@ public class WelfareItemViewHolder extends BaseViewHolder {
     public void comment() {
         Intent intent = new Intent(context, WriteCommentActivity.class);
         intent.putExtra(WriteCommentActivity.EXTRA_POST_ID, welfareItem.getId());
-        intent.putExtra(WriteCommentActivity.EXTRA_TYPE, "1");
+        intent.putExtra(WriteCommentActivity.EXTRA_TYPE, "2");
         context.startActivity(intent);
     }
 

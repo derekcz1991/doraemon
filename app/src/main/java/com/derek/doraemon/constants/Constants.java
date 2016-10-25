@@ -7,7 +7,7 @@ import android.os.Environment;
  */
 public class Constants {
     public static final String PET_FOLDER = Environment.getExternalStorageDirectory() + "/doraemon/";
-    public static final String RECORDS_FOLDER = PET_FOLDER + "audio/";
+    public static final String AUDIO_FOLDER = PET_FOLDER + "audio/";
 
     public static int PLATFORM_WECHAT = 1;
     public static int PLATFORM_FACEBOOK = 2;

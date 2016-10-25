@@ -8,12 +8,15 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.derek.doraemon.R;
+import com.derek.doraemon.adapter.AudioListAdapter;
 import com.derek.doraemon.adapter.MessageListAdapter;
 import com.derek.doraemon.model.Message;
 import com.derek.doraemon.model.Audio;
 import com.derek.doraemon.netapi.NetManager;
 import com.derek.doraemon.netapi.RequestCallback;
 import com.derek.doraemon.netapi.Resp;
+import com.derek.doraemon.view.ListenAudioView;
+import com.derek.doraemon.view.viewholder.AudioViewHolder;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -28,17 +31,26 @@ import butterknife.ButterKnife;
  * Created by derek on 08/10/2016.
  */
 public class MessageActivity extends BaseTitleActivity {
-    @BindView(R.id.refreshLayout)
-    SwipeRefreshLayout refreshLayout;
-    @BindView(R.id.recyclerView)
-    RecyclerView recyclerView;
+    @BindView(R.id.msgRefreshLayout)
+    SwipeRefreshLayout msgRefreshLayout;
+    @BindView(R.id.audioRefreshLayout)
+    SwipeRefreshLayout audioRefreshLayout;
+    @BindView(R.id.msgRecyclerView)
+    RecyclerView msgRecyclerView;
+    @BindView(R.id.audioRecyclerView)
+    RecyclerView audioRecyclerView;
+    @BindView(R.id.listenAudioView)
+    ListenAudioView listenAudioView;
 
     private List<Message> messages;
     private List<Audio> audioList;
     private MessageListAdapter messageListAdapter;
+    private AudioListAdapter audioListAdapter;
     private RequestCallback getMsgListCallback;
     private RequestCallback getAudioListCallback;
     private Gson gson;
+
+    private int type = 0;
 
     @Override
     protected boolean showNavIcon() {
@@ -51,9 +63,12 @@ public class MessageActivity extends BaseTitleActivity {
         View view = View.inflate(this, R.layout.activity_message, null);
         ButterKnife.bind(this, view);
 
-        refreshLayout.setRefreshing(true);
+        msgRefreshLayout.setRefreshing(true);
         initData();
-        refresh();
+
+        NetManager.getInstance().getLetterList().enqueue(getMsgListCallback);
+        NetManager.getInstance().getAudioList().enqueue(getAudioListCallback);
+
         return view;
     }
 
@@ -63,13 +78,28 @@ public class MessageActivity extends BaseTitleActivity {
         messages = new ArrayList<>();
         audioList = new ArrayList<>();
         messageListAdapter = new MessageListAdapter(messages);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(messageListAdapter);
+        audioListAdapter = new AudioListAdapter(audioList, new AudioViewHolder.Callback() {
+            @Override
+            public void onItemClicked(Audio audio) {
+                listenAudioView.show(audio);
+            }
+        });
+        msgRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        msgRecyclerView.setAdapter(messageListAdapter);
 
-        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        audioRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        audioRecyclerView.setAdapter(audioListAdapter);
+
+        msgRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                refresh();
+                NetManager.getInstance().getLetterList().enqueue(getMsgListCallback);
+            }
+        });
+        audioRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                NetManager.getInstance().getAudioList().enqueue(getAudioListCallback);
             }
         });
 
@@ -82,12 +112,12 @@ public class MessageActivity extends BaseTitleActivity {
                         new TypeToken<List<Message>>() {
                         }.getType()));
                 messageListAdapter.notifyDataSetChanged();
-                refreshLayout.setRefreshing(false);
+                msgRefreshLayout.setRefreshing(false);
             }
 
             @Override
             public boolean fail(Resp resp) {
-                refreshLayout.setRefreshing(false);
+                msgRefreshLayout.setRefreshing(false);
                 return false;
             }
         });
@@ -100,12 +130,13 @@ public class MessageActivity extends BaseTitleActivity {
                     (Collection<? extends Audio>) gson.fromJson(gson.toJsonTree(resp.getData()),
                         new TypeToken<List<Audio>>() {
                         }.getType()));
-                messageListAdapter.notifyDataSetChanged();
-                refreshLayout.setRefreshing(false);
+                audioListAdapter.notifyDataSetChanged();
+                audioRefreshLayout.setRefreshing(false);
             }
 
             @Override
             public boolean fail(Resp resp) {
+                audioRefreshLayout.setRefreshing(false);
                 return false;
             }
         });
@@ -113,17 +144,30 @@ public class MessageActivity extends BaseTitleActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_message, menu);
+        if(type == 0) {
+            getMenuInflater().inflate(R.menu.menu_audio, menu);
+        } else {
+            getMenuInflater().inflate(R.menu.menu_message, menu);
+        }
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
+        if (type == 0) {
+            type = 1;
+            msgRefreshLayout.setVisibility(View.INVISIBLE);
+            audioRefreshLayout.setVisibility(View.VISIBLE);
+        } else {
+            type = 0;
+            msgRefreshLayout.setVisibility(View.VISIBLE);
+            audioRefreshLayout.setVisibility(View.INVISIBLE);
+        }
+        invalidateOptionsMenu();
         return super.onOptionsItemSelected(item);
     }
 
     private void refresh() {
-        NetManager.getInstance().getLetterList().enqueue(getMsgListCallback);
+        NetManager.getInstance().getAudioList().enqueue(getAudioListCallback);
     }
 }

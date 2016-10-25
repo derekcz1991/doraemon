@@ -3,6 +3,7 @@ package com.derek.doraemon.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,12 +12,17 @@ import android.widget.TextView;
 import com.derek.doraemon.R;
 import com.derek.doraemon.activity.CompleteInfoActivity;
 import com.derek.doraemon.activity.FavListActivity;
+import com.derek.doraemon.activity.FeedbackActivity;
+import com.derek.doraemon.activity.LoginActivity;
 import com.derek.doraemon.activity.MessageActivity;
 import com.derek.doraemon.activity.MyItemListActivity;
+import com.derek.doraemon.constants.Constants;
+import com.derek.doraemon.constants.SharePrefsConstants;
 import com.derek.doraemon.model.UserDetail;
 import com.derek.doraemon.netapi.NetManager;
 import com.derek.doraemon.netapi.RequestCallback;
 import com.derek.doraemon.netapi.Resp;
+import com.derek.doraemon.utils.SharePreferenceHelper;
 import com.derek.doraemon.view.CircleImageView;
 import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
@@ -80,7 +86,7 @@ public class MeFragment extends HomeTabFragment {
             }));
     }
 
-    @OnClick(R.id.editBtn)
+    @OnClick(R.id.userImageView)
     public void editProfile() {
         Intent intent = new Intent(getActivity(), CompleteInfoActivity.class);
         intent.putExtra(CompleteInfoActivity.EXTRA_USER_DETAIL, userDetail);
@@ -125,5 +131,17 @@ public class MeFragment extends HomeTabFragment {
         Intent intent = new Intent(getActivity(), FavListActivity.class);
         intent.putExtra(FavListActivity.EXTRA_TYPE, 3);
         getActivity().startActivity(intent);
+    }
+
+    @OnClick(R.id.feedback)
+    public void feedback() {
+        getActivity().startActivity(new Intent(getActivity(), FeedbackActivity.class));
+    }
+
+    @OnClick(R.id.logout)
+    public void logout() {
+        SharePreferenceHelper.getInstance().put(SharePrefsConstants.IS_LOGIN, false);
+        getActivity().startActivity(new Intent(getActivity(), LoginActivity.class));
+        getActivity().finish();
     }
 }
