@@ -95,7 +95,7 @@
             android:layout_height="22dp"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
-            android:background="@drawable/btn_pz_selector"
+            android:background="@drawable/btn_hl_selector"
             />
 
         <CheckedTextView

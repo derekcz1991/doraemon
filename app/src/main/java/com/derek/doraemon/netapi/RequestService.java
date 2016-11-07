@@ -119,7 +119,7 @@ public interface RequestService {
     @POST("v1/post/collect")
     Call<Resp> collect(@Query("access_token") String token,
                        @Field("access_token") String accessToken,
-                       @Field("type") String type, // 点赞类型  1-寄养 2-朋友圈 3-公益
+                       @Field("type") int type, // 点赞类型  1-寄养 2-朋友圈 3-公益
                        @Field("uid") String uid,
                        @Field("post_id") String postId); // 帖子id
 
@@ -139,12 +139,19 @@ public interface RequestService {
                         @Field("uid") String uid,
                         @Field("feedback") String feedback);
 
+    @GET("v1/post/commentList")
+    Call<Resp> getCommentList(@Query("access_token") String token,
+                              @Query("id") long id, // 帖子id
+                              @Query("type") int type); // 类型： 1-寄养 2-公益 3-圈子
+
     // ------------------------------- post -------------------------------------
     @FormUrlEncoded
     @POST("v1/post/list")
     Call<Resp> getHostList(@Query("access_token") String token,
                            @Field("access_token") String accessToken,
-                           @Field("uid") String uid);
+                           @Field("uid") String uid,
+                           @Field("sort") int sort,
+                           @Field("city") String city);
 
     @FormUrlEncoded
     @POST("v1/post/find")
@@ -175,12 +182,17 @@ public interface RequestService {
                            @Field("content") String content,
                            @Field("photoUrl") String photoUrl);
 
+    @GET("v1/post/detail")
+    Call<Resp> getPostDetail(@Query("access_token") String token, @Query("id") long postId);
+
     // ------------------------------- welfare -------------------------------------
     @FormUrlEncoded
     @POST("v1/welfare/list")
     Call<Resp> getWelfareList(@Query("access_token") String token,
                               @Field("access_token") String accessToken,
-                              @Field("uid") String uid);
+                              @Field("uid") String uid,
+                              @Field("sort") int sort,
+                              @Field("city") String city);
 
     @GET("v1/my/welfare")
     Call<Resp> getMyWelfareList(@Query("access_token") String token,
@@ -212,12 +224,16 @@ public interface RequestService {
                                @Field("access_token") String accessToken,
                                @Field("keyword") String keyword);
 
+    @GET("v1/welfare/detail")
+    Call<Resp> getWelfareDetail(@Query("access_token") String token, @Query("id") long postId);
+
     // ------------------------------- moment -------------------------------------
     @FormUrlEncoded
     @POST("v1/moment/list")
     Call<Resp> getMomentList(@Query("access_token") String token,
                              @Field("access_token") String accessToken,
-                             @Field("uid") String uid);
+                             @Field("uid") String uid,
+                             @Field("kind") int kind);
 
     @GET("v1/my/moment")
     Call<Resp> getMyMomentList(@Query("access_token") String token,

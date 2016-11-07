@@ -67,7 +67,10 @@ public class CompleteInfoActivity extends BaseTitleActivity {
 
         userDetail = (UserDetail) getIntent().getSerializableExtra(EXTRA_USER_DETAIL);
         if (userDetail != null) {
-            Picasso.with(this).load(NetManager.getInstance().getHost() + userDetail.getAvatarUrl()).into(userImageView);
+            Picasso.with(this)
+                .load(NetManager.getInstance().getHost() + userDetail.getAvatarUrl())
+                .placeholder(R.drawable.icon_profile)
+                .into(userImageView);
             petNameText.setText(userDetail.getPetName());
             petTypeText.setText(userDetail.getPetBreed());
             petCategoryText.setText(userDetail.getPetType());
@@ -76,6 +79,7 @@ public class CompleteInfoActivity extends BaseTitleActivity {
             petAgeText.setText(String.valueOf(userDetail.getPetAge()));
             jobText.setText(userDetail.getProfession());
             constellationText.setText(userDetail.getConstellation());
+            introText.setText(userDetail.getIntro());
         }
         return view;
     }

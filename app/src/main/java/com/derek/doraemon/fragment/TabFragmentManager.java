@@ -122,7 +122,7 @@ public class TabFragmentManager {
         setTabSelected(onClickId);
     }
 
-    private void setTabSelected(int onClickId) {
+    public void setTabSelected(int onClickId) {
         Set<Map.Entry<Integer, HomeTabFragment>> entrySet = mFragmentsMap.entrySet();
         for (Map.Entry<Integer, HomeTabFragment> entry : entrySet) {
             int fragmentTabId = entry.getKey();

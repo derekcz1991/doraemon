@@ -30,6 +30,7 @@ public class ChatViewHolder extends BaseViewHolder {
         Chat.ChatInfo chatInfo = (Chat.ChatInfo) data;
         Picasso.with(context)
             .load(NetManager.getInstance().getHost() + chatInfo.getChatUser().getAvatarUrl())
+            .placeholder(R.drawable.app_logo)
             .into(userImageView);
         userNameText.setText(chatInfo.getChatUser().getUserName());
         msgText.setText(chatInfo.getContent());

@@ -51,6 +51,7 @@ public class NearbyViewHolder extends BaseViewHolder {
         final NearbyItem nearbyItem = (NearbyItem) data;
         Picasso.with(itemView.getContext())
             .load(NetManager.getInstance().getHost() + nearbyItem.getAvatarUrl())
+            .placeholder(R.drawable.app_logo)
             .into(userImageView);
 
         userNameText.setText(nearbyItem.getUserName());

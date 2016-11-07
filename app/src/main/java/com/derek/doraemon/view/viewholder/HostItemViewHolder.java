@@ -69,6 +69,7 @@ public class HostItemViewHolder extends BaseViewHolder {
         Picasso.with(context)
             .load(NetManager.getInstance().getHost() + hostItem.getAvatarUrl())
             .resize(100, 100)
+            .placeholder(R.drawable.app_logo)
             .into(userImageView);
         nameText.setText(hostItem.getUserName());
         timeText.setText(hostItem.getCreatedAt());
@@ -107,7 +108,7 @@ public class HostItemViewHolder extends BaseViewHolder {
     @OnClick(R.id.collectBtn)
     public void collect() {
         NetManager.getInstance()
-            .collect("1", hostItem.getId())
+            .collect(1, hostItem.getId())
             .enqueue(new RequestCallback(new RequestCallback.Callback() {
                 @Override
                 public void success(Resp resp) {
@@ -125,7 +126,7 @@ public class HostItemViewHolder extends BaseViewHolder {
     public void detail() {
         Intent intent = new Intent(context, ItemDetailActivity.class);
         intent.putExtra(ItemDetailActivity.EXTRA_ITEM, hostItem);
-        intent.putExtra(ItemDetailActivity.EXTRA_TYPE, "1");
+        intent.putExtra(ItemDetailActivity.EXTRA_TYPE, 1);
         context.startActivity(intent);
     }
 }

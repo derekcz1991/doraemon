@@ -1,6 +1,7 @@
 package com.derek.doraemon.netapi;
 
 import com.derek.doraemon.model.WechatResp;
+import com.derek.doraemon.model.WechatUserinfo;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -16,4 +17,8 @@ public interface OtherRequestService {
                                     @Query("secret") String secret,
                                     @Query("code") String code,
                                     @Query("grant_type") String grantType);
+
+    @GET("sns/userinfo")
+    Call<WechatUserinfo> getWechatUserInfo(@Query("access_token") String accessToken,
+                                           @Query("openid") String openid);
 }

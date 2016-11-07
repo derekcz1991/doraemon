@@ -14,11 +14,13 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckedTextView;
 import android.widget.TextView;
 
 import com.derek.doraemon.R;
 import com.derek.doraemon.activity.PublishActivity;
 import com.derek.doraemon.activity.SearchWelfareActivity;
+import com.derek.doraemon.activity.SelectLocationActivity;
 import com.derek.doraemon.adapter.StarUserAdapter;
 import com.derek.doraemon.adapter.WelfareListAdapter;
 import com.derek.doraemon.model.Location;
@@ -45,8 +47,6 @@ import butterknife.OnClick;
 public class WelfareFragment extends HomeTabFragment {
     @BindView(R.id.refreshLayout)
     SwipeRefreshLayout swipeRefreshLayout;
-    @BindView(R.id.starUserRecyclerView)
-    RecyclerView starUserRecyclerView;
     @BindView(R.id.hostRecyclerView)
     RecyclerView welfareRecyclerView;
     @BindView(R.id.searchFab)
@@ -55,6 +55,10 @@ public class WelfareFragment extends HomeTabFragment {
     FloatingActionButton cameraFab;
     @BindView(R.id.locationText)
     TextView locationText;
+    @BindView(R.id.tab1)
+    CheckedTextView tab1;
+    @BindView(R.id.tab2)
+    CheckedTextView tab2;
 
     private Gson gson;
 
@@ -64,6 +68,8 @@ public class WelfareFragment extends HomeTabFragment {
     private RequestCallback getWelfareCallback;
 
     private int kind = 0;
+    private int sort = 1;
+    private String city = "";
 
     @Nullable
     @Override
@@ -114,10 +120,14 @@ public class WelfareFragment extends HomeTabFragment {
             public void success(Resp resp) {
                 swipeRefreshLayout.setRefreshing(false);
                 welfareItems.clear();
-                welfareItems.addAll(
-                    (List<? extends WelfareItem>) gson.fromJson(gson.toJsonTree(resp.getData()),
-                        new TypeToken<List<WelfareItem>>() {
-                        }.getType()));
+                if (resp.getData() == null) {
+                    CommonUtils.toast(resp.getMessage());
+                } else {
+                    welfareItems.addAll(
+                        (List<? extends WelfareItem>) gson.fromJson(gson.toJsonTree(resp.getData()),
+                            new TypeToken<List<WelfareItem>>() {
+                            }.getType()));
+                }
                 updateDisplayList();
             }
 
@@ -138,7 +148,8 @@ public class WelfareFragment extends HomeTabFragment {
     }
 
     private void refresh() {
-        NetManager.getInstance().getWelfareList().enqueue(getWelfareCallback);
+        swipeRefreshLayout.setRefreshing(true);
+        NetManager.getInstance().getWelfareList(sort, city).enqueue(getWelfareCallback);
     }
 
     private void updateDisplayList() {
@@ -195,8 +206,47 @@ public class WelfareFragment extends HomeTabFragment {
         getActivity().startActivity(intent);
     }
 
+    @OnClick(R.id.wallPaper)
+    public void onWallPaper() {
+        getActivity().startActivityForResult(new Intent(getActivity(), SelectLocationActivity.class), 1);
+    }
+
     @Override
     public void onPageInto(BaseFragment fromFragment) {
 
+    }
+
+    @OnClick(R.id.tab1)
+    public void onTab1Checked() {
+        if (!tab1.isChecked()) {
+            tab1.setChecked(true);
+            tab2.setChecked(false);
+            sort = 1;
+            refresh();
+        }
+    }
+
+    @OnClick(R.id.tab2)
+    public void onTab2Checked() {
+        if (!tab2.isChecked()) {
+            tab1.setChecked(false);
+            tab2.setChecked(true);
+            sort = 2;
+            refresh();
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == 1) {
+            String city = data.getStringExtra("city");
+            if (this.city.equals(city)) {
+                return;
+            }
+            locationText.setText(city);
+            this.city = city;
+            refresh();
+        }
     }
 }

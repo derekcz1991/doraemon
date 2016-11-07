@@ -3,6 +3,7 @@ package com.derek.doraemon.netapi;
 import com.derek.doraemon.constants.Constants;
 import com.derek.doraemon.model.Token;
 import com.derek.doraemon.model.WechatResp;
+import com.derek.doraemon.model.WechatUserinfo;
 
 import java.io.File;
 
@@ -84,8 +85,8 @@ public class NetManager {
             nickName, profession, constellation, intro);
     }
 
-    public Call<Resp> getHostList() {
-        return service.getHostList(token, token, String.valueOf(uid));
+    public Call<Resp> getHostList(int sort, String city) {
+        return service.getHostList(token, token, String.valueOf(uid), sort, city);
     }
 
     public Call<Resp> getStarUser() {
@@ -101,7 +102,7 @@ public class NetManager {
             content);
     }
 
-    public Call<Resp> collect(String type, long postId) {
+    public Call<Resp> collect(int type, long postId) {
         return service.collect(token, token, type, String.valueOf(uid), String.valueOf(postId));
     }
 
@@ -147,12 +148,12 @@ public class NetManager {
         return service.sendChat(token, token, String.valueOf(uid), String.valueOf(toUid), content);
     }
 
-    public Call<Resp> getWelfareList() {
-        return service.getWelfareList(token, token, String.valueOf(uid));
+    public Call<Resp> getWelfareList(int sort, String city) {
+        return service.getWelfareList(token, token, String.valueOf(uid), sort, city);
     }
 
-    public Call<Resp> getMomentList() {
-        return service.getMomentList(token, token, String.valueOf(uid));
+    public Call<Resp> getMomentList(int kind) {
+        return service.getMomentList(token, token, String.valueOf(uid), kind);
     }
 
     public Call<Resp> getMyPostList() {
@@ -205,6 +206,10 @@ public class NetManager {
         return otherService.getWechatToken(Constants.APP_ID, Constants.SECRET_ID, code, grantType);
     }
 
+    public Call<WechatUserinfo> getWechatUserInfo(String accessToken, String openId) {
+        return otherService.getWechatUserInfo(accessToken, openId);
+    }
+
     public Call<Resp> uploadAudio(File file, long hostUid) {
         // create RequestBody instance from file
         RequestBody requestFile =
@@ -241,5 +246,17 @@ public class NetManager {
 
     public Call<Resp> findWelfarePost(String keyword) {
         return service.findWelfareList(token, token, keyword);
+    }
+
+    public Call<Resp> getCommentList(long id, int type) {
+        return service.getCommentList(token, id, type);
+    }
+
+    public Call<Resp> getItemDetail(int type, long id) {
+        if (type == 1) {
+            return service.getPostDetail(token, id);
+        } else {
+            return service.getWelfareDetail(token, id);
+        }
     }
 }

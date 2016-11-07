@@ -10,115 +10,166 @@
     tools:context=".activity.ItemDetailActivity"
     >
 
-    <LinearLayout
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <ImageView
-                android:id="@+id/wallPaper"
-                android:layout_width="match_parent"
-                android:layout_height="180dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/bg_foster"
-                app:layout_collapseMode="parallax"
-                app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed"
-                />
-
-            <TextView
-                android:id="@+id/commentBtn"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_alignParentRight="true"
-                android:layout_margin="10dp"
-                android:background="@drawable/icon_pen"/>
-        </RelativeLayout>
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp"
-            >
-
-            <TextView
-                android:id="@+id/contentText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                android:textColor="#ff000000"
-                />
-
-            <View
-                android:id="@+id/divider"
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_marginTop="10dp"
-                android:alpha="0.15"
-                android:background="#ff000000"
-                />
+            android:orientation="vertical">
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginTop="10dp"
-                android:gravity="center_vertical"
-                >
+                android:layout_height="wrap_content">
 
-                <com.derek.doraemon.view.CircleImageView
-                    android:id="@+id/userImageView"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
+                <ImageView
+                    android:id="@+id/wallPaper"
+                    android:layout_width="match_parent"
+                    android:layout_height="180dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/bg_foster"
+                    app:layout_collapseMode="parallax"
+                    app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed"
+                    />
+
+                <ImageView
+                    android:id="@+id/btnBack"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_margin="10dp"
+                    android:padding="5dp"
+                    android:src="@drawable/btn_arrow"/>
+
+                <TextView
+                    android:id="@+id/commentBtn"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:layout_alignParentRight="true"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/icon_pen"/>
+
+                <com.derek.doraemon.view.StarMarkView
+                    android:id="@+id/starMarkView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginLeft="10dp"
+                    android:padding="10dp"
+                    android:visibility="invisible"
                     />
 
                 <TextView
-                    android:id="@+id/hostLabelText"
+                    android:id="@+id/starMarkText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:text="房东  :  "
-                    />
-
-                <TextView
-                    android:id="@+id/hostNameText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignTop="@id/hostLabelText"
-                    android:layout_toRightOf="@id/hostLabelText"
-                    android:textColor="@color/colorAccent"
-                    />
-
-                <TextView
-                    android:id="@+id/locationText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignBottom="@id/userImageView"
-                    android:layout_marginBottom="5dp"
-                    android:drawableLeft="@drawable/icon_pin"
-                    android:drawablePadding="5dp"
-                    android:gravity="bottom"
-                    android:textSize="12dp"
-                    />
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginLeft="5dp"
+                    android:layout_toRightOf="@id/starMarkView"
+                    android:paddingBottom="8dp"
+                    android:text="1111"
+                    android:textColor="#ffffffff"
+                    android:visibility="invisible"/>
             </RelativeLayout>
 
-            <ImageView
-                android:id="@+id/msgBtn"
-                android:layout_width="220dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center"
-                android:layout_marginTop="50dp"
-                android:src="@drawable/icon_msg"
-                />
-        </LinearLayout>
-    </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                >
 
+                <TextView
+                    android:id="@+id/contentText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:textColor="#ff000000"
+                    />
+
+                <View
+                    android:id="@+id/divider"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginTop="10dp"
+                    android:alpha="0.15"
+                    android:background="#ff000000"
+                    />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center_vertical"
+                    >
+
+                    <com.derek.doraemon.view.CircleImageView
+                        android:id="@+id/userImageView"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_alignParentRight="true"
+                        />
+
+                    <TextView
+                        android:id="@+id/hostLabelText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:text="房东  :  "
+                        />
+
+                    <TextView
+                        android:id="@+id/hostNameText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@id/hostLabelText"
+                        android:layout_toRightOf="@id/hostLabelText"
+                        android:textColor="@color/colorAccent"
+                        />
+
+                    <TextView
+                        android:id="@+id/locationText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@id/userImageView"
+                        android:layout_marginBottom="5dp"
+                        android:drawableLeft="@drawable/icon_pin"
+                        android:drawablePadding="5dp"
+                        android:gravity="bottom"
+                        android:textSize="12dp"
+                        />
+                </RelativeLayout>
+
+                <ImageView
+                    android:id="@+id/msgBtn"
+                    android:layout_width="220dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="50dp"
+                    android:src="@drawable/icon_msg"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="留言"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_marginTop="5dp"
+                    android:background="@color/gray"/>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/collectBtn"

@@ -144,7 +144,10 @@ public class NearbyFragment extends HomeTabFragment {
                     ((TextView) view.findViewById(R.id.nameText)).setText(nearbyItems.get(position).getUserName());
                     ((TextView) view.findViewById(R.id.addressText)).setText(nearbyItems.get(position).getAddress());
                 }
-                InfoWindow mInfoWindow = new InfoWindow(BitmapDescriptorFactory.fromView(view), marker.getPosition(), 135,
+                Intent intent = new Intent(getContext(), ProfileActivity.class);
+                intent.putExtra(ProfileActivity.EXTRA_UID, nearbyItems.get(position).getUid());
+                getContext().startActivity(intent);
+                /*InfoWindow mInfoWindow = new InfoWindow(BitmapDescriptorFactory.fromView(view), marker.getPosition(), 135,
                     new InfoWindow.OnInfoWindowClickListener() {
                         @Override
                         public void onInfoWindowClick() {
@@ -153,7 +156,7 @@ public class NearbyFragment extends HomeTabFragment {
                             getContext().startActivity(intent);
                         }
                     });
-                mBaiduMap.showInfoWindow(mInfoWindow);
+                mBaiduMap.showInfoWindow(mInfoWindow);*/
                 return true;
             }
         });

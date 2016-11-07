@@ -2,6 +2,8 @@ package com.derek.doraemon.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 /**
  * Created by derek on 10/6/16.
  */
@@ -46,6 +48,8 @@ public class UserDetail extends BaseModel {
     private String createdAt;
     @SerializedName("updated_at")
     private String updatedAt;
+    @SerializedName("comment")
+    private List<Comment> comments;
 
     public long getId() {
         return id;
@@ -253,5 +257,13 @@ public class UserDetail extends BaseModel {
 
     public void setUpdatedAt(String updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
     }
 }

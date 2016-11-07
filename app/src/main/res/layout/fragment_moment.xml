@@ -53,15 +53,16 @@
                         android:layout_height="22dp"
                         android:layout_marginRight="20dp"
                         android:background="@drawable/btn_st_selector"
+                        android:checked="true"
                         />
 
                     <CheckedTextView
-                        android:id="@+id/pzBtn"
+                        android:id="@+id/hlBtn"
                         android:layout_width="51dp"
                         android:layout_height="22dp"
                         android:layout_marginLeft="20dp"
                         android:layout_marginRight="20dp"
-                        android:background="@drawable/btn_pz_selector"
+                        android:background="@drawable/btn_hl_selector"
                         />
 
                     <CheckedTextView

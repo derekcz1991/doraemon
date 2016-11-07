@@ -4,6 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.derek.doraemon.MyApplication;
@@ -14,6 +18,7 @@ import com.derek.doraemon.model.ThirdParty;
 import com.derek.doraemon.model.Token;
 import com.derek.doraemon.model.User;
 import com.derek.doraemon.model.WechatResp;
+import com.derek.doraemon.model.WechatUserinfo;
 import com.derek.doraemon.netapi.NetManager;
 import com.derek.doraemon.netapi.RequestCallback;
 import com.derek.doraemon.netapi.Resp;
@@ -23,6 +28,8 @@ import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
+import com.facebook.Profile;
+import com.facebook.ProfileTracker;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.google.gson.Gson;
@@ -38,6 +45,7 @@ import com.twitter.sdk.android.core.identity.TwitterLoginButton;
 
 import java.util.Arrays;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import retrofit2.Call;
@@ -50,6 +58,13 @@ import retrofit2.Response;
 public class LoginActivity extends BaseActivity {
     private String TAG = this.getClass().getSimpleName();
     public static String wechatCode;
+
+    @BindView(R.id.container)
+    LinearLayout container;
+    @BindView(R.id.text)
+    TextView text;
+    @BindView(R.id.bg)
+    ImageView bg;
 
     // facebook
     private CallbackManager callbackManager;
@@ -64,7 +79,17 @@ public class LoginActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
-        //CommonUtils.showProgress(this, "登录中...");
+        if (SharePreferenceHelper.getInstance().get(SharePrefsConstants.IS_LOGIN, false)) {
+            bg.setImageResource(R.drawable.bg_login2);
+            container.setVisibility(View.INVISIBLE);
+            text.setVisibility(View.INVISIBLE);
+            CommonUtils.showProgress(this, "登录中...");
+            thirdPartyLogin(
+                SharePreferenceHelper.getInstance().get(SharePrefsConstants.NAME, ""),
+                SharePreferenceHelper.getInstance().get(SharePrefsConstants.PLATFORM_USER_ID, ""),
+                SharePreferenceHelper.getInstance().get(SharePrefsConstants.NAME, "")
+            );
+        }
     }
 
     @Override
@@ -74,9 +99,22 @@ public class LoginActivity extends BaseActivity {
             NetManager.getInstance().oauthWechat(wechatCode, "authorization_code").enqueue(new Callback<WechatResp>() {
                 @Override
                 public void onResponse(Call<WechatResp> call, Response<WechatResp> response) {
-                    WechatResp wechatResp = response.body();
+                    final WechatResp wechatResp = response.body();
                     Log.d("wechat", response.toString());
-                    thirdPartyLogin("1", wechatResp.getOpenid());
+                    NetManager.getInstance().getWechatUserInfo(wechatResp.getAccessToken(), wechatResp.getOpenid())
+                        .enqueue(new Callback<WechatUserinfo>() {
+                            @Override
+                            public void onResponse(Call<WechatUserinfo> call, Response<WechatUserinfo> response) {
+                                if (response != null) {
+                                    thirdPartyLogin("1", wechatResp.getOpenid(), response.body().getNickname());
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<WechatUserinfo> call, Throwable t) {
+
+                            }
+                        });
                 }
 
                 @Override
@@ -84,26 +122,13 @@ public class LoginActivity extends BaseActivity {
 
                 }
             });
-
-            /*new RequestCallback(new RequestCallback.Callback() {
-                    @Override
-                    public void success(Resp resp) {
-                        Gson gson = new Gson();
-                        WechatResp wechatResp = gson.fromJson(gson.toJsonTree(resp.getData()), WechatResp.class);
-                        thirdPartyLogin("1", wechatResp.getOpenid());
-                    }
-
-                    @Override
-                    public boolean fail(Resp resp) {
-                        return false;
-                    }
-                }));*/
             wechatCode = null;
         }
     }
 
     @OnClick(R.id.wechatBtn)
     public void onWechatClick() {
+        CommonUtils.showProgress(this, "登录中...");
         //api注册
         if (api == null) {
             api = WXAPIFactory.createWXAPI(this, Constants.APP_ID, true);
@@ -127,6 +152,7 @@ public class LoginActivity extends BaseActivity {
 
     @OnClick(R.id.fbBtn)
     public void onFacebookClick() {
+        CommonUtils.showProgress(this, "登录中...");
         AccessToken accessToken = AccessToken.getCurrentAccessToken();
         if (accessToken == null) {
             callbackManager = CallbackManager.Factory.create();
@@ -135,7 +161,12 @@ public class LoginActivity extends BaseActivity {
                 public void onSuccess(LoginResult loginResult) {
                     facebookUid = loginResult.getAccessToken().getUserId();
                     Log.d(TAG, "facebookUid = " + facebookUid);
-                    thirdPartyLogin("2", facebookUid);
+                    new ProfileTracker() {
+                        @Override
+                        protected void onCurrentProfileChanged(Profile oldProfile, Profile currentProfile) {
+                            thirdPartyLogin("2", facebookUid, currentProfile.getName());
+                        }
+                    };
                 }
 
                 @Override
@@ -153,12 +184,13 @@ public class LoginActivity extends BaseActivity {
         } else {
             facebookUid = accessToken.getUserId();
             Log.d(TAG, "facebookUid = " + facebookUid);
-            thirdPartyLogin("2", facebookUid);
+            thirdPartyLogin("2", facebookUid, "");
         }
     }
 
     @OnClick(R.id.twitterBtn)
     public void onTwitterClick() {
+        CommonUtils.showProgress(this, "登录中...");
         TwitterSession session = TwitterCore.getInstance().getSessionManager().getActiveSession();
         if (session == null) {
             getTwitterAuthClient().authorize(this, new com.twitter.sdk.android.core.Callback<TwitterSession>() {
@@ -170,8 +202,8 @@ public class LoginActivity extends BaseActivity {
                     // TODO: Remove toast and use the TwitterSession's userID
                     // with your app's user model
                     String msg = "@" + session.getUserName() + " logged in! (#" + session.getUserId() + ")";
-                    Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
-                    thirdPartyLogin("3", String.valueOf(session.getUserId()));
+                    //Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
+                    thirdPartyLogin("3", String.valueOf(session.getUserId()), session.getUserName());
                 }
 
                 @Override
@@ -181,12 +213,12 @@ public class LoginActivity extends BaseActivity {
             });
         } else {
             String msg = "@" + session.getUserName() + " logged in! (#" + session.getUserId() + ")";
-            Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
-            thirdPartyLogin("3", String.valueOf(session.getUserId()));
+            //Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
+            thirdPartyLogin("3", String.valueOf(session.getUserId()), session.getUserName());
         }
     }
 
-    private void thirdPartyLogin(final String platform, final String openId) {
+    private void thirdPartyLogin(final String platform, final String openId, final String nickname) {
         NetManager.getInstance()
             .thirdPartyLogin(platform, openId)
             .enqueue(new RequestCallback(new RequestCallback.Callback() {
@@ -197,16 +229,36 @@ public class LoginActivity extends BaseActivity {
                     NetManager.getInstance().setToken(thirdParty.getAccessToken());
                     NetManager.getInstance().setUid(thirdParty.getUser().getId());
                     if (thirdParty.getUser().isFirst()) {
-                        startActivity(new Intent(LoginActivity.this, CompleteInfoActivity.class));
+                        completeInfo(platform, openId, nickname);
                     } else {
                         startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                        SharePreferenceHelper.getInstance().put(SharePrefsConstants.IS_LOGIN, true);
+                        SharePreferenceHelper.getInstance().put(SharePrefsConstants.NAME, nickname);
+                        SharePreferenceHelper.getInstance().put(SharePrefsConstants.PLATFORM, platform);
+                        SharePreferenceHelper.getInstance().put(SharePrefsConstants.PLATFORM_USER_ID, openId);
+                        finish();
                     }
+                }
 
+                @Override
+                public boolean fail(Resp resp) {
+                    return false;
+                }
+            }));
+    }
+
+    private void completeInfo(final String platform, final String openId, final String nickname) {
+        NetManager.getInstance()
+            .completeUserInfo("1", "", "", "", "", nickname, "", "", "我是" + nickname)
+            .enqueue(new RequestCallback(new RequestCallback.Callback() {
+                @Override
+                public void success(Resp resp) {
                     SharePreferenceHelper.getInstance().put(SharePrefsConstants.IS_LOGIN, true);
+                    SharePreferenceHelper.getInstance().put(SharePrefsConstants.NAME, nickname);
                     SharePreferenceHelper.getInstance().put(SharePrefsConstants.PLATFORM, platform);
                     SharePreferenceHelper.getInstance().put(SharePrefsConstants.PLATFORM_USER_ID, openId);
 
-                    finish();
+                    startActivity(new Intent(LoginActivity.this, HomeActivity.class));
                 }
 
                 @Override

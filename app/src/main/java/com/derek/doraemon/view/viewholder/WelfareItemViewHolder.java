@@ -69,6 +69,7 @@ public class WelfareItemViewHolder extends BaseViewHolder {
         Picasso.with(context)
             .load(NetManager.getInstance().getHost() + welfareItem.getAvatarUrl())
             .resize(100, 100)
+            .placeholder(R.drawable.app_logo)
             .into(userImageView);
         nameText.setText(welfareItem.getUserName());
         if (welfareItem.getKind() == 1) {
@@ -115,7 +116,7 @@ public class WelfareItemViewHolder extends BaseViewHolder {
     public void detail() {
         Intent intent = new Intent(context, ItemDetailActivity.class);
         intent.putExtra(ItemDetailActivity.EXTRA_ITEM, welfareItem);
-        intent.putExtra(ItemDetailActivity.EXTRA_TYPE, "3");
+        intent.putExtra(ItemDetailActivity.EXTRA_TYPE, 3);
         context.startActivity(intent);
     }
 }

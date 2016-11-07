@@ -9,6 +9,7 @@ public class SharePrefsConstants {
     public static final String TOKEN = "token";
 
     public static final String IS_LOGIN = "isLogin";
+    public static final String NAME = "name";
     public static final String PLATFORM = "platform";
     public static final String PLATFORM_USER_ID = "platformUserId";
 }

@@ -39,6 +39,7 @@ public class AudioViewHolder extends BaseViewHolder {
         final Audio audio = (Audio) data;
         Picasso.with(context)
             .load(NetManager.getInstance().getHost() + audio.getAvatarUrl())
+            .placeholder(R.drawable.app_logo)
             .into(userImageView);
         userNameText.setText(audio.getUserName());
 

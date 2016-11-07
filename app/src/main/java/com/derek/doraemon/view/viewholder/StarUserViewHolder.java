@@ -40,6 +40,7 @@ public class StarUserViewHolder extends BaseViewHolder {
         final StarUser starUser = (StarUser) data;
         Picasso.with(itemView.getContext())
             .load(NetManager.getInstance().getHost() + starUser.getAvatarUrl())
+            .placeholder(R.drawable.app_logo)
             .into(userImageView);
 
         Picasso.with(itemView.getContext())

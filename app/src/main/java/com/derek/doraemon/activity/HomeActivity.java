@@ -34,7 +34,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
         setContentView(R.layout.activity_home);
 
         initView(savedInstanceState);
-        setTabSelected(R.id.tab_home);
+        setTabSelected(R.id.tab_nearby);
 
     }
 
@@ -100,6 +100,12 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
         if (fragment != null) {
             fragment.onActivityResult(requestCode, resultCode, data);
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        TabFragmentManager.getInstance(this).onDestroy();
+        super.onDestroy();
     }
 
     @Override

@@ -60,13 +60,14 @@ public class MomentViewHolder extends BaseViewHolder {
             Picasso.with(context)
                 .load(NetManager.getInstance().getHost() + momentItem.getPhotoUrl())
                 .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE)
-                //.resize(200, 200)
+                .resize(200, 200)
                 //.centerCrop()
                 .into(petImageView);
         }
         Picasso.with(context)
             .load(NetManager.getInstance().getHost() + momentItem.getAvatarUrl())
             .resize(100, 100)
+            .placeholder(R.drawable.app_logo)
             .into(userImageView);
         switch (momentItem.getKind()) {
             case 1:

@@ -56,14 +56,8 @@ public class MeFragment extends HomeTabFragment {
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        update();
-    }
-
-    @Override
     public void onPageInto(BaseFragment fromFragment) {
-
+        update();
     }
 
     private void update() {
@@ -73,7 +67,10 @@ public class MeFragment extends HomeTabFragment {
                 public void success(Resp resp) {
                     Gson gson = new Gson();
                     userDetail = gson.fromJson(gson.toJsonTree(resp.getData()), UserDetail.class);
-                    Picasso.with(getActivity()).load(NetManager.getInstance().getHost() + userDetail.getAvatarUrl()).into(userImageView);
+                    Picasso.with(getActivity())
+                        .load(NetManager.getInstance().getHost() + userDetail.getAvatarUrl())
+                        .placeholder(R.drawable.app_logo)
+                        .into(userImageView);
                     userNameText.setText(userDetail.getUserName());
                     occupationText.setText(userDetail.getProfession());
                     constellationText.setText(userDetail.getConstellation());
@@ -143,5 +140,14 @@ public class MeFragment extends HomeTabFragment {
         SharePreferenceHelper.getInstance().put(SharePrefsConstants.IS_LOGIN, false);
         getActivity().startActivity(new Intent(getActivity(), LoginActivity.class));
         getActivity().finish();
+    }
+
+    @OnClick(R.id.share)
+    public void share() {
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.putExtra(Intent.EXTRA_TEXT, "你的宠物养成社交助手与懂的人结伴走过与爱宠共处的点滴幸福...");
+        sendIntent.setType("text/plain");
+        startActivity(Intent.createChooser(sendIntent, "分享到"));
     }
 }
