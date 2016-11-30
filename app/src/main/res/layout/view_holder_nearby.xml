@@ -37,15 +37,6 @@
         android:text="0.7km"
         />
 
-    <TextView
-        android:id="@+id/locationText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@id/userNameText"
-        android:layout_below="@id/timeText"
-        android:text="哈哈"
-        />
-
     <ImageView
         android:id="@+id/btnBark"
         android:layout_width="80dp"
@@ -55,6 +46,16 @@
         android:layout_alignTop="@id/userNameText"
         android:layout_marginRight="10dp"
         android:src="@drawable/icon_wang"
+        />
+
+    <TextView
+        android:id="@+id/locationText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/userNameText"
+        android:layout_below="@id/timeText"
+        android:layout_toLeftOf="@id/btnBark"
+        android:text="哈哈"
         />
 
     <View

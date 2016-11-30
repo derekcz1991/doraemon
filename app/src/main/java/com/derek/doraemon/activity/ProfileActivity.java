@@ -1,6 +1,8 @@
 package com.derek.doraemon.activity;
 
 import android.content.Intent;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -33,11 +35,11 @@ import butterknife.OnClick;
 /**
  * Created by derek on 16/8/12.
  */
-public class ProfileActivity extends BaseTitleActivity {
+public class ProfileActivity extends BaseActivity {
     public static final String EXTRA_UID = "uid";
 
     @BindView(R.id.userImageView)
-    CircleImageView userImageView;
+    ImageView userImageView;
     @BindView(R.id.hostNameText)
     TextView hostNameText;
     @BindView(R.id.starMarkView)
@@ -69,20 +71,14 @@ public class ProfileActivity extends BaseTitleActivity {
     private UserDetail userDetail;
 
     @Override
-    protected boolean showNavIcon() {
-        return false;
-    }
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_profile);
 
-    @Override
-    protected View onCreateContentView() {
         uid = getIntent().getLongExtra(EXTRA_UID, 0);
-        View view = View.inflate(this, R.layout.activity_profile, null);
-        getToolbar().setNavigationIcon(R.drawable.icon_nav_blue);
-        ButterKnife.bind(this, view);
-
+        ButterKnife.bind(this);
         initRecord();
         update();
-        return view;
     }
 
     @OnClick(R.id.msgBtn)
@@ -149,5 +145,9 @@ public class ProfileActivity extends BaseTitleActivity {
                 return false;
             }
         }));
+    }
+
+    public void onBackClicked(View view) {
+        finish();
     }
 }

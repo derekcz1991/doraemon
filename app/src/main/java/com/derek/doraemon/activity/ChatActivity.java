@@ -96,12 +96,12 @@ public class ChatActivity extends BaseTitleActivity {
             if (msgText.getText().toString().isEmpty()) {
                 return true;
             }
+            CommonUtils.toast("发送中...");
             NetManager.getInstance().sendChat(chatterId, msgText.getText().toString()).enqueue(
                 new RequestCallback(new RequestCallback.Callback() {
                     @Override
                     public void success(Resp resp) {
                         CommonUtils.toast(resp.getMessage());
-                        msgText.setText("");
                         getChat();
                     }
 
@@ -110,6 +110,7 @@ public class ChatActivity extends BaseTitleActivity {
                         return false;
                     }
                 }));
+            msgText.setText("");
         }
         return false;
     }

@@ -10,142 +10,155 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center_horizontal"
-            android:orientation="vertical"
-            >
-
-            <com.derek.doraemon.view.CircleImageView
-                android:id="@+id/userImageView"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_alignParentRight="true"
-                android:src="@drawable/app_logo"
-                />
-
-            <TextView
-                android:id="@+id/hostNameText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:textColor="@color/colorAccent"
-                />
+            android:layout_height="match_parent">
 
             <LinearLayout
-                android:id="@+id/starLayout"
-                android:layout_width="wrap_content"
-                android:layout_height="20dp"
-                android:layout_marginTop="10dp"
-                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
                 >
 
-                <com.derek.doraemon.view.StarMarkView
-                    android:id="@+id/starMarkView"
+                <ImageView
+                    android:id="@+id/userImageView"
+                    android:layout_width="match_parent"
+                    android:layout_height="240dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/app_logo"/>
+
+                <TextView
+                    android:id="@+id/hostNameText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:textColor="@color/colorAccent"
+                    />
+
+                <LinearLayout
+                    android:id="@+id/starLayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal"
+                    >
+
+                    <com.derek.doraemon.view.StarMarkView
+                        android:id="@+id/starMarkView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        />
+
+                    <TextView
+                        android:id="@+id/starText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="10dp"
+                        android:textSize="12dp"
+                        />
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    >
+
+                    <ImageView
+                        android:id="@+id/msgBtn"
+                        android:layout_width="140dp"
+                        android:layout_height="35dp"
+                        android:layout_marginLeft="20dp"
+                        android:src="@drawable/icon_sendpm"
+                        />
+
+                    <ImageView
+                        android:id="@+id/helloBtn"
+                        android:layout_width="140dp"
+                        android:layout_height="35dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="20dp"
+                        android:src="@drawable/icon_wang"
+                        />
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/petNameText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:text="宠物名:"
                     />
 
                 <TextView
-                    android:id="@+id/starText"
+                    android:id="@+id/petAgeText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="10dp"
-                    android:textSize="12dp"
+                    android:layout_marginTop="15dp"
+                    android:text="宠物年龄:"
+                    />
+
+                <TextView
+                    android:id="@+id/petTypeText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:text="宠物种类:"
+                    />
+
+                <TextView
+                    android:id="@+id/petCategoryText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:text="品种:"
+                    />
+
+                <TextView
+                    android:id="@+id/jobText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:text="职业:"
+                    />
+
+                <TextView
+                    android:id="@+id/constellationText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:text="星座:"
+                    />
+
+                <TextView
+                    android:id="@+id/emailText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:text="邮箱:"
+                    />
+
+                <TextView
+                    android:id="@+id/introText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:text="自我介绍:"
                     />
             </LinearLayout>
+        </ScrollView>
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                >
-
-                <ImageView
-                    android:id="@+id/msgBtn"
-                    android:layout_width="140dp"
-                    android:layout_height="35dp"
-                    android:layout_marginLeft="20dp"
-                    android:src="@drawable/icon_sendpm"
-                    />
-
-                <ImageView
-                    android:id="@+id/helloBtn"
-                    android:layout_width="140dp"
-                    android:layout_height="35dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="20dp"
-                    android:src="@drawable/icon_wang"
-                    />
-            </RelativeLayout>
-
-            <TextView
-                android:id="@+id/petNameText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:text="宠物名:"
-                />
-
-            <TextView
-                android:id="@+id/petAgeText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:text="宠物年龄:"
-                />
-
-            <TextView
-                android:id="@+id/petTypeText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:text="宠物种类:"
-                />
-
-            <TextView
-                android:id="@+id/petCategoryText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:text="品种:"
-                />
-
-            <TextView
-                android:id="@+id/jobText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:text="职业:"
-                />
-
-            <TextView
-                android:id="@+id/constellationText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:text="星座:"
-                />
-
-            <TextView
-                android:id="@+id/emailText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:text="邮箱:"
-                />
-
-            <TextView
-                android:id="@+id/introText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:text="自我介绍:"
-                />
-        </LinearLayout>
+        <ImageView
+            android:id="@+id/btnBack"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_margin="10dp"
+            android:onClick="onBackClicked"
+            android:padding="5dp"
+            android:src="@drawable/btn_arrow"/>
 
         <com.derek.doraemon.view.RecorderView
             android:id="@+id/recordView"

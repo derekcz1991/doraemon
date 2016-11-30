@@ -270,10 +270,10 @@ public class PublishActivity extends BaseActivity implements View.OnClickListene
                 intent.putExtra("aspectX", 1);
                 intent.putExtra("aspectY", 1);
             } else {
-                intent.putExtra("outputX", 250);
+                intent.putExtra("outputX", 200);
                 intent.putExtra("outputY", 100);
-                intent.putExtra("aspectX", 5);
-                intent.putExtra("aspectY", 2);
+                intent.putExtra("aspectX", 2);
+                intent.putExtra("aspectY", 1);
             }
             intent.putExtra("scale", true);
             intent.putExtra("return-data", true);

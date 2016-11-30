@@ -131,31 +131,6 @@ public class HomeFragment extends HomeTabFragment {
 
         });
 
-        /*starUsers = new ArrayList<>();
-        starUserAdapter = new StarUserAdapter(starUsers);
-        starUserRecyclerView.setLayoutManager(
-            new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-        starUserRecyclerView.setNestedScrollingEnabled(false);
-        starUserRecyclerView.setAdapter(starUserAdapter);
-
-        getStarUserCallback = new RequestCallback(new RequestCallback.Callback() {
-            @Override
-            public void success(Resp resp) {
-                starUsers.clear();
-                starUsers.addAll(
-                    (Collection<? extends StarUser>) gson.fromJson(gson.toJsonTree(resp.getData()),
-                        new TypeToken<List<StarUser>>() {
-                        }.getType()));
-                starUserAdapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public boolean fail(Resp resp) {
-                return false;
-            }
-
-        });*/
-
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -167,7 +142,6 @@ public class HomeFragment extends HomeTabFragment {
     private void refresh() {
         swipeRefreshLayout.setRefreshing(true);
         NetManager.getInstance().getHostList(sort, city).enqueue(getHostCallback);
-        //NetManager.getInstance().getStarUser().enqueue(getStarUserCallback);
     }
 
     @OnClick(R.id.searchFab)
