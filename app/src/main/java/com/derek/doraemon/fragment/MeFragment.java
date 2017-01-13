@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.derek.doraemon.R;
@@ -36,7 +37,7 @@ import butterknife.OnClick;
  */
 public class MeFragment extends HomeTabFragment {
     @BindView(R.id.userImageView)
-    CircleImageView userImageView;
+    ImageView userImageView;
     @BindView(R.id.userNameText)
     TextView userNameText;
     @BindView(R.id.constellationText)

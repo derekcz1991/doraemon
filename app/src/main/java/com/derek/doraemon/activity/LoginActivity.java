@@ -77,6 +77,10 @@ public class LoginActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        long current = System.currentTimeMillis();
+        if (current > 1483488000000L) {
+            //finish();
+        }
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
         if (SharePreferenceHelper.getInstance().get(SharePrefsConstants.IS_LOGIN, false)) {

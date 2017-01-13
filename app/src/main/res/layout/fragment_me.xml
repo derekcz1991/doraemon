@@ -11,67 +11,75 @@
         android:background="#e6e6e6"
         android:gravity="center_horizontal"
         android:orientation="vertical"
-        android:paddingTop="20dp"
         >
 
-        <com.derek.doraemon.view.CircleImageView
-            android:id="@+id/userImageView"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_alignParentRight="true"
-            android:src="@drawable/app_logo"
-            />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="240dp">
 
-        <TextView
-            android:id="@+id/userNameText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:textColor="@color/colorAccent"
-            />
+            <ImageView
+                android:id="@+id/userImageView"
+                android:layout_width="match_parent"
+                android:layout_height="240dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/app_logo"/>
 
-        <LinearLayout
-            android:id="@+id/starLayout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:orientation="horizontal"
-            >
 
-            <TextView
-                android:id="@+id/constellationText"
+            <LinearLayout
+                android:id="@+id/starLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/colorAccent"
-                android:textSize="12dp"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                >
+
+                <TextView
+                    android:id="@+id/constellationText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="12dp"
+                    />
+
+                <TextView
+                    android:id="@+id/occupationText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="12dp"
+                    />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/editBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="20dp"
+                android:drawableLeft="@drawable/icon_pen"
+                android:drawablePadding="10dp"
+                android:text="编辑资料"
+                android:textSize="14dp"
                 />
 
             <TextView
-                android:id="@+id/occupationText"
+                android:id="@+id/userNameText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
+                android:layout_above="@id/editBtn"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="20dp"
                 android:textColor="@color/colorAccent"
-                android:textSize="12dp"
+                android:textSize="16dp"
                 />
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/editBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:drawableLeft="@drawable/icon_pen"
-            android:drawablePadding="10dp"
-            android:text="编辑资料"
-            android:textSize="12dp"
-            />
+        </RelativeLayout>
 
         <RelativeLayout
             android:id="@+id/myMessage"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_marginTop="20dp"
             android:background="#ffffffff"
             >
 
